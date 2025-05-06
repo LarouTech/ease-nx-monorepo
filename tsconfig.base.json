@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ease/dto": ["shared/dto/src/index.ts"],
+      "@ease/interfaces": ["shared/interfaces/src/index.ts"],
+      "@ease/types": ["shared/types/src/index.ts"],
+      "@ease/utils": ["shared/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
