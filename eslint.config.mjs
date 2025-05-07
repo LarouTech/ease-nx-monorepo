@@ -25,6 +25,7 @@ export default [
       ],
     },
   },
+
   {
     files: [
       '**/*.ts',

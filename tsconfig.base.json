@@ -15,6 +15,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ease-angular/ui": ["angular/shared/ui/src/index.ts"],
+      "@ease-nx-monorepo/directives": [
+        "angular/shared/directives/src/index.ts"
+      ],
+      "@ease-nx-monorepo/guards": ["angular/shared/guards/src/index.ts"],
+      "@ease-nx-monorepo/interceptors": [
+        "angular/shared/interceptors/src/index.ts"
+      ],
+      "@ease-nx-monorepo/pipes": ["angular/shared/pipes/src/index.ts"],
+      "@ease-nx-monorepo/services": ["angular/shared/services/src/index.ts"],
       "@ease/dto": ["shared/dto/src/index.ts"],
       "@ease/interfaces": ["shared/interfaces/src/index.ts"],
       "@ease/types": ["shared/types/src/index.ts"],
