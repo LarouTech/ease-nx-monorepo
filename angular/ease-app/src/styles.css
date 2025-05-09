@@ -1,1 +1,16 @@
 @import 'tailwindcss';
+
+:root {
+  --ease-primary: #3b3f7f; /* Deep Indigo */
+  --ease-secondary: #4f81c7; /* Soft Blue */
+  --ease-accent: #2bbbad; /* Fresh Teal */
+  --ease-background: #f5f6fa; /* Light Gray */
+  --ease-text: #2c2c2c; /* Dark Charcoal */
+  --ease-highlight: #f4b400; /* Goldenrod */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}

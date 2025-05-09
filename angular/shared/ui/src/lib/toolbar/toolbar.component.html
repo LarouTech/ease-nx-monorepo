@@ -1,0 +1,56 @@
+<nav
+[ngClass]="isFixed() ? 'fixed top-0 left-0 right-0 z-50' : ''"
+  [ngStyle]="{
+    color: textColor(),
+    backgroundColor: backgroundColor(),
+    borderColor: borderColor(),
+    'padding-left': paddingHorizontal(),
+    'padding-right': paddingHorizontal(),
+    'padding-top': paddingVertical(),
+    'padding-bottom': paddingVertical(),
+  }"
+  class="border-b h-20 shadow-md flex flex-row justify-between items-center"
+>
+  <!-- branding -->
+  <div class="flex flex-row justify-start items-center h-full">
+    <svg-icon
+      class="mr-2"
+      [size]="iconSize()"
+      [name]="logo()"
+      [color]="iconColor() ? iconColor()! : textColor()!"
+    ></svg-icon>
+    <div>
+      <h1
+        [ngStyle]="{
+          'font-style': brandNameItalic() ? 'italic' : 'normal',
+          'font-size': brandNameFontSize(),
+          'font-weight': brandNameFontWeight()
+        }"
+        class="tracking-wider"
+      >
+        {{ brandName() }}
+      </h1>
+    </div>
+  </div>
+
+  <!-- controls -->
+  @if(controls()) {
+  <div id="controls" class="flex flex-row justify-start items-end h-full">
+    @for (control of controls(); track $index) {
+    <button
+      (click)="control.action()"
+      [ngStyle]="{ backgroundColor: easeColor.primary }"
+      class="p-1.5 rounded-full mr-2 mb-2 cursor-pointer transform transition duration-150 ease-in-out hover:scale-105 hover:brightness-90"
+    >
+      <svg-icon
+        size="16px"
+        [color]="easeColor.background"
+        [name]="control.icon"
+      >
+      </svg-icon>
+    </button>
+
+    }
+  </div>
+  }
+</nav>

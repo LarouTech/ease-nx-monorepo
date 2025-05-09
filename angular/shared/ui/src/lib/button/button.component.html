@@ -1,1 +1,62 @@
-<button class="bg-amber-900 px-2 py-1 rounded-md">shared button component</button>
+@let btnVariant = variant();
+<button
+  [disabled]
+  (click)="onClick($event)"
+  [ngStyle]="{
+    color: color(),
+    textTransform: textTransform(),
+    borderColor: borderColor(),
+    padding: customPadding() ? customPadding() : padding(),
+    fontSize: fontSize(),
+    fontWeight: fontWeight(),
+    backgroundColor: backgroundColor(),
+    borderStyle: borderStyle(),
+    borderWidth: borderWidth(),
+    borderRadius: borderRadius(), 
+  }"
+  [ngClass]="{
+        'bg-gray-100': btnVariant === 'default',
+        'bg-blue-500': btnVariant === 'primary',
+        'bg-red-500': btnVariant === 'danger',
+        'bg-green-500': btnVariant === 'success',
+        'bg-yellow-500': btnVariant === 'warning',
+        'bg-purple-500': btnVariant === 'info',
+        'text-white': btnVariant !== 'primary' || 'danger' || 'success' || 'warning' || 'info',
+        'text-black': btnVariant === 'default',
+        'opacity-25': disabled(),
+        'cursor-not-allowed': disabled(),
+        'cursor-pointer': !disabled(),
+        'hover:bg-blue-700': btnVariant === 'primary',
+        'hover:bg-red-700': btnVariant === 'danger',
+        'hover:bg-green-700': btnVariant === 'success',
+        'hover:bg-yellow-700': btnVariant === 'warning',
+        'hover:bg-purple-700': btnVariant === 'info',
+        'hover:text-white': btnVariant === 'primary' || 'danger' || 'success' || 'warning' || 'info',
+     
+    }"
+  [name]="name()"
+  [type]="type()"
+  class=" cursor-pointer rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out focus:outline-none flex flex-row justify-center items-center"
+>
+  <div
+    [ngClass]="{ 'flex-row-reverse': iconLocation() === 'before' }"
+    class="flex flex-row justify-center items-center"
+  >
+    {{ name() }}
+
+    @if (icon()) {
+    <svg-icon
+      class="spin"
+      [color]="color()!"
+      [ngClass]="{'spin': isIconAnimated()}"
+      [ngStyle]="{
+        marginLeft: iconLocation() === 'after' ? '4px' : 0,
+        marginRight: iconLocation() === 'before' ? '4px' : 0
+      }"
+      [size]="fontSize()"
+      [name]="icon()!"
+    ></svg-icon>
+
+    }
+  </div>
+</button>

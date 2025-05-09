@@ -1,7 +1,25 @@
-<div class="">
+<toolbar
+    brandName="EASE"
+    logo="ease"
+    [textColor]="easeColors.primary"
+    [iconColor]="easeColors.text"
+    [brandNameItalic]="true"
+    [controls]="toolbarControls"
+    [isFixed]="true"
+></toolbar>
 
-    <ease-button></ease-button>
+<div class="flex flex-row justify-center items-center h-screen bg-gray-100">
 
+    <!-- <svg-icon name="brain"></svg-icon> -->
+
+    <button-custom
+        (clickEvent)="onTest($event)"
+        variant="success"
+        name="submit"
+        fontWeight="bold"
+        size="large"
+        backgroundColor="blue"
+    ></button-custom>
 
 </div>
 
