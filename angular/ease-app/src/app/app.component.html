@@ -1,26 +1,26 @@
-<toolbar
-    brandName="EASE"
-    logo="ease"
-    [textColor]="easeColors.primary"
-    [iconColor]="easeColors.text"
-    [brandNameItalic]="true"
-    [controls]="toolbarControls"
-    [isFixed]="true"
-></toolbar>
+<div class="h-full  bg-gray-100">
 
-<div class="flex flex-row justify-center items-center h-screen bg-gray-100">
+    <toolbar
+        #toolbarRef
+        brandName="EASE"
+        logo="ease"
+        [textColor]="easeColors.primary"
+        [iconColor]="easeColors.text"
+        [brandNameItalic]="true"
+        [controls]="toolbarControls"
+        [isFixed]="true"
+        [isShadow]="false"
+    ></toolbar>
 
-    <!-- <svg-icon name="brain"></svg-icon> -->
+    <side-menu
+        #sidemenuRef
+        [toolbarRef]="toolbarRef"
+        [menuItems]="menu"
+    >
+        <router-outlet></router-outlet>
 
-    <button-custom
-        (clickEvent)="onTest($event)"
-        variant="success"
-        name="submit"
-        fontWeight="bold"
-        size="large"
-        backgroundColor="blue"
-    ></button-custom>
+    </side-menu>
+
+    <my-footer></my-footer>
 
 </div>
-
-<router-outlet></router-outlet>

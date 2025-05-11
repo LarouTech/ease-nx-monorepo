@@ -1,0 +1,78 @@
+<!-- Full screen flex container -->
+<div
+  [ngStyle]="{
+    'margin-top': !toolbarRef()?.isFixed()
+      ? '0px'
+      : (toolbarRef()?.toolbarRef()?.nativeElement)!.clientHeight + 'px'
+  }"
+  class="w-full h-full min-h-screen bg-pink-200 flex relative"
+>
+  <!-- Sidebar -->
+  <nav
+    #navRef
+    [ngStyle]="{
+      color: color(),
+      backgroundColor: backgroundColor(),
+      width: isOpen() ? '200px' : '55px'
+    }"
+    class="min-h-full text-white p-2 flex-shrink-0 relative transition-all duration-300 ease-in-out overflow-hidden"
+  >
+    <!-- Toggler Button -->
+    <button
+      class="absolute top-2 right-2 text-white p-1 rounded z-50 cursor-pointer"
+      (click)="toggleMenu()"
+    >
+      @if(isOpen()) {
+      <ng-container
+        *ngTemplateOutlet="togglerRef; context: { name: 'close' }"
+      ></ng-container>
+      } @else {
+      <ng-container
+        *ngTemplateOutlet="togglerRef; context: { name: 'hamburger' }"
+      ></ng-container>
+      }
+
+      <ng-template #togglerRef let-name="name">
+        <svg-icon [color]="color()" size="12px" [name]="name"></svg-icon>
+      </ng-template>
+    </button>
+
+    <!-- Menu List -->
+    <ul class="mt-10 space-y-3 transition-all duration-300 ease-in-out">
+      @for (item of menuItems(); track $index) {
+        <li
+          (click)="item.action()"
+          (keydown.enter)="item.action()"
+          (keydown.space)="item.action()"
+          role="button"
+          tabindex="0"
+          class="transition-all duration-300 ease-in-out font-medium focus:outline-none rounded px-2 py-1 flex items-center space-x-2 cursor-pointer"
+          [ngStyle]="{ backgroundColor: menuItemColor() }"
+        >
+          <!-- Always show icon -->
+          <svg-icon [name]="item.icon"></svg-icon>
+    
+          <!-- Smoothly transition label -->
+          <span
+          class="inline-block overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out"
+          [ngClass]="{
+            'opacity-100 ml-2 scale-100 max-w-[150px]': isOpen(),
+            'opacity-0 ml-0 scale-95 max-w-0': !isOpen()
+          }"
+          style="transition-property: opacity, margin, transform, max-width;"
+        >
+          {{ item.label }}
+        </span>
+        
+        </li>
+      }
+    </ul>
+    
+    
+  </nav>
+
+  <!-- Main content area -->
+  <div class="flex-1 min-h-screen overflow-auto p-6">
+    <ng-content></ng-content>
+  </div>
+</div>

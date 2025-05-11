@@ -1,5 +1,6 @@
 <nav
-[ngClass]="isFixed() ? 'fixed top-0 left-0 right-0 z-50' : ''"
+#toolbarRef
+  [ngClass]="{'fixed top-0 left-0 right-0 z-50': isFixed(), 'shadow-md': isShadow()}"
   [ngStyle]="{
     color: textColor(),
     backgroundColor: backgroundColor(),
@@ -9,7 +10,7 @@
     'padding-top': paddingVertical(),
     'padding-bottom': paddingVertical(),
   }"
-  class="border-b h-20 shadow-md flex flex-row justify-between items-center"
+  class="h-20 flex flex-row justify-between items-center"
 >
   <!-- branding -->
   <div class="flex flex-row justify-start items-center h-full">
@@ -24,7 +25,7 @@
         [ngStyle]="{
           'font-style': brandNameItalic() ? 'italic' : 'normal',
           'font-size': brandNameFontSize(),
-          'font-weight': brandNameFontWeight()
+          'font-weight': brandNameFontWeight(),
         }"
         class="tracking-wider"
       >
@@ -35,22 +36,55 @@
 
   <!-- controls -->
   @if(controls()) {
-  <div id="controls" class="flex flex-row justify-start items-end h-full">
-    @for (control of controls(); track $index) {
-    <button
-      (click)="control.action()"
-      [ngStyle]="{ backgroundColor: easeColor.primary }"
-      class="p-1.5 rounded-full mr-2 mb-2 cursor-pointer transform transition duration-150 ease-in-out hover:scale-105 hover:brightness-90"
-    >
-      <svg-icon
-        size="16px"
-        [color]="easeColor.background"
-        [name]="control.icon"
-      >
-      </svg-icon>
-    </button>
-
+  <div id="controls" class="flex flex-row justify-start items-end h-full transition-all">
+    @for (control of controls(); track $index) { @switch (control.type) {
+    @case('icon-badge') {
+    <ng-container
+      *ngTemplateOutlet="iconBadgeRef; context: { control }"
+    ></ng-container>
+    } @case ('link') {
+      <ng-container
+      *ngTemplateOutlet="linkRef; context: { control }"
+    ></ng-container>
+    } 
+    @case ('button') {
+      <ng-container
+      *ngTemplateOutlet="linkRef; context: { control }"
+    ></ng-container>
     }
+  } }
   </div>
   }
 </nav>
+
+<!-- Template references -->
+<!-- icon badge -->
+<ng-template #iconBadgeRef let-control="control">
+  <button
+    (click)="control.action()"
+    [ngStyle]="{ backgroundColor: easeColor.primary }"
+    class="p-1.5 rounded-full mr-3 mb-2 cursor-pointer transform transition duration-150 ease-in-out hover:scale-105 hover:brightness-90"
+  >
+    <svg-icon size="16px" [color]="easeColor.background" [name]="control.icon!">
+    </svg-icon>
+  </button>
+</ng-template>
+
+<!-- link -->
+ <ng-template #linkRef let-control="control">
+  <a
+  role="link"
+  tabindex="0"
+  (click)="control.action()"
+  (keydown.enter)="control.action()"
+  (keydown.space)="control.action()"
+  class="mr-3 mb-2 font-bold hover:underline underline-offset-4 cursor-pointer anchor-hover"
+>
+  {{ control.label }}
+</a>
+ </ng-template>
+
+ <!-- button -->
+<ng-template #btnRef let-control="control">
+  <button-custom class="mr-2 mb-2" [name]="control.label" [backgroundColor]="easeColor.primary" color="white" size="small">SHIT</button-custom>
+</ng-template>

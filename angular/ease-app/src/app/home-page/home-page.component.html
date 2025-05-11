@@ -1,0 +1,24 @@
+<div class="p-4 w-full h-full,  bg-yellow-100">
+
+
+    <div class="space-y-6">
+        <h1 class="text-4xl font-bold">Welcome to the Dashboard</h1>
+        <p class="text-lg">This is the main content area. Scroll down to see more.</p>
+      
+
+       
+        @for (i of items; track $index) {
+            <section class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold mb-2">Section {{ $index + 1 }}</h2>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+                  Praesent libero. Sed cursus ante dapibus diam.
+                </p>
+              </section>
+        }
+
+      </div>
+      
+
+
+</div>

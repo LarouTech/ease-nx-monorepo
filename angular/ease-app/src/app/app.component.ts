@@ -1,5 +1,6 @@
 import {
-  ButtonComponent,
+  FooterComponent,
+  SideMenuComponent,
   ToolbarComponent,
   ToolbarControlsProps,
 } from '@ease-angular/ui';
@@ -8,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { EASE_COLORS } from '@ease/const';
 
 @Component({
-  imports: [RouterModule, ButtonComponent, ToolbarComponent],
+  imports: [RouterModule, SideMenuComponent, ToolbarComponent, FooterComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -21,6 +22,7 @@ export class AppComponent {
     {
       icon: 'home',
       label: 'Home',
+      type: 'link',
       action: () => {
         console.log('home');
       },
@@ -28,9 +30,30 @@ export class AppComponent {
     {
       icon: 'user',
       label: 'About',
+      type: 'icon-badge',
+
       action: () => {
         console.log('user');
       },
+    },
+  ];
+
+  menu = [
+    { label: 'Home', icon: 'home', action: () => console.log('Home clicked') },
+    {
+      label: 'Profile',
+      icon: 'profile',
+      action: () => console.log('Profile clicked'),
+    },
+    {
+      label: 'Settings',
+      icon: 'settings',
+      action: () => console.log('Settings clicked'),
+    },
+    {
+      label: 'Logout',
+      icon: 'logout',
+      action: () => console.log('Logout clicked'),
     },
   ];
 

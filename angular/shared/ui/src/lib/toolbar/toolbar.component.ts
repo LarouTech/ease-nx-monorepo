@@ -1,13 +1,21 @@
 import { EASE_COLORS } from '@ease/const';
-import { Component, input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { ButtonComponent } from '../button/button.component';
 
 export interface ToolbarControlsProps {
-  icon: string;
-  label: string;
+  icon?: string;
+  label?: string;
   action: () => void;
+  type: 'button' | 'link' | 'dropdown' | 'menu' | 'icon-badge';
 }
 
 @Component({
@@ -17,7 +25,9 @@ export interface ToolbarControlsProps {
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements AfterViewInit {
+  toolbarRef = viewChild<ElementRef<HTMLElement>>('toolbarRef');
+  el = inject(ElementRef);
   easeColor = EASE_COLORS;
   brandName = input.required<string>();
   brandNameItalic = input(false);
@@ -27,11 +37,16 @@ export class ToolbarComponent {
   textColor = input<string>(EASE_COLORS.text);
   iconColor = input<string>();
   iconSize = input<string>('4rem');
-  paddingHorizontal = input<string>('1.25rem');
+  paddingHorizontal = input<string>('1rem');
   paddingVertical = input<string>('0.5rem');
   backgroundColor = input<string>(EASE_COLORS.background);
-  borderColor = input<string>('#e5e7eb ');
+  borderColor = input<string>('transparent');
   isFixed = input(false);
+  isShadow = input(false);
 
   controls = input<ToolbarControlsProps[]>([]);
+
+  ngAfterViewInit() {
+    console.log(this.el);
+  }
 }
