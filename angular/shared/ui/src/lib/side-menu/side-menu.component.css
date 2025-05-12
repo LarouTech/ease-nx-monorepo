@@ -4,5 +4,6 @@
 }
 
 li:hover {
-  background-color: var(--ease-secondary);
+  /* color: var(--ease-secondary); */
+  opacity: 0.7;
 }

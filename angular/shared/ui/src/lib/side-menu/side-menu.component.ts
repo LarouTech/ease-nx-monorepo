@@ -27,16 +27,18 @@ export interface SidemenuItemProps {
   styleUrl: './side-menu.component.css',
 })
 export class SideMenuComponent implements OnInit {
-  menuItems = input<SidemenuItemProps[]>([]);
-  isOpen: WritableSignal<boolean> = signal(true);
-  toolbarRef = input<ToolbarComponent>();
-  // easeColor = EASE_COLORS;
-
-  backgroundColor = input<string>(EASE_COLORS.background);
-  color = input<string>(EASE_COLORS.text);
-  menuItemColor = input<string>('#e5e7eb');
-
   navRef_ = viewChild<ElementRef<HTMLElement>>('navRef');
+  easeColors = EASE_COLORS;
+
+  menuItems = input<SidemenuItemProps[]>([]);
+  toolbarRef = input<ToolbarComponent>();
+  backgroundColor = input<string>();
+  color = input<string>('#000000');
+  menuItemBackgroundColorColor = input<string>();
+  contentPadding = input<string>('1rem');
+
+  isOpen: WritableSignal<boolean> = signal(true);
+  top: WritableSignal<number> = signal(0);
 
   initialTop = computed(() => {
     const isToolbarFixed = this.toolbarRef()?.isFixed;
@@ -46,12 +48,9 @@ export class SideMenuComponent implements OnInit {
     } else return '0';
   });
 
-  top: WritableSignal<number> = signal(0);
-
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollY = window.scrollY || document.documentElement.scrollTop;
-
     const isToolbarFixed = this.toolbarRef()?.isFixed();
 
     if (isToolbarFixed) return;
@@ -66,11 +65,9 @@ export class SideMenuComponent implements OnInit {
 
   toggleMenu() {
     this.isOpen.update((open) => !open);
-    console.log('toggleMenu', this.isOpen());
   }
 
   ngOnInit() {
     this.top.set(this.initialTop());
-    console.log(this.toolbarRef()?.toolbarRef());
   }
 }

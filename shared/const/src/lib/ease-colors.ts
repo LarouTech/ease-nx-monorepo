@@ -5,4 +5,11 @@ export const EASE_COLORS = {
   background: '#F5F6FA', // Light Gray
   text: '#2C2C2C', // Dark Charcoal
   highlight: '#F4B400', // Goldenrod
+  gray: '#A0A0A0', // Gray
+  lightGray: '#E0E0E0', // Light Gray
+  lightertGray: '#E7E7E7', // Lighter Gray
+  success: '#4CAF50', // Green
+  warning: '#FFC107', // Amber
+  error: '#F44336', // Red
+  darkGray: '#707070', // Dark Gray
 };

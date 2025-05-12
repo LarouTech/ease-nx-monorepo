@@ -15,13 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ease-angular": ["angular/shared/services/src/index.ts"],
       "@ease-angular/directives": ["angular/shared/directives/src/index.ts"],
       "@ease-angular/guards": ["angular/shared/guards/src/index.ts"],
       "@ease-angular/interceptors": [
         "angular/shared/interceptors/src/index.ts"
       ],
       "@ease-angular/pipes": ["angular/shared/pipes/src/index.ts"],
+      "@ease-angular/services": ["angular/shared/services/src/index.ts"],
       "@ease-angular/ui": ["angular/shared/ui/src/index.ts"],
       "@ease/const": ["shared/const/src/index.ts"],
       "@ease/dto": ["shared/dto/src/index.ts"],

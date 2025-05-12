@@ -1,4 +1,4 @@
-<div class="h-full  bg-gray-100">
+<div class="h-full">
 
     <toolbar
         #toolbarRef
@@ -6,6 +6,7 @@
         logo="ease"
         [textColor]="easeColors.primary"
         [iconColor]="easeColors.text"
+        backgroundColor="#ffffff"
         [brandNameItalic]="true"
         [controls]="toolbarControls"
         [isFixed]="true"
@@ -16,6 +17,9 @@
         #sidemenuRef
         [toolbarRef]="toolbarRef"
         [menuItems]="menu"
+        menuItemBackgroundColorColor
+        [color]="easeColors.primary"
+        [menuItemBackgroundColorColor]="easeColors.lightertGray"
     >
         <router-outlet></router-outlet>
 

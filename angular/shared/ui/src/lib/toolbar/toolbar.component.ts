@@ -39,7 +39,7 @@ export class ToolbarComponent implements AfterViewInit {
   iconSize = input<string>('4rem');
   paddingHorizontal = input<string>('1rem');
   paddingVertical = input<string>('0.5rem');
-  backgroundColor = input<string>(EASE_COLORS.background);
+  backgroundColor = input<string>();
   borderColor = input<string>('transparent');
   isFixed = input(false);
   isShadow = input(false);

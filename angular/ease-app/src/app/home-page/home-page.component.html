@@ -1,13 +1,22 @@
-<div class="p-4 w-full h-full,  bg-yellow-100">
-
+<div class="p-4 w-full h-full">
 
     <div class="space-y-6">
         <h1 class="text-4xl font-bold">Welcome to the Dashboard</h1>
-        <p class="text-lg">This is the main content area. Scroll down to see more.</p>
-      
+        <p class="text-lg">
+            This is the main content area. Scroll down to see more.
+        </p>
 
-       
-        @for (i of items; track $index) {
+        <div class="w-5/12">
+            <formfield
+                hint="Your name at birth"
+                label="first name"
+                [focusColor]="easeColor.secondary"
+                [color]="easeColor.primary"
+                (valueChanged)="onValueChanged($event)"
+            ></formfield>
+        </div>
+
+        <!-- @for (i of items; track $index) {
             <section class="bg-white p-4 rounded shadow">
                 <h2 class="text-xl font-semibold mb-2">Section {{ $index + 1 }}</h2>
                 <p>
@@ -15,10 +24,8 @@
                   Praesent libero. Sed cursus ante dapibus diam.
                 </p>
               </section>
-        }
+        } -->
 
-      </div>
-      
-
+    </div>
 
 </div>

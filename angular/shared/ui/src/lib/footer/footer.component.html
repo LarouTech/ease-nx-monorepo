@@ -1,1 +1,128 @@
-<div class="w-full h-20 bg-purple-300">FOOTER</div>
+<footer class="w-full bg-gray-900 text-white pt-10 pb-6 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
+        <!-- Company Info -->
+        <div>
+            <h2 class="text-lg font-semibold mb-3">{{brandName()}}</h2>
+            <p class="text-xs italic text-gray-300 leading-relaxed">
+                Unified EA governance + service intake = less redundancy, better alignment. Single platform streamlines requests, reviews, tracking-ready for AI/automation.
+            </p>
+        </div>
+
+        <!-- Links -->
+        <div>
+            <h3 class="text-md font-semibold mb-2">Resources</h3>
+            <ul class="space-y-1 text-sm text-gray-300">
+                <li>
+                    <a
+                        href="/about"
+                        class="hover:underline"
+                    >
+                        About Us
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/services"
+                        class="hover:underline"
+                    >
+                        Services
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/blog"
+                        class="hover:underline"
+                    >
+                        Blog
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/contact"
+                        class="hover:underline"
+                    >
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+            <h3 class="text-md font-semibold mb-2">Legal</h3>
+            <ul class="space-y-1 text-sm text-gray-300">
+                <li>
+                    <a
+                        href="/privacy"
+                        class="hover:underline"
+                    >
+                        Privacy Policy
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/terms"
+                        class="hover:underline"
+                    >
+                        Terms of Use
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/security"
+                        class="hover:underline"
+                    >
+                        Security
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Social Icons (placeholder) -->
+        <div>
+            <h3 class="text-md font-semibold mb-2">Follow Us</h3>
+            <div class="flex space-x-4">
+                <!-- Replace with actual icon components or images -->
+                <a
+                    href="#"
+                    class="text-gray-400 hover:text-white"
+                    aria-label="Facebook"
+                >
+                    <svg-icon
+                        name="facebook"
+                        size="20px"
+                        color="white"
+                    ></svg-icon>
+                </a>
+                <a
+                    href="#"
+                    class="text-gray-400 hover:text-white"
+                    aria-label="LinkedIn"
+                >
+                    <svg-icon
+                        name="linkedin"
+                        size="20px"
+                        color="white"
+                    ></svg-icon>
+                </a>
+                <a
+                    href="#"
+                    class="text-gray-400 hover:text-white"
+                    aria-label="GitHub"
+                >
+                    <svg-icon
+                        name="github"
+                        size="20px"
+                        color="white"
+                    ></svg-icon>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-700 pt-4 text-center text-xs text-gray-400">
+        © {{ currentYear }} {{brandName()}}. All rights reserved.
+    </div>
+</footer>
