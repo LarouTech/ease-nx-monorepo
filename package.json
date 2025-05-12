@@ -2,7 +2,9 @@
   "name": "@ease-nx-monorepo/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "ease-build": "nx build ease-app"
+  },
   "private": true,
   "dependencies": {
     "@angular/cdk": "^19.2.15",
