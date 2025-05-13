@@ -11,12 +11,7 @@ import { EASE_COLORS } from '@ease/const';
 
 @Component({
   selector: 'app-home-page',
-  imports: [
-    CommonModule,
-    FormfieldComponent,
-    SvgIconComponent,
-    ButtonComponent,
-  ],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
