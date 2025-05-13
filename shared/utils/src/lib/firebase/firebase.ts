@@ -4,11 +4,9 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'your-app.firebaseapp.com',
-  projectId: 'ease-ng',
-  messagingSenderId: '...',
-  appId: '...',
+  apiKey: 'AIzaSyAL1kM9By3jbFbtPTS6oY4QWN-BIKzouIA',
+  authDomain: 'ease-project-007.firebaseapp.com',
+  projectId: 'ease-project-007',
 };
 
 const app = initializeApp(firebaseConfig);

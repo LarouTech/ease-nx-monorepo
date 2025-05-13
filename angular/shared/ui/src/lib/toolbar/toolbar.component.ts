@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { ButtonComponent } from '../button/button.component';
+import { ToolbarService } from './toolbar.service';
 
 export interface ToolbarControlsProps {
   icon?: string;
@@ -24,6 +25,7 @@ export interface ToolbarControlsProps {
   imports: [CommonModule, SvgIconComponent, ButtonComponent],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
+  providers: [ToolbarService],
 })
 export class ToolbarComponent implements AfterViewInit {
   toolbarRef = viewChild<ElementRef<HTMLElement>>('toolbarRef');

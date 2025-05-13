@@ -9,8 +9,22 @@
   --ease-highlight: #f4b400; /* Goldenrod */
 }
 
-/* html,
-body {
-  height: 100%;
-  margin: 0;
-} */
+.bg-ease-primary {
+  background-color: var(--ease-primary);
+}
+.bg-ease-secondary {
+  background-color: var(--ease-secondary);
+}
+.bg-ease-accent {
+  background-color: var(--ease-accent);
+}
+.bg-ease-background {
+  background-color: var(--ease-background);
+}
+
+.text-ease-primary {
+  color: var(--ease-primary);
+}
+.text-ease-text {
+  color: var(--ease-text);
+}

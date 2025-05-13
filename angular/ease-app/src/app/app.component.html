@@ -8,23 +8,34 @@
         [iconColor]="easeColors.text"
         backgroundColor="#ffffff"
         [brandNameItalic]="true"
-        [controls]="toolbarControls"
+        [controls]="toolbarControls()"
         [isFixed]="true"
         [isShadow]="false"
     ></toolbar>
 
+@if (isAuth) {
     <side-menu
-        #sidemenuRef
-        [toolbarRef]="toolbarRef"
-        [menuItems]="menu"
-        menuItemBackgroundColorColor
-        [color]="easeColors.primary"
-        [menuItemBackgroundColorColor]="easeColors.lightertGray"
-    >
+    #sidemenuRef
+    [toolbarRef]="toolbarRef"
+    [menuItems]="menu"
+    menuItemBackgroundColorColor
+    [color]="easeColors.primary"
+    [menuItemBackgroundColorColor]="easeColors.lightertGray"
+>
+    <router-outlet></router-outlet>
+
+</side-menu>
+
+} @else {
+    <div   [ngStyle]="{
+        'margin-top': !toolbarRef.isFixed()
+          ? '0px'
+          : (toolbarRef.toolbarRef()?.nativeElement)!.clientHeight + 'px'
+      }"
+      class="w-full h-full min-h-screen  flex relative">
         <router-outlet></router-outlet>
-
-    </side-menu>
-
+    </div>
+}
     <my-footer></my-footer>
 
 </div>
