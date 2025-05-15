@@ -1,5 +1,5 @@
 import { SNACKBAR_DATA, SnackbarConfig } from './snackbar.service';
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 

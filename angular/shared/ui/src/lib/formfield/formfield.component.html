@@ -3,14 +3,14 @@
         <label
             [ngStyle]="{color:color()}"
             for="input"
-            class="text-xs font-bold  capitalize"
+            class="text-xs font-bold  capitalize mb-2"
         >
             {{ label() }}
         </label>
     }
     <input
-        id="input"
-        class="w-full px-2 py-1 border rounded-md shadow-sm"
+        [id]="name()"
+        class="w-full px-2 py-1 border rounded-lg shadow-sm text-sm placeholder-gray-400"
         [type]="type()"
         [value]="value"
         (input)="onInput($event)"
@@ -20,7 +20,8 @@
         [ngStyle]="{
             backgroundColor: backgroundColor(),
             color: color(),
-            borderColor: borderColor()
+            borderColor: borderColor(),
+            padding: padding()
         }"
         [style.--focusColor]="focusColor()"
     >

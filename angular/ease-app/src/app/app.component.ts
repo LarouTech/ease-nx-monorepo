@@ -2,13 +2,15 @@ import {
   FooterComponent,
   SideMenuComponent,
   ToolbarComponent,
-  ToolbarControlsProps,
 } from '@ease-angular/ui';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { EASE_COLORS } from '@ease/const';
 import { CommonModule } from '@angular/common';
 import { ToolbarService } from 'angular/shared/ui/src/lib/toolbar/toolbar.service';
+import {
+  ColorPaletteService,
+  FirebaseAuthService,
+} from '@ease-angular/services';
 
 @Component({
   imports: [
@@ -23,13 +25,13 @@ import { ToolbarService } from 'angular/shared/ui/src/lib/toolbar/toolbar.servic
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'ease-app';
-  easeColors = EASE_COLORS;
-
+  title = 'EASE';
+  colorPaletteService = inject(ColorPaletteService);
   private toolbarService = inject(ToolbarService);
+  private firebaseAuth = inject(FirebaseAuthService);
+  colorPalette = this.colorPaletteService.colorPalette_;
 
-  //TO BE REFACTOR WHEN IMPLEMENTING AUTH
-  isAuth = false;
+  isLoggedIn = this.firebaseAuth.isLoggedIn;
 
   toolbarControls = this.toolbarService.toolbarControls;
 
@@ -37,6 +39,11 @@ export class AppComponent {
     { label: 'Home', icon: 'home', action: () => console.log('Home clicked') },
     {
       label: 'Profile',
+      icon: 'profile',
+      action: () => console.log('Profile clicked'),
+    },
+    {
+      label: 'Library',
       icon: 'profile',
       action: () => console.log('Profile clicked'),
     },

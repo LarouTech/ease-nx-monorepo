@@ -1,0 +1,3 @@
+.section {
+  background: linear-gradient(to right, var(--lightGray), #ffffff);
+}

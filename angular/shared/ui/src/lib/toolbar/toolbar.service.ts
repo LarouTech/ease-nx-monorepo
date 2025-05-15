@@ -9,24 +9,24 @@ export class ToolbarService {
   private firebaseAuthService = inject(FirebaseAuthService);
   toolbarControls: WritableSignal<ToolbarControlsProps[]> = signal([]);
 
-  constructor() {
-    this.initControls();
-  }
+  // constructor() {
+  //   this.initControls();
+  // }
 
-  initControls() {
-    this.toolbarControls.set([
-      {
-        label: 'Login',
-        action: () => console.log('Home clicked'),
-        type: 'link',
-      },
-      {
-        label: 'Signin',
-        action: () => this.firebaseAuthService.signin(),
-        type: 'link',
-      },
-    ]);
-  }
+  // initControls() {
+  // this.toolbarControls.set([
+  //   {
+  //     label: 'Login',
+  //     action: () => console.log('Home clicked'),
+  //     type: 'link',
+  //   },
+  //   {
+  //     label: 'Signin',
+  //     action: () => console.log('signin'),
+  //     type: 'link',
+  //   },
+  // ]);
+  // }
 
   updateControls(controls: ToolbarControlsProps[]) {
     this.toolbarControls.set(controls);

@@ -14,7 +14,7 @@
       color: color(),
       backgroundColor: backgroundColor(),
       width: isOpen() ? 'fit' : 'fit',
-      borderColor: easeColors.lightGray
+      borderColor: colorPalette().lightGray
     }"
     class="min-h-full text-white p-2 px-3 flex-shrink-0 relative transition-all duration-500 ease-in-out overflow-hidden border-r"
   >
@@ -34,7 +34,7 @@
       }
 
       <ng-template #togglerRef let-name="name">
-        <svg-icon [color]="easeColors.darkGray" size="10px" [name]="name"></svg-icon>
+        <svg-icon [color]="colorPalette().darkGray" size="10px" [name]="name"></svg-icon>
       </ng-template>
     </button>
 

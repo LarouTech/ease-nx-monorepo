@@ -1,0 +1,51 @@
+<section
+  class="w-full min-h-screen flex items-center justify-center px-6 py-12 test"
+>
+  <div class="w-full flex flex-row items-center px-16 space-x-6">
+    <!-- Left content -->
+    <div>
+      <h1
+        [ngStyle]="{ color: colorPalette().primary }"
+        class="text-4xl lg:text-5xl font-bold leading-tight mb-6"
+      >
+        Enterprise Architecture Services & Enablement
+      </h1>
+      <p class="text-lg text-gray-700 mb-6 max-w-xl">
+        EASE brings together governance, expert advisory, and service catalog
+        capabilities into a unified, purpose-driven platform. It is
+        strategically designed to empower transformation initiatives, foster
+        architectural discipline, and ensure alignment across enterprise
+        solutions—enabling organizations to navigate complexity with clarity,
+        consistency, and confidence.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button-custom
+          [routerLink]="['/', 'home', 'signin']"
+          name="started"
+          color="#ffffff"
+          [backgroundColor]="colorPalette().secondary"
+          size="large"
+          customPadding="10px 20px"
+          >get started</button-custom
+        >
+        <button-custom
+          name="learn"
+          variant="default"
+          color="#000000"
+          size="large"
+          customPadding="10px 20px"
+          >Learn more</button-custom
+        >
+      </div>
+    </div>
+
+    <!-- Right image or illustration -->
+    <div class="flex justify-center">
+      <img
+        src="images/programmer.svg"
+        alt="Enterprise Architecture Illustration"
+        class="max-w-full h-auto"
+      />
+    </div>
+  </div>
+</section>

@@ -1,41 +1,40 @@
 <div class="h-full">
+  <toolbar
+    #toolbarRef
+    brandName="EASE"
+    logo="ease"
+    [textColor]="colorPalette().primary"
+    [iconColor]="colorPalette().text"
+    [backgroundColor]="colorPalette().lighterGray"
+    [brandNameItalic]="true"
+    [controls]="toolbarControls()"
+    [isFixed]="true"
+    [isShadow]="false"
+  ></toolbar>
 
-    <toolbar
-        #toolbarRef
-        brandName="EASE"
-        logo="ease"
-        [textColor]="easeColors.primary"
-        [iconColor]="easeColors.text"
-        backgroundColor="#ffffff"
-        [brandNameItalic]="true"
-        [controls]="toolbarControls()"
-        [isFixed]="true"
-        [isShadow]="false"
-    ></toolbar>
-
-@if (isAuth) {
-    <side-menu
+  @if (isLoggedIn()) {
+  <side-menu
     #sidemenuRef
     [toolbarRef]="toolbarRef"
     [menuItems]="menu"
     menuItemBackgroundColorColor
-    [color]="easeColors.primary"
-    [menuItemBackgroundColorColor]="easeColors.lightertGray"
->
+    [color]="colorPalette().primary"
+    [menuItemBackgroundColorColor]="colorPalette().lightGray"
+  >
     <router-outlet></router-outlet>
+  </side-menu>
 
-</side-menu>
-
-} @else {
-    <div   [ngStyle]="{
-        'margin-top': !toolbarRef.isFixed()
-          ? '0px'
-          : (toolbarRef.toolbarRef()?.nativeElement)!.clientHeight + 'px'
-      }"
-      class="w-full h-full min-h-screen  flex relative">
-        <router-outlet></router-outlet>
-    </div>
-}
-    <my-footer></my-footer>
-
+  } @else {
+  <div
+    [ngStyle]="{
+      'margin-top': !toolbarRef.isFixed()
+        ? '0px'
+        : (toolbarRef.toolbarRef()?.nativeElement)!.clientHeight + 'px'
+    }"
+    class="w-full h-full min-h-screen relative"
+  >
+    <router-outlet></router-outlet>
+  </div>
+  }
+  <my-footer></my-footer>
 </div>

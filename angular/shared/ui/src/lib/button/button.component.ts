@@ -82,7 +82,7 @@ export class ButtonComponent implements OnInit {
   clickEvent = output<MouseEvent>();
 
   ngOnInit() {
-    console.log(this.textTransform());
+    console.log(this.disabled());
   }
 
   onClick(event: MouseEvent) {

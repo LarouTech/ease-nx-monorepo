@@ -1,37 +1,34 @@
-import { auth } from '@ease/utils';
-import {
-  ButtonComponent,
-  FormfieldComponent,
-  SnackbarService,
-  SvgIconComponent,
-} from '@ease-angular/ui';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EASE_COLORS } from '@ease/const';
+import { Router, RouterModule } from '@angular/router';
+import { ToolbarService } from 'angular/shared/ui/src/lib/toolbar/toolbar.service';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent {
-  easeColor = EASE_COLORS;
-
-  private snackbarService = inject(SnackbarService);
+export class HomePageComponent implements OnInit {
+  private toolbarService = inject(ToolbarService);
+  private router = inject(Router);
 
   ngOnInit() {
-    this.snackbarService.show({
-      message: 'Saved successfully!',
-      type: 'success',
-      duration: 4000,
-      backgroundColor: 'black',
-      color: 'aqua',
-      icon: 'settings',
-    });
+    this.setHomePageToolbarControls();
   }
 
-  onValueChanged(value: string) {
-    console.log('Value changed:', value);
+  private setHomePageToolbarControls(): void {
+    this.toolbarService.updateControls([
+      {
+        label: 'Login',
+        action: () => this.router.navigate(['/', 'home', 'login']),
+        type: 'link',
+      },
+      {
+        label: 'Signin',
+        action: () => this.router.navigate(['/', 'home', 'signin']),
+        type: 'link',
+      },
+    ]);
   }
 }

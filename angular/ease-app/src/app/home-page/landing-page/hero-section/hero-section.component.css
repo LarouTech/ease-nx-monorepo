@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+.test {
+  background-image: linear-gradient(to bottom, #f9fafb, #ffffff);
+}

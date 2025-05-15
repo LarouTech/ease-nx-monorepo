@@ -9,7 +9,7 @@ const firebaseConfig = {
   projectId: 'ease-project-007',
 };
 
-const app = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+// export const auth = getAuth(app);
+// export const db = getFirestore(app);

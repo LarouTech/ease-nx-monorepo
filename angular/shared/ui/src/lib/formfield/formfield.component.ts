@@ -6,9 +6,10 @@ import {
   HostBinding,
   input,
   output,
+  inject,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { EASE_COLORS } from '@ease/const';
+import { ColorPaletteService } from '@ease-angular/services';
 
 @Component({
   selector: 'formfield',
@@ -25,19 +26,22 @@ import { EASE_COLORS } from '@ease/const';
   ],
 })
 export class FormfieldComponent implements ControlValueAccessor {
-  palette = EASE_COLORS;
+  colorPalette = inject(ColorPaletteService);
+
+  palette = this.colorPalette.colorPalette_;
   label = input<string>();
+  name = input.required<string>();
   placeholder = input<string>('');
   hint = input<string>();
   type = input<string>('text');
-  borderColor = input<string>(EASE_COLORS.primary);
+  borderColor = input<string>(this.palette().lightGray);
   backgroundColor = input<string>('transparent');
-  color = input<string>();
-  hintColor = input<string>(EASE_COLORS.text);
-  padding = input<string>('0.5rem 1rem');
-  borderWidth = input<string>('1px');
-  borderStyle = input<string>('solid');
-  focusColor = input<string>();
+  color = input<string>(this.palette().primary);
+  hintColor = input<string>(this.palette().text);
+  padding = input<string>('.75rem 1rem');
+  borderWidth = input<string>();
+  borderStyle = input<string>();
+  focusColor = input<string>('var(--primary');
 
   valueChanged = output<string>();
 

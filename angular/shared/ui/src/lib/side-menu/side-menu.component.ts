@@ -3,6 +3,7 @@ import {
   computed,
   ElementRef,
   HostListener,
+  inject,
   input,
   OnInit,
   signal,
@@ -11,8 +12,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
-import { EASE_COLORS } from '@ease/const';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
+import { ColorPaletteService } from '@ease-angular/services';
 
 export interface SidemenuItemProps {
   label: string;
@@ -28,8 +29,8 @@ export interface SidemenuItemProps {
 })
 export class SideMenuComponent implements OnInit {
   navRef_ = viewChild<ElementRef<HTMLElement>>('navRef');
-  easeColors = EASE_COLORS;
-
+  colorPaletteService = inject(ColorPaletteService);
+  colorPalette = this.colorPaletteService.colorPalette_;
   menuItems = input<SidemenuItemProps[]>([]);
   toolbarRef = input<ToolbarComponent>();
   backgroundColor = input<string>();
@@ -38,6 +39,7 @@ export class SideMenuComponent implements OnInit {
   contentPadding = input<string>('1rem');
 
   isOpen: WritableSignal<boolean> = signal(true);
+
   top: WritableSignal<number> = signal(0);
 
   initialTop = computed(() => {
