@@ -1,24 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  inject,
-  input,
-  viewChild,
-} from '@angular/core';
+import { Component, ElementRef, inject, input, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { ButtonComponent } from '../button/button.component';
-import { ToolbarService } from './toolbar.service';
+import { ToolbarControlsProps, ToolbarService } from './toolbar.service';
 import { ColorPaletteService } from '@ease-angular/services';
 import { RouterModule } from '@angular/router';
-
-export interface ToolbarControlsProps {
-  icon?: string;
-  label?: string;
-  action: () => void;
-  type: 'button' | 'link' | 'dropdown' | 'menu' | 'icon-badge';
-}
 
 @Component({
   selector: 'toolbar',

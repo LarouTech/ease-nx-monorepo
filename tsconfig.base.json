@@ -23,6 +23,9 @@
       "@ease-angular/pipes": ["angular/shared/pipes/src/index.ts"],
       "@ease-angular/services": ["angular/shared/services/src/index.ts"],
       "@ease-angular/ui": ["angular/shared/ui/src/index.ts"],
+      "@ease-nx-monorepo/animations": [
+        "angular/shared/animations/src/index.ts"
+      ],
       "@ease/const": ["shared/const/src/index.ts"],
       "@ease/dto": ["shared/dto/src/index.ts"],
       "@ease/interfaces": ["shared/interfaces/src/index.ts"],

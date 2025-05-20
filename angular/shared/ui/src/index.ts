@@ -6,3 +6,5 @@ export * from './lib/footer/footer.component';
 export * from './lib/formfield/formfield.component';
 export * from './lib/snackbar/snackbar.component';
 export * from './lib/snackbar/snackbar.service';
+export * from './lib/toolbar/toolbar.service';
+export * from './lib/side-menu/side-menu.service';

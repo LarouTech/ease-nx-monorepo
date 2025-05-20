@@ -1,16 +1,19 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from '@ease-angular/services';
-import { ToolbarService } from 'angular/shared/ui/src/lib/toolbar/toolbar.service';
+import { ToolbarService } from '@ease-angular/ui';
+
+import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
 
 @Component({
   selector: 'app-lobby-page',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './lobby-page.component.html',
   styleUrl: './lobby-page.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [FadeInFadeOut],
 })
-export class LobbyPageComponent {
+export class LobbyPageComponent implements OnInit {
   private toolbarService = inject(ToolbarService);
   private firebaseAuth = inject(FirebaseAuthService);
   private router = inject(Router);
@@ -28,6 +31,10 @@ export class LobbyPageComponent {
         label: 'logout',
       },
     ]);
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet?.activatedRouteData?.['animation'];
   }
 
   async onLogout() {

@@ -1,16 +1,15 @@
 <div
-    [ngStyle]="{
+  [innerHTML]="svgContent"
+  [ngStyle]="{
     width: size(),
     height: size(),
     color: color(),
     backgroundColor: backgroundColor(),
+    borderRadius: borderRadius(),
     borderColor: borderColor(),
     borderWidth: borderWidth(),
     borderStyle: borderStyle(),
-    borderRadius: borderRadius(),
-    padding: padding(),
     border: border(),
+    padding: padding()
   }"
-    class="inline-svg"
-    [innerHTML]="svgContent"
 ></div>

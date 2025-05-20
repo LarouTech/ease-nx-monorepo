@@ -2,8 +2,3 @@
   display: block;
   height: 100%;
 }
-
-li:hover {
-  /* color: var(--ease-secondary); */
-  opacity: 0.7;
-}

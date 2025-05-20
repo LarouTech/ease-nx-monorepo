@@ -1,0 +1,33 @@
+<section class="w-full p-4 bg-gray-50">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Portfolios</h1>
+    <p class="text-gray-600">
+      Start a new cloud advisory intake, explore cost estimates, or manage your
+      submissions.
+    </p>
+  </div>
+
+  <div class="flex flex-wrap gap-6">
+    @for (iteration of testArray; track $index) {
+    <div class="flex-[1_1_calc(33.333%_-_1rem)] max-w-[33.333%]">
+      <portfolio-card
+        class="w-full"
+        [ownerName]="'Alex Smith'"
+        [ownerRole]="'Product Owner – Architecture Intake'"
+        [intakeRequests]="[
+          {
+            id: 'REQ-001',
+            title: 'Review Request: New Workflow Engine',
+            link: '/requests/001'
+          },
+          {
+            id: 'REQ-002',
+            title: 'Assessment: Case Platform Update',
+            link: '/requests/002'
+          }
+        ]"
+      ></portfolio-card>
+    </div>
+    }
+  </div>
+</section>

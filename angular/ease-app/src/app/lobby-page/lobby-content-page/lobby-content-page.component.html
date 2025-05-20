@@ -1,0 +1,26 @@
+<div class="min-h-screen bg-gray-50 p-4">
+  <div class="max-w-screen-xl">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome to EASE</h1>
+    <p class="text-gray-600 mb-8">
+      Start a new cloud advisory intake, explore cost estimates, or manage your
+      submissions.
+    </p>
+
+    <div class="flex flex-wrap gap-6">
+      <!-- New Intake -->
+      @for (props of easeFeatureCardsProps; track $index) {
+      <a
+        routerLink="/intake/new"
+        class="cursor-pointer bg-white shadow hover:shadow-md rounded-2xl p-6 border border-gray-200 transition w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] flex flex-col items-start justify-start text-center gap-y-2"
+        [ngStyle]="{ color: 'var(--primary)' }"
+      >
+        <svg-icon [name]="props.icon" color="var(--primary)"></svg-icon>
+        <h2 class="text-lg font-bold capitalize">{{ props.title }}</h2>
+        <p class="text-gray-600 text-sm text-left">
+          {{ props.description }}
+        </p>
+      </a>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="flex flex-row flex-wrap gap-6 w-full">
+  <div
+    class="cursor-pointer bg-white rounded-2xl p-6 border border-gray-200 w-full flex flex-col justify-start items-start gap-y-5"
+    [ngStyle]="{ color: 'var(--primary)' }"
+  >
+    <div
+      id="header"
+      class="flex flex-row justify-between items-center gap-x-4 w-full"
+    >
+      <div
+        [ngStyle]="{
+          height: '50px',
+          width: '50px',
+          backgroundColor: 'var(--primary)'
+        }"
+        class="rounded-full flex flex-col justify-center items-center"
+        id="header_icon"
+      >
+        <svg-icon name="user" size="28px" color="#ffffff"></svg-icon>
+      </div>
+      <div id="header_owner" class="text-right">
+        <h2 class="font-semibold">{{ ownerName }}</h2>
+        <p [ngStyle]="{ color: 'var(--darkGray)' }" class="text-xs">
+          {{ ownerRole }}
+        </p>
+      </div>
+    </div>
+
+    <div id="intake" class="w-full">
+      <h3 class="text-md font-medium text-gray-700 mb-3">Intake Requests</h3>
+      <ul class="space-y-2">
+        @for (request of intakeRequests; track $index) {
+
+        <li>
+          <a
+            [href]="request.link"
+            [ngStyle]="{
+              color: 'var(--secondary)',
+              backgroundColor: 'var(--lightGray)'
+            }"
+            class="block px-3 py-2 rounded-lg font-bold text-sm tracking-wide transition-all duration-200 shadow-sm hover:shadow-md hover:bg-gray-200 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            target="_blank"
+          >
+            {{ request.title }}
+          </a>
+        </li>
+
+        }
+      </ul>
+    </div>
+  </div>
+</div>

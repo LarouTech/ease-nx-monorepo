@@ -1,54 +1,11 @@
 import { Route } from '@angular/router';
-import {
-  firebaseAuthGuard,
-  redirectIfLoginGuard,
-} from '@ease-angular/services';
+import { HomeRoutes } from './home-page/home.routes';
+import { LobbyRoutes } from './lobby-page/lobby.routes';
+import { PortfolioRoutes } from './lobby-page/portfolios-page/portfolio.routes';
 
 export const appRoutes: Route[] = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    loadComponent: () =>
-      import('./home-page/home-page.component').then(
-        (m) => m.HomePageComponent
-      ),
-    canActivate: [redirectIfLoginGuard],
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./home-page/landing-page/landing-page.component').then(
-            (c) => c.LandingPageComponent
-          ),
-      },
-      {
-        path: 'signin',
-        loadComponent: () =>
-          import('./home-page/signin-page/signin-page.component').then(
-            (c) => c.SigninPageComponent
-          ),
-      },
-      {
-        path: 'login',
-        loadComponent: () =>
-          import('./home-page/login-page/login-page.component').then(
-            (c) => c.LoginPageComponent
-          ),
-      },
-    ],
-  },
-  {
-    path: 'lobby',
-    loadComponent: () =>
-      import('./lobby-page/lobby-page.component').then(
-        (c) => c.LobbyPageComponent
-      ),
-    canActivate: [firebaseAuthGuard],
-  },
+  ...HomeRoutes,
+  ...LobbyRoutes,
   {
     path: '**',
     loadComponent: () =>

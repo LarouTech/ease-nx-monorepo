@@ -8,8 +8,8 @@ export const COLOR_PALETTE: ColorPalette = {
   text: '#2C2C2C', // Dark Charcoal
   highlight: '#F4B400', // Goldenrod
   gray: '#A0A0A0', // Gray
-  lightGray: '#E0E0E0', // Light Gray
-  lighterGray: 'f9fafb',
+  lightGray: '#f3f4f6', // Light Gray
+  lighterGray: '#f9fafb',
   success: '#28a745', // Bootstrap Green (Success)
   warning: '#f59e0b', // Bootstrap Amber (Warning)
   error: '#dc3545', // Bootstrap Red (Danger/Error)

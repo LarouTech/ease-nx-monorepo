@@ -9,5 +9,14 @@
   },
   "tailwindCSS.emmetCompletions": true,
   "css.validate": false,
-  "editor.inlineSuggest.enabled": true
+  "editor.inlineSuggest.enabled": true,
+  "angular-schematics.schematicsDefaultOptions": {
+    "angular-component": {
+      "skipChangeDetectionOnPush": false,
+      "ngOnInit": true
+    },
+    "angular-*": {
+      "externalTemplate": true
+    }
+  }
 }
