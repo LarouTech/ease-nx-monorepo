@@ -1,1 +1,3 @@
-<router-outlet></router-outlet>
+<div class="min-h-screen h-full" [@routeAnimations]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>

@@ -12,6 +12,7 @@ export const HomeRoutes: Routes = [
     loadComponent: () =>
       import('./home-page.component').then((m) => m.HomePageComponent),
     canActivate: [redirectIfLoginGuard],
+    data: { animation: 'HomePage' },
     children: [
       {
         path: '',
@@ -19,6 +20,7 @@ export const HomeRoutes: Routes = [
           import('./landing-page/landing-page.component').then(
             (c) => c.LandingPageComponent
           ),
+        data: { animation: 'LandingPage' },
       },
       {
         path: 'signin',
@@ -26,6 +28,7 @@ export const HomeRoutes: Routes = [
           import('./signin-page/signin-page.component').then(
             (c) => c.SigninPageComponent
           ),
+        data: { animation: 'LoginPage' },
       },
       {
         path: 'login',
@@ -33,6 +36,7 @@ export const HomeRoutes: Routes = [
           import('./login-page/login-page.component').then(
             (c) => c.LoginPageComponent
           ),
+        data: { animation: 'SigninPage' },
       },
     ],
   },

@@ -1,13 +1,23 @@
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  DestroyRef,
+  inject,
+  Injectable,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
+import { filter } from 'rxjs';
+import { SIDEDMENU_PROPS } from './side-menu-props. const';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface SidemenuItemProps {
   label: string;
   action?: () => void;
   icon: string;
   isSelected: boolean;
-  link?: string;
   submenuItems?: SidemenuItemProps[];
+  route?: string;
 }
 
 @Injectable({
@@ -16,72 +26,80 @@ export interface SidemenuItemProps {
 export class SideMenuService {
   sidemenuControls: WritableSignal<SidemenuItemProps[]> = signal([]);
   private router = inject(Router);
+  private location = inject(Location);
+  private destroyRef = inject(DestroyRef);
 
   constructor() {
-    this.updateControls([
-      {
-        label: 'Lobby',
-        icon: 'bell',
-        action: () => this.router.navigate(['/', 'lobby']),
-        isSelected: true,
-      },
-      {
-        label: 'Porfolios',
-        icon: 'portfolio',
-        action: () => this.router.navigate(['/', 'lobby', 'portfolio']),
-        isSelected: false,
-        submenuItems: [
-          {
-            label: 'List',
-            icon: 'list',
-            action: () => this.router.navigate(['/', 'lobby', 'portfolio']),
-            isSelected: false,
-          },
-          {
-            label: 'Create',
-            icon: 'add',
-            action: () =>
-              this.router.navigate(['/', 'lobby', 'portfolio', 'create']),
-            isSelected: false,
-          },
-        ],
-      },
-      {
-        label: 'Intakes',
-        icon: 'checklist',
-        action: () => console.log('Intakes clicked'),
-        isSelected: false,
-      },
-      {
-        label: 'Cost Estimator',
-        icon: 'estimate',
-        action: () => console.log('Intakes clicked'),
-        isSelected: false,
-      },
-      {
-        label: 'Requests',
-        icon: 'request',
-        action: () => console.log('Profile clicked'),
-        isSelected: false,
-      },
-      {
-        label: 'Settings',
-        icon: 'settings',
-        action: () => console.log('Settings clicked'),
-        isSelected: false,
-      },
-      {
-        label: 'Logout',
-        icon: 'logout',
-        action: () => console.log('Logout clicked'),
-        isSelected: false,
-      },
-    ]);
+    this.sidemenuControls.set(SIDEDMENU_PROPS(this.router));
 
-    this.router.events.subscribe((d) => console.log(d));
+    // Update selection on navigation
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(() => this.updateSelectionFromCurrentRoute());
+
+    // Initial selection
+    this.updateSelectionFromCurrentRoute();
   }
 
-  updateControls(controls: SidemenuItemProps[]) {
-    this.sidemenuControls.set(controls);
+  updateSelectionFromCurrentRoute(): void {
+    const currentPath = this.location.path();
+    const menuItems = this.sidemenuControls();
+
+    // Reset selection
+    for (const item of menuItems) {
+      item.isSelected = false;
+      if (item.submenuItems) {
+        for (const subItem of item.submenuItems) {
+          subItem.isSelected = false;
+        }
+      }
+    }
+
+    // Track best match
+    let bestMatch: {
+      item: SidemenuItemProps;
+      subItem?: SidemenuItemProps;
+    } | null = null;
+    let longestMatchLength = -1;
+
+    for (const item of menuItems) {
+      // Match submenu item exactly
+      if (item.submenuItems) {
+        for (const subItem of item.submenuItems) {
+          if (
+            subItem.route === currentPath &&
+            subItem.route.length > longestMatchLength
+          ) {
+            bestMatch = { item, subItem };
+            longestMatchLength = subItem.route.length;
+          }
+        }
+      }
+
+      // Match item route as prefix
+      if (
+        item.route &&
+        currentPath.startsWith(item.route) &&
+        item.route.length > longestMatchLength
+      ) {
+        bestMatch = { item };
+        longestMatchLength = item.route.length;
+      }
+    }
+
+    // Apply best match
+    if (bestMatch) {
+      bestMatch.item.isSelected = true;
+      if (bestMatch.subItem) {
+        bestMatch.subItem.isSelected = true;
+      }
+    }
+
+    this.sidemenuControls.set(menuItems);
   }
 }

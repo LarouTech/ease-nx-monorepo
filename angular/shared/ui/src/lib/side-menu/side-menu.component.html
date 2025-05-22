@@ -1,4 +1,4 @@
-<!-- Full screen flex container -->
+<!-- Full screen flex container that adjusts top margin based on toolbar height -->
 <div
   [ngStyle]="{
     'margin-top': !toolbarRef()?.isFixed()
@@ -7,7 +7,7 @@
   }"
   class="w-full h-full min-h-screen flex relative"
 >
-  <!-- Sidebar -->
+  <!-- Sidebar navigation panel -->
   <nav
     #navRef
     [ngStyle]="{
@@ -18,21 +18,24 @@
     }"
     class="min-h-full text-white p-2 px-3 flex-shrink-0 relative transition-all duration-500 ease-in-out overflow-hidden border-r"
   >
-    <!-- Toggler Button -->
+    <!-- Sidebar toggle button (top-right corner) -->
     <button
       class="absolute top-2 right-2 text-white p-1 rounded cursor-pointer"
       (click)="toggleMenu()"
     >
       @if(isOpen()) {
+      <!-- Show close icon if menu is open -->
       <ng-container
         *ngTemplateOutlet="togglerRef; context: { name: 'close' }"
       ></ng-container>
       } @else {
+      <!-- Show hamburger icon if menu is closed -->
       <ng-container
         *ngTemplateOutlet="togglerRef; context: { name: 'hamburger' }"
       ></ng-container>
       }
 
+      <!-- Template for the toggler icon -->
       <ng-template #togglerRef let-name="name">
         <svg-icon
           [color]="colorPalette().darkGray"
@@ -42,8 +45,9 @@
       </ng-template>
     </button>
 
-    <!-- Menu List -->
+    <!-- Sidebar menu list -->
     <ul class="mt-10 space-y-3 transition-all duration-300 ease-in-out">
+      <!-- Iterate through menu items -->
       @for (item of menuItems(); track $index) {
       <li
         (click)="item.action!()"
@@ -54,11 +58,11 @@
         [ngClass]="isOpen() ? 'px-4' : 'px-2'"
         class="transition-all duration-500 ease-in-out font-medium focus:outline-none rounded py-2 flex flex-col items-start gap-y-3"
         [ngStyle]="{
-          backgroundColor: menuItemBackgroundColorColor(),
+          backgroundColor: menuItemBackgroundColor(),
           color: item.isSelected ? 'var(--secondary)' : color()
         }"
       >
-        <!-- Always show icon -->
+        <!-- Menu item container with icon and label -->
         <div
           (click)="onClickMenuItem(item)"
           (keydown.enter)="onClickMenuItem(item)"
@@ -67,12 +71,13 @@
           role="button"
           class="flex items-center cursor-pointer focus:outline-none"
         >
+          <!-- Icon -->
           <svg-icon
             [color]="item.isSelected ? 'var(--secondary)' : color()"
             [name]="item.icon"
           ></svg-icon>
 
-          <!-- Smoothly transition label -->
+          <!-- Animated label visibility based on open state -->
           <span
             class="inline-block overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out"
             [ngClass]="{
@@ -85,57 +90,70 @@
           </span>
         </div>
 
+        <!-- Submenu: displayed if item is selected and has children -->
         @if (item.isSelected && item.submenuItems && item.submenuItems.length >
-        0) { @for (subItem of item.submenuItems; track $index) {
-
-        <div class="flex flex-row items-center justify-start ml-5 gap-x-2">
-          <svg-icon
-            [color]="subItem.isSelected ? 'var(--secondary)' : color()"
-            size="16px"
-            class="-scale-x-100"
-            name="enter"
-          ></svg-icon>
-          <div
-            (click)="onClickSubmenuItem(item, subItem)"
-            (keydown.enter)="onClickSubmenuItem(item, subItem)"
-            (keydown.space)="onClickSubmenuItem(item, subItem)"
-            tabindex="0"
-            class="flex items-center text-xs cursor-pointer"
-            [ngStyle]="{
-              color: subItem.isSelected ? 'var(--secondary)' : color()
-            }"
-          >
+        0 && isOpen()) {
+        <div @submenuAnimation class="flex flex-col space-y-2">
+          <!-- Iterate through submenu items -->
+          @for (subItem of item.submenuItems; track $index) {
+          <div class="flex flex-row items-center justify-start ml-6 gap-x-2">
+            <!-- Submenu caret icon -->
             <svg-icon
               [color]="subItem.isSelected ? 'var(--secondary)' : color()"
-              [name]="subItem.icon"
-              size="14px"
+              size="10px"
+              name="caret"
             ></svg-icon>
 
-            <!-- Smoothly transition label -->
-            <span
-              class="inline-block overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out"
-              [ngClass]="{
-                'opacity-100 ml-2 scale-100 max-w-[150px]': isOpen(),
-                'opacity-0 ml-0 scale-95 max-w-0': !isOpen()
+            <!-- Submenu item with click/keyboard handlers -->
+            <div
+              (click)="onClickSubmenuItem(item, subItem)"
+              (keydown.enter)="onClickSubmenuItem(item, subItem)"
+              (keydown.space)="onClickSubmenuItem(item, subItem)"
+              tabindex="0"
+              class="flex items-center text-xs cursor-pointer"
+              [ngStyle]="{
+                color: subItem.isSelected ? 'var(--secondary)' : color()
               }"
-              style="transition-property: opacity, margin, transform, max-width"
             >
-              {{ subItem.label }}
-            </span>
-          </div>
-        </div>
+              <!-- Submenu icon -->
+              <svg-icon
+                [color]="subItem.isSelected ? 'var(--secondary)' : color()"
+                [name]="subItem.icon"
+                size="14px"
+              ></svg-icon>
 
-        } }
+              <!-- Animated submenu label -->
+              <span
+                class="inline-block overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out"
+                [ngClass]="{
+                  'opacity-100 ml-2 scale-100 max-w-[150px]': isOpen(),
+                  'opacity-0 ml-0 scale-95 max-w-0': !isOpen()
+                }"
+                style="
+                  transition-property: opacity, margin, transform, max-width;
+                "
+              >
+                {{ subItem.label }}
+              </span>
+            </div>
+          </div>
+          }
+        </div>
+        }
       </li>
       }
     </ul>
   </nav>
 
-  <!-- Main content area -->
+  <!-- Main content area to display projected content -->
   <div
-    [ngStyle]="{ padding: contentPadding() }"
+    [ngStyle]="{
+      padding: contentPadding(),
+      backgroundColor: backgroundColor()
+    }"
     class="flex-1 min-h-screen overflow-auto"
   >
     <ng-content></ng-content>
+    <!-- Slot for content injection -->
   </div>
 </div>

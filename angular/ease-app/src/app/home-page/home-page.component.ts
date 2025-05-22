@@ -1,13 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { ToolbarService } from 'angular/shared/ui/src/lib/toolbar/toolbar.service';
+import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
 
 @Component({
   selector: 'app-home-page',
   imports: [CommonModule, RouterModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
+  animations: [FadeInFadeOut],
 })
 export class HomePageComponent implements OnInit {
   private toolbarService = inject(ToolbarService);
@@ -15,6 +17,10 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.setHomePageToolbarControls();
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet?.activatedRouteData?.['animation'];
   }
 
   private setHomePageToolbarControls(): void {

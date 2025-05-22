@@ -18,6 +18,13 @@ export const LobbyRoutes: Routes = [
         data: { animation: 'LobbyContentPage' },
       },
       ...PortfolioRoutes,
+      {
+        path: 'intakes',
+        loadComponent: () =>
+          import('./intakes-page/intakes-page.component').then(
+            (c) => c.IntakesPageComponent
+          ),
+      },
     ],
   },
 ];

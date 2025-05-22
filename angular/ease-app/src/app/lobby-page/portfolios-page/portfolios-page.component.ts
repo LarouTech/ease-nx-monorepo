@@ -1,5 +1,10 @@
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { Component, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  inject,
+} from '@angular/core';
 import { SideMenuService } from '@ease-angular/ui';
 import { Location } from '@angular/common';
 import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
@@ -12,40 +17,18 @@ import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
   styleUrl: './portfolios-page.component.css',
   animations: [FadeInFadeOut],
 })
-export class PortfoliosPageComponent {
+export class PortfoliosPageComponent implements AfterViewInit {
   private sidemenuService = inject(SideMenuService);
   private location = inject(Location);
+  private cdrRef = inject(ChangeDetectorRef);
 
   testArray = Array(5);
+
+  ngAfterViewInit() {
+    this.cdrRef.detectChanges();
+  }
 
   prepareRoute(outlet: RouterOutlet) {
     return outlet?.activatedRouteData?.['animation'];
   }
-
-  // ngOnInit(): void {
-  //   this.setSidemenuControls();
-  // }
-
-  // setSidemenuControls() {
-  //   this.sidemenuService.updateControls([
-  //     {
-  //       label: 'Lobby',
-  //       icon: 'dashboard',
-  //       action: () => this.location.back(),
-  //       isSelected: false,
-  //     },
-  //     {
-  //       label: 'Create',
-  //       icon: 'add',
-  //       action: () => console.log('Create clicked'),
-  //       isSelected: false,
-  //     },
-  //     {
-  //       label: 'List',
-  //       icon: 'list',
-  //       action: () => console.log('List clicked'),
-  //       isSelected: false,
-  //     },
-  //   ]);
-  // }
 }

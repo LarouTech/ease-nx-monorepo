@@ -4,7 +4,6 @@
     brandName="EASE"
     logo="ease"
     [textColor]="colorPalette().primary"
-    [iconColor]="colorPalette().text"
     [backgroundColor]="colorPalette().lighterGray"
     [brandNameItalic]="true"
     [controls]="toolbarControls()"
@@ -19,7 +18,6 @@
     [menuItems]="sidemenuControls()"
     menuItemBackgroundColorColor
     [color]="colorPalette().primary"
-    [menuItemBackgroundColorColor]="colorPalette().lightGray"
   >
     <router-outlet></router-outlet>
   </side-menu>
@@ -32,8 +30,9 @@
         : (toolbarRef.toolbarRef()?.nativeElement)!.clientHeight + 'px'
     }"
     class="w-full h-full min-h-screen relative"
+    [@routeAnimations]="prepareRoute(outlet)"
   >
-    <router-outlet></router-outlet>
+    <router-outlet #outlet="outlet"></router-outlet>
   </div>
   }
   <my-footer></my-footer>

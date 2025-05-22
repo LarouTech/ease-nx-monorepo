@@ -16,12 +16,30 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { ColorPaletteService } from '@ease-angular/services';
 import { SidemenuItemProps, SideMenuService } from './side-menu.service';
 import { Router, RouterModule } from '@angular/router';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'side-menu',
   imports: [CommonModule, SvgIconComponent, RouterModule],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.css',
+  animations: [
+    trigger('submenuAnimation', [
+      transition(':enter', [
+        style({ height: 0, opacity: 0, transform: 'scaleY(0.9)' }),
+        animate(
+          '200ms ease-out',
+          style({ height: '*', opacity: 1, transform: 'scaleY(1)' })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '150ms ease-in',
+          style({ height: 0, opacity: 0, transform: 'scaleY(0.9)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class SideMenuComponent implements OnInit {
   private sidemenuService = inject(SideMenuService);
@@ -32,10 +50,10 @@ export class SideMenuComponent implements OnInit {
   colorPalette = this.colorPaletteService.colorPalette_;
   menuItems = input<SidemenuItemProps[]>([]);
   toolbarRef = input<ToolbarComponent>();
-  backgroundColor = input<string>();
-  color = input<string>('#000000');
+  backgroundColor = input<string>('var(--background');
+  color = input<string>('var(--text');
   focusColor = input<string>('var(--secondary');
-  menuItemBackgroundColorColor = input<string>();
+  menuItemBackgroundColor = input<string>();
   contentPadding = input<string>('1rem');
 
   isOpen: WritableSignal<boolean> = signal(true);
@@ -67,7 +85,7 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit() {
     this.top.set(this.initialTop());
-    this.router.events.subscribe((d) => console.log(d));
+    // this.router.events.subscribe((d) => console.log(d));
   }
 
   onClickMenuItem(item: SidemenuItemProps) {
@@ -96,7 +114,7 @@ export class SideMenuComponent implements OnInit {
       return menuItem;
     });
 
-    this.sidemenuService.updateControls(updatedControls);
+    this.sidemenuService.sidemenuControls.set(updatedControls);
   }
 
   onClickSubmenuItem(
@@ -141,14 +159,8 @@ export class SideMenuComponent implements OnInit {
       };
     });
 
-    this.sidemenuService.updateControls(updatedControls);
+    this.sidemenuService.sidemenuControls.set(updatedControls);
 
-    // // 👇 Ensure navigation happens explicitly
-    // if (submenuItem.link) {
-    //   this.router.navigate([submenuItem.link]);
-    // }
-
-    // Then optionally trigger any other action after a slight delay
     if (submenuItem.action) {
       setTimeout(() => submenuItem.action?.(), 10);
     }

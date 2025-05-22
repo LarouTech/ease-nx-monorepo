@@ -24,7 +24,7 @@
       class="mr-2"
       [size]="iconSize()"
       [name]="logo()"
-      [color]="iconColor() ? iconColor()! : textColor()!"
+      [color]="iconColor()"
     ></svg-icon>
     <div>
       <h1
@@ -89,6 +89,10 @@
     (keydown.enter)="control.action()"
     (keydown.space)="control.action()"
     class="mr-3 mb-2 font-bold hover:underline underline-offset-4 cursor-pointer anchor-hover"
+    [ngStyle]="{
+      color: colorPalette().secondary,
+      
+    }"
   >
     {{ control.label }}
   </a>
