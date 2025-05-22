@@ -11,7 +11,9 @@ async function main() {
 
   runInInjectionContext(appRef.injector, () => {
     const colorPaletteService = inject(ColorPaletteService);
-    colorPaletteService.setColorPalette(COLOR_PALETTE);
+    colorPaletteService.applyPalette(
+      colorPaletteService.loadPaletteFromStorage()
+    );
   });
 }
 

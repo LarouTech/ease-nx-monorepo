@@ -26,18 +26,15 @@ import { ColorPaletteService } from '@ease-angular/services';
   ],
 })
 export class FormfieldComponent implements ControlValueAccessor {
-  colorPalette = inject(ColorPaletteService);
-
-  palette = this.colorPalette.colorPalette_;
   label = input<string>();
   name = input.required<string>();
   placeholder = input<string>('');
   hint = input<string>();
   type = input<string>('text');
-  borderColor = input<string>(this.palette().lightGray);
+  borderColor = input<string>('var(--lightGray');
   backgroundColor = input<string>('transparent');
-  color = input<string>(this.palette().primary);
-  hintColor = input<string>(this.palette().text);
+  color = input<string>('var(--primary');
+  hintColor = input<string>('var(--text');
   padding = input<string>('.75rem 1rem');
   borderWidth = input<string>();
   borderStyle = input<string>();

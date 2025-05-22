@@ -33,13 +33,24 @@ export class LobbyPageComponent implements OnInit {
   isDarkMode = signal(false);
 
   ngOnInit(): void {
+    this.setDarmodeState();
     this.updateToolbar();
     this.cdr.detectChanges();
+  }
+
+  setDarmodeState() {
+    const darkModeState = localStorage.getItem('isDarkMode');
+    if (darkModeState) {
+      this.isDarkMode.set(JSON.parse(darkModeState));
+    } else {
+      this.isDarkMode.set(false);
+    }
   }
 
   toggleDarkMode(): void {
     this.isDarkMode.update((prev) => !prev);
     const palette = this.isDarkMode() ? DARK_COLOR_PALETTE : COLOR_PALETTE;
+    localStorage.setItem('isDarkMode', JSON.stringify(this.isDarkMode()));
     this.paletteService.setColorPalette(palette);
     this.updateToolbar();
   }
@@ -66,7 +77,7 @@ export class LobbyPageComponent implements OnInit {
       label: 'logout',
     };
 
-    this.toolbarService.updateControls([logoutControl, darkModeControl]);
+    this.toolbarService.updateControls([darkModeControl, logoutControl]);
   }
 
   private getDarkModeControl(): ToolbarControlsProps {

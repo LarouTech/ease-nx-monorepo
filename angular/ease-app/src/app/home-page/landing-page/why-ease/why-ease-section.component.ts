@@ -10,7 +10,4 @@ import { ColorPaletteService } from '@ease-angular/services';
   styleUrl: './why-ease-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WhyEaseSectionComponent {
-  private colorPaletteService = inject(ColorPaletteService);
-  colorPalette = this.colorPaletteService.colorPalette_;
-}
+export class WhyEaseSectionComponent {}

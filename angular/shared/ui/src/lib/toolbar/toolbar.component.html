@@ -69,14 +69,10 @@
 <ng-template #iconBadgeRef let-control="control">
   <button
     (click)="control.action()"
-    [ngStyle]="{ backgroundColor: colorPalette().primary }"
+    [ngStyle]="{ backgroundColor: 'var(--primary)' }"
     class="w-8 h-8 flex items-center justify-center rounded-full mr-3 mb-2 cursor-pointer transform transition duration-150 ease-in-out hover:scale-105 hover:brightness-90"
   >
-    <svg-icon
-      size="16px"
-      [color]="colorPalette().background"
-      [name]="control.icon!"
-    ></svg-icon>
+    <svg-icon size="16px" color="#ffffff" [name]="control.icon!"></svg-icon>
   </button>
 </ng-template>
 
@@ -90,7 +86,7 @@
     (keydown.space)="control.action()"
     class="mr-3 mb-2 font-bold hover:underline underline-offset-4 cursor-pointer anchor-hover"
     [ngStyle]="{
-      color: colorPalette().secondary,
+      color: 'var(-secondary)',
       
     }"
   >
@@ -103,7 +99,7 @@
   <button-custom
     class="mr-2 mb-2"
     [name]="control.label"
-    [backgroundColor]="colorPalette().primary"
+    backgroundColor="var(--primary)"
     color="white"
     size="small"
     >SHIT</button-custom

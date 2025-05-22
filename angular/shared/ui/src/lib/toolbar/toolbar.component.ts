@@ -27,8 +27,8 @@ export class ToolbarComponent implements AfterViewInit {
   toolbarRef = viewChild<ElementRef<HTMLElement>>('toolbarRef');
   el = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
-  private colorPaletteService = inject(ColorPaletteService);
-  colorPalette = this.colorPaletteService.colorPalette_;
+  // private colorPaletteService = inject(ColorPaletteService);
+  // colorPalette = this.colorPaletteService.colorPalette_;
   brandName = input.required<string>();
   brandNameItalic = input(false);
   brandNameFontSize = input<string>('2.25rem');
@@ -39,7 +39,7 @@ export class ToolbarComponent implements AfterViewInit {
   iconSize = input<string>('4rem');
   paddingHorizontal = input<string>('1rem');
   paddingVertical = input<string>('0.5rem');
-  backgroundColor = input<string>('transparent');
+  backgroundColor = input<string>('var(--background');
   borderColor = input<string>('transparent');
   isFixed = input(false);
   isShadow = input(false);

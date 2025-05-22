@@ -33,7 +33,7 @@ export const COLOR_PALETTE: ColorPalette = {
 };
 
 export const DARK_COLOR_PALETTE: ColorPalette = {
-  primary: '#8C5AAB', // Brighter indigo – stands out well on dark surfaces
+  primary: '#c05beb', // Brighter indigo – stands out well on dark surfaces
   secondary: '#4DCFE0', // Lighter, clearer blue – keeps energy on dark background
   accent: '#f43f5e', // Stays vibrant – works great in both modes
   background: '#0f172a', // Dark navy slate – deep and clean

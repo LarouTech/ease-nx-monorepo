@@ -1,10 +1,12 @@
-<div class="h-full">
+<div
+  [ngStyle]="{ color: 'var(--text)', backgroundColor: 'var(--background)' }"
+  class="h-full"
+>
   <toolbar
     #toolbarRef
     brandName="EASE"
     logo="ease"
-    [textColor]="colorPalette().primary"
-    [backgroundColor]="colorPalette().lighterGray"
+    textColor="var(--primary)"
     [brandNameItalic]="true"
     [controls]="toolbarControls()"
     [isFixed]="true"
@@ -17,7 +19,7 @@
     [toolbarRef]="toolbarRef"
     [menuItems]="sidemenuControls()"
     menuItemBackgroundColorColor
-    [color]="colorPalette().primary"
+    color="var(--primary)"
   >
     <router-outlet></router-outlet>
   </side-menu>

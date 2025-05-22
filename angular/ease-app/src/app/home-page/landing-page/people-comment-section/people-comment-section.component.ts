@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ColorPaletteService } from '@ease-angular/services';
 
 @Component({
   selector: 'ease-people-comment-section',
@@ -10,7 +9,4 @@ import { ColorPaletteService } from '@ease-angular/services';
   styleUrl: './people-comment-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PeopleCommentSectionComponent {
-  private colorPaletteService = inject(ColorPaletteService);
-  colorPalette = this.colorPaletteService.colorPalette_;
-}
+export class PeopleCommentSectionComponent {}

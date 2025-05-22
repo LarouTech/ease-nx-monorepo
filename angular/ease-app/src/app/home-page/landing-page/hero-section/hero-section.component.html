@@ -24,7 +24,7 @@
     <!-- Left content -->
     <div>
       <h1
-        [ngStyle]="{ color: colorPalette().primary }"
+        [ngStyle]="{ color: 'var(--primary)' }"
         class="text-4xl lg:text-5xl font-bold leading-tight mb-6"
       >
         Enterprise Architecture Services & Enablement
@@ -42,7 +42,7 @@
           [routerLink]="['/', 'home', 'signin']"
           name="started"
           color="#ffffff"
-          [backgroundColor]="colorPalette().secondary"
+          backgroundColor="var(--secondary)"
           size="large"
           customPadding="10px 20px"
           fontWeight="bold"

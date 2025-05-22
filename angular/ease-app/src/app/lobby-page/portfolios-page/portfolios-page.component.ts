@@ -5,14 +5,14 @@ import {
   Component,
   inject,
 } from '@angular/core';
-import { SideMenuService } from '@ease-angular/ui';
-import { Location } from '@angular/common';
+import { SideMenuService, SvgIconComponent } from '@ease-angular/ui';
+import { CommonModule, Location } from '@angular/common';
 import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
 
 @Component({
   selector: 'portfolios-page',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, SvgIconComponent, CommonModule],
   templateUrl: './portfolios-page.component.html',
   styleUrl: './portfolios-page.component.css',
   animations: [FadeInFadeOut],

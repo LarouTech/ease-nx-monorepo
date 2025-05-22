@@ -17,17 +17,47 @@ export interface ColorPalette {
   darkGray: string;
 }
 
+const LOCAL_STORAGE_KEY = 'app-color-palette';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ColorPaletteService {
-  colorPalette_ = signal<ColorPalette>(COLOR_PALETTE_DEFAULT);
+  private storedPalette = this.loadPaletteFromStorage();
 
-  setColorPalette(palette: ColorPalette = COLOR_PALETTE_DEFAULT) {
-    for (const [key, value] of Object.entries(palette)) {
-      document.documentElement.style.setProperty(`--${key}`, value);
+  private colorPalette_ = signal<ColorPalette>(this.storedPalette);
+
+  constructor() {
+    this.applyPalette(this.storedPalette);
+  }
+
+  loadPaletteFromStorage(): ColorPalette {
+    try {
+      const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+      const parsed = stored ? JSON.parse(stored) : null;
+      // Basic shape validation (optional)
+      if (parsed && parsed.primary && parsed.secondary) {
+        return parsed;
+      }
+    } catch {
+      // Fallback to default if parsing fails
     }
+    return COLOR_PALETTE_DEFAULT;
+  }
 
+  applyPalette(palette: ColorPalette): void {
+    Object.entries(palette).forEach(([key, value]) => {
+      document.documentElement.style.setProperty(`--${key}`, value);
+    });
+  }
+
+  setColorPalette(palette: ColorPalette = COLOR_PALETTE_DEFAULT): void {
     this.colorPalette_.set(palette);
+    this.applyPalette(palette);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(palette));
+  }
+
+  getColorPalette(): ColorPalette {
+    return this.colorPalette_();
   }
 }

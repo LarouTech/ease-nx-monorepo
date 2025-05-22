@@ -40,7 +40,7 @@ export class AppComponent implements AfterViewInit {
   private sidemenuService = inject(SideMenuService);
   private cdrRef = inject(ChangeDetectorRef);
 
-  colorPalette = this.colorPaletteService.colorPalette_;
+  // colorPalette = this.colorPaletteService.colorPalette_;
   isLoggedIn = this.firebaseAuth.isLoggedIn;
 
   toolbarControls = this.toolbarService.toolbarControls;

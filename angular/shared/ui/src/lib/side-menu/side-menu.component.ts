@@ -13,7 +13,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
-import { ColorPaletteService } from '@ease-angular/services';
 import { SidemenuItemProps, SideMenuService } from './side-menu.service';
 import { Router, RouterModule } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -46,8 +45,8 @@ export class SideMenuComponent implements OnInit {
   private router = inject(Router);
 
   navRef_ = viewChild<ElementRef<HTMLElement>>('navRef');
-  colorPaletteService = inject(ColorPaletteService);
-  colorPalette = this.colorPaletteService.colorPalette_;
+  // colorPaletteService = inject(ColorPaletteService);
+  // colorPalette = this.colorPaletteService.colorPalette_;
   menuItems = input<SidemenuItemProps[]>([]);
   toolbarRef = input<ToolbarComponent>();
   backgroundColor = input<string>('var(--background');
@@ -56,7 +55,7 @@ export class SideMenuComponent implements OnInit {
   menuItemBackgroundColor = input<string>();
   contentPadding = input<string>('1rem');
 
-  isOpen: WritableSignal<boolean> = signal(true);
+  isOpen: WritableSignal<boolean> = signal(false);
 
   top: WritableSignal<number> = signal(0);
 

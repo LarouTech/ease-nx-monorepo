@@ -13,6 +13,6 @@ import { ButtonComponent } from '@ease-angular/ui';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroSectionComponent {
-  colorPalatteService = inject(ColorPaletteService);
-  colorPalette = this.colorPalatteService.colorPalette_;
+  // colorPalatteService = inject(ColorPaletteService);
+  // colorPalette = this.colorPalatteService.colorPalette_;
 }
