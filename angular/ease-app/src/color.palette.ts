@@ -21,9 +21,9 @@ export const COLOR_PALETTE: ColorPalette = {
   secondary: '#2563eb', // Soft sky blue – for balance and flexibility
   accent: '#f43f5e', // Vibrant rose – adds energy and visual interest
   background: '#f9fbfd', // Soft off-white with a hint of blue – very clean
-  text: '#0f172a', // Deep navy slate – high contrast, easy to read
+  text: '#27272a', // Deep navy slate – high contrast, easy to read
   highlight: '#facc15', // Warm golden yellow – subtle and noticeable
-  gray: '#94a3b8', // Muted slate – not too dark, still distinct
+  gray: '#4b5563', // Muted slate – not too dark, still distinct
   lightGray: '#f1f5f9', // Very soft bluish gray – gentle and modern
   lighterGray: '#f8fafc', // Ultra-light – nearly white with a touch of tone
   success: '#22c55e', // Clean green – readable and friendly

@@ -1,4 +1,7 @@
-<section class="w-full bg-gray-50 py-20 px-6">
+<section
+  [ngStyle]="{ backgroundColor: 'var(--background)' }"
+  class="w-full h-full min-h-screen py-20 px-6"
+>
   <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
     <h2
       [ngStyle]="{ color: 'var(--primary)' }"
@@ -6,216 +9,36 @@
     >
       Why Choose EASE?
     </h2>
-    <p class="text-lg text-gray-600 max-w-2xl mb-12">
+    <p [ngStyle]="{ color: 'var(--gray)' }" class="text-lg max-w-2xl mb-12">
       EASE is purpose-built to support architecture governance and advisory
       workflows with integrated service catalog access — all from one powerful
       platform.
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left w-full">
-      <!-- Card 1 -->
+      @for (card of cardProps; track $index) {
       <div
-        class="p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition hover:-translate-y-1 duration-300"
+        [ngStyle]="{ backgroundColor: 'var(--background)' }"
+        class="p-6 rounded-xl border border-gray-200 shadow-md hover:shadow-xl transition hover:-translate-y-1 duration-300"
       >
-        <div class="mb-4 rounded-full p-4 w-fit">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 3L2 9l10 6 10-6-10-6z"
-            ></path>
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M2 15l10 6 10-6"
-            ></path>
-          </svg>
+        <div class="mb-4 rounded-full w-fit">
+          <svg-icon
+            size="32px"
+            color="var(--primary)"
+            [name]="card.icon"
+          ></svg-icon>
         </div>
         <h3
           [ngStyle]="{ color: 'var(--primary)' }"
           class="text-xl font-semibold mb-2"
         >
-          Unified Governance
+          {{ card.title }}
         </h3>
-        <p class="text-gray-600">
-          Streamline EA workflows and approvals with traceable decision gates
-          and structured review steps.
+        <p [ngStyle]="{ color: 'var(--text)' }" class="text-sm">
+          {{ card.description }}
         </p>
       </div>
-
-      <!-- Card 2 -->
-      <div
-        class="p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition hover:-translate-y-1 duration-300"
-      >
-        <div class="mb-4 rounded-full p-4 w-fit">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 8h2a2 2 0 012 2v10H3V10a2 2 0 012-2h2m0-4h8a2 2 0 012 2v2H7V4a2 2 0 012-2z"
-            ></path>
-          </svg>
-        </div>
-        <h3
-          [ngStyle]="{ color: 'var(--primary)' }"
-          class="text-xl font-semibold mb-2"
-        >
-          Advisory Support
-        </h3>
-        <p class="text-gray-600">
-          Request, track, and manage EA advisory engagements with configurable
-          intake and response tools.
-        </p>
-      </div>
-
-      <!-- Card 3 -->
-      <div
-        class="p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition hover:-translate-y-1 duration-300"
-      >
-        <div class="mb-4 rounded-full p-4 w-fit">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 4a1 1 0 011-1h3.586a1 1 0 01.707.293l1.414 1.414A1 1 0 0010.414 5H20a1 1 0 011 1v2H3V4zM3 9h18v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"
-            ></path>
-          </svg>
-        </div>
-        <h3
-          [ngStyle]="{ color: 'var(--primary)' }"
-          class="text-xl font-semibold mb-2"
-        >
-          Service Catalog
-        </h3>
-        <p class="text-gray-600">
-          Browse and request EA and CCOE services from a curated, self-serve
-          catalog — fully integrated with governance workflows.
-        </p>
-      </div>
-
-      <!-- Card 4 -->
-      <div
-        class="p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition hover:-translate-y-1 duration-300"
-      >
-        <div class="mb-4 rounded-full p-4 w-fit">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 8v8m4-4H8m12-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
-        </div>
-        <h3
-          [ngStyle]="{ color: 'var(--primary)' }"
-          class="text-xl font-semibold mb-2"
-        >
-          Seamless Integration
-        </h3>
-        <p class="text-gray-600">
-          Connect easily with other enterprise tools like GitHub, Teams, or Jira
-          to support end-to-end delivery pipelines.
-        </p>
-      </div>
-
-      <!-- Card 5 -->
-      <div
-        class="p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition hover:-translate-y-1 duration-300"
-      >
-        <div class="mb-4 rounded-full p-4 w-fit">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0h6M4 4h16v16H4V4z"
-            ></path>
-          </svg>
-        </div>
-        <h3
-          [ngStyle]="{ color: 'var(--primary)' }"
-          class="text-xl font-semibold mb-2"
-        >
-          Metrics & Insights
-        </h3>
-        <p class="text-gray-600">
-          Monitor service usage, identify bottlenecks, and track governance KPIs
-          across your architecture ecosystem.
-        </p>
-      </div>
-
-      <!-- Card 6 -->
-      <div
-        class="p-6 rounded-xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition hover:-translate-y-1 duration-300"
-      >
-        <div class="mb-4 rounded-full p-4 w-fit">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 13l4 4L19 7"
-            ></path>
-          </svg>
-        </div>
-        <h3
-          [ngStyle]="{ color: 'var(--primary)' }"
-          class="text-xl font-semibold mb-2"
-        >
-          Standards & Consistency
-        </h3>
-        <p class="text-gray-600">
-          Promote alignment to enterprise standards and reusable patterns across
-          teams and projects.
-        </p>
-      </div>
+      }
     </div>
   </div>
 </section>
