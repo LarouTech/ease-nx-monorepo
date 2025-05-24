@@ -1,0 +1,11 @@
+import { FirebaseOptions } from 'firebase/app';
+
+export const environment = {
+  production: true,
+  apiUrl: 'https://your-production-api.com/api',
+  firebaseConfig: {
+    apiKey: 'AIzaSyAL1kM9By3jbFbtPTS6oY4QWN-BIKzouIA',
+    authDomain: 'ease-project-007.firebaseapp.com',
+    projectId: 'ease-project-007',
+  } as FirebaseOptions,
+};

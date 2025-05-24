@@ -1,5 +1,5 @@
-import { firebaseApp } from '@ease/utils';
 import {
+  Auth,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
@@ -8,13 +8,16 @@ import {
   User,
   UserCredential,
 } from 'firebase/auth';
-import { computed, effect, Injectable, signal } from '@angular/core';
+import { computed, effect, Inject, Injectable, signal } from '@angular/core';
+import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
+import { FIREBASE_CONFIG_TOKEN } from './firebase-config.token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  auth = getAuth(firebaseApp);
+  firebaseApp: FirebaseApp;
+  auth: Auth;
 
   private _user = signal<User | null | undefined>(undefined); // undefined = loading
 
@@ -22,7 +25,12 @@ export class FirebaseAuthService {
   isLoading = computed(() => this._user() === undefined);
   isLoggedIn = computed(() => !!this._user());
 
-  constructor() {
+  constructor(
+    @Inject(FIREBASE_CONFIG_TOKEN) public firebaseOptions: FirebaseOptions
+  ) {
+    this.firebaseApp = initializeApp(this.firebaseOptions);
+    this.auth = getAuth(this.firebaseApp);
+
     onAuthStateChanged(this.auth, (user) => {
       console.log(user);
       this._user.set(user);

@@ -1,8 +1,9 @@
 <section
+  [ngStyle]="{ backgroundColor: 'var(--background)' }"
   class="relative w-full min-h-screen flex items-center justify-center px-6 py-12 overflow-hidden"
 >
   <!-- Decorative Top Wave -->
-  <div class="absolute top-0 left-0 w-full h-full z-20">
+  <div class="absolute top-0 left-0 w-full h-full z-20 pointer-events-none">
     <img
       src="/images/wave.svg"
       alt="Top Decorative Shape"
@@ -11,7 +12,7 @@
   </div>
 
   <!-- Decorative Bottom Wave -->
-  <div class="absolute bottom-0 left-0 w-full -z-10">
+  <div class="absolute bottom-0 left-0 w-full z-10 pointer-events-none">
     <img
       src="/images/wave_2.svg"
       alt="Bottom Decorative Shape"
@@ -20,7 +21,7 @@
   </div>
 
   <!-- Main Content -->
-  <div class="w-full flex flex-row items-center px-16 space-x-6">
+  <div class="w-full flex flex-row items-center px-16 space-x-6 mb-36">
     <!-- Left content -->
     <div class="">
       <h1
@@ -42,7 +43,7 @@
           [routerLink]="['/', 'home', 'signin']"
           name="started"
           color="#ffffff"
-          backgroundColor="var(--secondary)"
+          backgroundColor="var(--accent)"
           size="large"
           customPadding="10px 20px"
           fontWeight="bold"
@@ -63,9 +64,11 @@
     <!-- Right image -->
     <div class="flex justify-center">
       <img
-        src="images/programmer.svg"
+        [src]="
+          isDarkMode_() ? 'images/programmer_dark.svg' : 'images/programmer.svg'
+        "
         alt="Enterprise Architecture Illustration"
-        class="max-w-full h-auto"
+        class="max-w-[80%] h-auto"
       />
     </div>
   </div>

@@ -26,6 +26,12 @@
       },
       "configurations": {
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "angular/ease-app/src/environments/environment.ts",
+              "with": "angular/ease-app/src/environments/environment.prod.ts"
+            }
+          ],
           "budgets": [
             {
               "type": "initial",

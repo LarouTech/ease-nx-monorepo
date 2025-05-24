@@ -6,11 +6,9 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {
-  DARK_PALETTE_TOKEN,
-  LIGHT_PALETTE_TOKEN,
-} from '@ease-angular/services';
 import { COLOR_PALETTE, DARK_COLOR_PALETTE } from '../color.palette';
+import { provideColorPalettes, provideFirebase } from '@ease-angular/services';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: LIGHT_PALETTE_TOKEN, useValue: COLOR_PALETTE },
-    { provide: DARK_PALETTE_TOKEN, useValue: DARK_COLOR_PALETTE },
+    provideColorPalettes(COLOR_PALETTE, DARK_COLOR_PALETTE),
+    provideFirebase(environment.firebaseConfig),
   ],
 };

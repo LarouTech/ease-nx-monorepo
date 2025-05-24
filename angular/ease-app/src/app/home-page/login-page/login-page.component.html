@@ -1,10 +1,16 @@
 <section
-  class="w-full min-h-screen flex flex-col items-center justify-start px-6 py-24 bg-gray-50 space-y-20"
+  [ngStyle]="{ backgroundColor: 'var(--background)' }"
+  class="w-full min-h-screen flex flex-col items-center justify-start px-6 py-24 space-y-20"
 >
   <!-- Heading / Blurb Section -->
   <div class="max-w-3xl text-center space-y-4">
-    <h1 class="text-4xl font-bold text-gray-800">Welcome Back to EASE</h1>
-    <p class="text-gray-600 text-lg">
+    <h1
+      [ngStyle]="{ color: 'var(--text)' }"
+      class="text-4xl font-bold text-gray-800"
+    >
+      Welcome Back to EASE
+    </h1>
+    <p [ngStyle]="{ color: 'var(--gray)' }" class="text-lg">
       Get tailored cloud advisory and early-stage cost estimates in minutes.
       Start your intake to accelerate planning and align with enterprise
       standards.
@@ -17,7 +23,8 @@
   >
     <!-- Form Card -->
     <div
-      class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 space-y-6 border border-gray-200"
+      [ngStyle]="{ backgroundColor: 'var(--background)' }"
+      class="rounded-2xl shadow-xl w-full max-w-md p-8 space-y-6 border border-gray-200"
     >
       <h2
         [ngStyle]="{ color: 'var(--primary)' }"
@@ -54,7 +61,7 @@
           name="login"
           type="submit"
           size="large"
-          backgroundColor="var(--secondary)"
+          backgroundColor="var(--accent)"
           color="#ffffff"
           fontWeight="bold"
           [disabled]="loginForm.invalid"
@@ -73,7 +80,7 @@
         </button-custom>
       </form>
 
-      <p class="text-sm text-center text-gray-600">
+      <p [ngStyle]="{ color: 'var(--text)' }" class="text-sm text-center">
         Don't have an account?
         <a
           [ngStyle]="{ color: 'var(--primary)' }"
@@ -88,7 +95,11 @@
     <!-- Image -->
     <div class="w-full max-w-md">
       <img
-        src="/images/login_image.svg"
+        [src]="
+          isDarkMode_()
+            ? 'images/login_image_dark.svg'
+            : 'images/login_image.svg'
+        "
         alt="Login illustration"
         class="w-full h-auto"
       />

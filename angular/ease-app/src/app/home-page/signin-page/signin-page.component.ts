@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { FirebaseAuthService } from '@ease-angular/services';
+import {
+  ColorPaletteService,
+  FirebaseAuthService,
+} from '@ease-angular/services';
 import {
   ButtonComponent,
   FormfieldComponent,
@@ -25,6 +28,9 @@ export class SigninPageComponent {
   private firebaseAuth = inject(FirebaseAuthService);
   private snackbar = inject(SnackbarService);
   private router = inject(Router);
+  private colorService = inject(ColorPaletteService);
+
+  isDarkMode_ = this.colorService.isDarkMode;
 
   signinForm: FormGroup = new FormGroup({
     email: new FormControl(''),

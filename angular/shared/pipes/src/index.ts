@@ -1,1 +1,1 @@
-export * from './lib/pipes/pipes.component';
+export * from './lib/key-value-pairs-to-array.pipe';

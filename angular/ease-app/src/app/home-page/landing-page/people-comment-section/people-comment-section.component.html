@@ -1,5 +1,6 @@
 <section
-  class="w-full bg-gradient-to-br from-gray-50 via-white to-gray-100 py-20 px-6 min-h-screen flex flex-col items-center justify-center"
+  [ngStyle]="{ backgroundColor: 'var(--background)' }"
+  class="w-full py-20 px-6 min-h-screen flex flex-col items-center justify-center"
 >
   <div class="max-w-6xl mx-auto text-center">
     <h2
@@ -11,23 +12,26 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Testimonial Card 1 -->
+      @for (props of cardProps; track $index) {
       <div
-        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300"
+        [ngStyle]="{
+          backgroundColor: 'var(--background)',
+          color: 'var(--text)'
+        }"
+        class="rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300 border border-white"
       >
-        <p class="text-gray-700 italic mb-4 relative pl-10">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            class="w-6 h-6 absolute left-3 top-1"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M7 17h3v-6H5v4c0 1.1.9 2 2 2zm9-6h-5v6h5c1.1 0 2-.9 2-2v-4z"
-            ></path>
-          </svg>
-          “EASE has completely transformed how we deliver enterprise
-          architecture reviews. Everything’s centralized, traceable, and
-          efficient.”
+        <p
+          [ngStyle]="{ color: 'var(--text)' }"
+          class="italic mb-4 relative pl-10"
+        >
+          <svg-icon
+            class="mr-2"
+            size="24px"
+            color="var(--primary)"
+            [name]="props.icon"
+          ></svg-icon>
+
+          {{ props.comment }}
         </p>
         <div class="flex items-center justify-center mt-4">
           <img
@@ -36,73 +40,19 @@
             class="w-10 h-10 rounded-full mr-3"
           />
           <div class="text-left">
-            <div class="font-semibold text-gray-900">Senior Architect</div>
-            <div class="text-sm text-gray-500">IRCC</div>
+            <div [ngStyle]="{ color: 'var(--primary)' }" class="font-bold">
+              {{ props.role }}
+            </div>
+            <div
+              [ngStyle]="{ color: 'var(--secondary)' }"
+              class="text-sm font-semibold"
+            >
+              {{ props.company }}
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- Testimonial Card 2 -->
-      <div
-        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300"
-      >
-        <p class="text-gray-700 italic mb-4 relative pl-10">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            class="w-6 h-6 absolute left-3 top-1"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M7 17h3v-6H5v4c0 1.1.9 2 2 2zm9-6h-5v6h5c1.1 0 2-.9 2-2v-4z"
-            ></path>
-          </svg>
-          “It used to take weeks to process advisory requests. With EASE, it’s
-          seamless — the intake form is smart and responsive.”
-        </p>
-        <div class="flex items-center justify-center mt-4">
-          <img
-            src="https://i.pravatar.cc/40?img=12"
-            alt="avatar"
-            class="w-10 h-10 rounded-full mr-3"
-          />
-          <div class="text-left">
-            <div class="font-semibold text-gray-900">Program Manager</div>
-            <div class="text-sm text-gray-500">DPM3</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Testimonial Card 3 -->
-      <div
-        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300"
-      >
-        <p class="text-gray-700 italic mb-4 relative pl-10">
-          <svg
-            [ngStyle]="{ color: 'var(--primary)' }"
-            class="w-6 h-6 absolute left-3 top-1"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M7 17h3v-6H5v4c0 1.1.9 2 2 2zm9-6h-5v6h5c1.1 0 2-.9 2-2v-4z"
-            ></path>
-          </svg>
-          “Having the service catalog integrated into governance saves us so
-          much time. This is a game-changer for digital delivery.”
-        </p>
-        <div class="flex items-center justify-center mt-4">
-          <img
-            src="https://i.pravatar.cc/40?img=16"
-            alt="avatar"
-            class="w-10 h-10 rounded-full mr-3"
-          />
-          <div class="text-left">
-            <div class="font-semibold text-gray-900">Director</div>
-            <div class="text-sm text-gray-500">Cloud CoE</div>
-          </div>
-        </div>
-      </div>
+      }
     </div>
 
     <!-- Call to action -->

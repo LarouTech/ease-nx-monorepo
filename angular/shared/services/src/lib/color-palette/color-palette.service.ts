@@ -28,8 +28,8 @@ export class ColorPaletteService {
   isDarkMode = computed(() => this.isDarkMode_());
 
   constructor(
-    @Inject(LIGHT_PALETTE_TOKEN) private lightPalette: ColorPalette,
-    @Inject(DARK_PALETTE_TOKEN) private darkPalette: ColorPalette
+    @Inject(LIGHT_PALETTE_TOKEN) public lightPalette: ColorPalette,
+    @Inject(DARK_PALETTE_TOKEN) public darkPalette: ColorPalette
   ) {
     // Now safe to use injected values
     const initialDarkMode = this.loadDarkModeFromStorage();

@@ -15,4 +15,8 @@ import { ButtonComponent } from '@ease-angular/ui';
 export class HeroSectionComponent {
   // colorPalatteService = inject(ColorPaletteService);
   // colorPalette = this.colorPalatteService.colorPalette_;
+
+  private colorPalletteService = inject(ColorPaletteService);
+
+  isDarkMode_ = this.colorPalletteService.isDarkMode;
 }

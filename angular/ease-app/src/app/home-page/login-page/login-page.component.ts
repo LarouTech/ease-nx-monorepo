@@ -12,7 +12,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { FirebaseAuthService } from '@ease-angular/services';
+import {
+  ColorPaletteService,
+  FirebaseAuthService,
+} from '@ease-angular/services';
 import {
   ButtonComponent,
   FormfieldComponent,
@@ -37,6 +40,9 @@ export class LoginPageComponent {
   private firebaseAuth = inject(FirebaseAuthService);
   private snackbar = inject(SnackbarService);
   private router = inject(Router);
+  private colorService = inject(ColorPaletteService);
+
+  isDarkMode_ = this.colorService.isDarkMode;
 
   isLoading = signal(false);
 

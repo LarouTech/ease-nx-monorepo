@@ -1,1 +1,24 @@
-<p>intakes-page works!</p>,
+<div
+  class="flex flex-row items-center gap-x-10 text-center font-bold capitalize"
+>
+  <div>
+    <h3>dark palette</h3>
+    @for (color of darkPalette | keyValuePairsToArray; track $index) {
+
+    <div class="h-10 w-[200px]" [ngStyle]="{ backgroundColor: color.value }">
+      {{ color.key }}
+    </div>
+
+    }
+  </div>
+  <div>
+    <h3>light palette</h3>
+    @for (color of lightPalette | keyValuePairsToArray; track $index) {
+
+    <div class="h-10 w-[200px]" [ngStyle]="{ backgroundColor: color.value }">
+      {{ color.key }}
+    </div>
+
+    }
+  </div>
+</div>
