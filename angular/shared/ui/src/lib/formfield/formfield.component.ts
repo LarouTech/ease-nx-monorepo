@@ -31,9 +31,9 @@ export class FormfieldComponent implements ControlValueAccessor {
   placeholder = input<string>('');
   hint = input<string>();
   type = input<string>('text');
-  borderColor = input<string>('var(--lightGray');
+  borderColor = input<string>('var(--gray');
   backgroundColor = input<string>('transparent');
-  color = input<string>('var(--primary');
+  color = input<string>('var(--text');
   hintColor = input<string>('var(--text');
   padding = input<string>('.75rem 1rem');
   borderWidth = input<string>();

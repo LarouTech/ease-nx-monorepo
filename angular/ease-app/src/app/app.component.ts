@@ -11,13 +11,19 @@ import {
   Component,
   inject,
 } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import {
+  NavigationEnd,
+  Router,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import {
   ColorPaletteService,
   FirebaseAuthService,
 } from '@ease-angular/services';
 import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
+import { filter } from 'rxjs';
 
 @Component({
   imports: [
@@ -39,12 +45,22 @@ export class AppComponent implements AfterViewInit {
   private firebaseAuth = inject(FirebaseAuthService);
   private sidemenuService = inject(SideMenuService);
   private cdrRef = inject(ChangeDetectorRef);
+  private router = inject(Router);
+  private viewportScroller = inject(ViewportScroller);
 
   // colorPalette = this.colorPaletteService.colorPalette_;
   isLoggedIn = this.firebaseAuth.isLoggedIn;
 
   toolbarControls = this.toolbarService.toolbarControls;
   sidemenuControls = this.sidemenuService.sidemenuControls;
+
+  constructor() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.viewportScroller.scrollToPosition([0, 0]);
+      });
+  }
 
   ngAfterViewInit() {
     this.cdrRef.detectChanges();

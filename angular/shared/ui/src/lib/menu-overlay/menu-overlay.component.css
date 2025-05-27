@@ -1,0 +1,27 @@
+.menu-item {
+  cursor: pointer;
+  /* text-transform: capitalize;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.25rem; /* ~ gap-x-1 */
+  /* padding: 0.5rem 0.5rem; py-2 px-2
+  border-bottom: 1px solid var(--lightGray);
+  color: var(--primary);  */
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+  outline: none; /* we'll add custom focus */
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:hover,
+.menu-item:focus > span {
+  opacity: 0.5; /* A light gray (similar to zinc-100) */
+  /* transform: scale(1.02); */
+  outline: none;
+  border-radius: 6px;
+}

@@ -25,6 +25,13 @@ export const LobbyRoutes: Routes = [
             (c) => c.IntakesPageComponent
           ),
       },
+      {
+        path: 'profile-creation',
+        loadComponent: () =>
+          import(
+            './profile-creation-page/profile-creation-page.component'
+          ).then((c) => c.ProfileCreationPageComponent),
+      },
     ],
   },
 ];

@@ -1,23 +1,21 @@
 import {
   Auth,
   createUserWithEmailAndPassword,
-  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   User,
   UserCredential,
 } from 'firebase/auth';
-import { computed, effect, Inject, Injectable, signal } from '@angular/core';
-import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
-import { FIREBASE_CONFIG_TOKEN } from './firebase-config.token';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
-  firebaseApp: FirebaseApp;
-  auth: Auth;
+  private firebase = inject(FirebaseService);
+  auth: Auth = this.firebase.getFirebaseAuthInstance();
 
   private _user = signal<User | null | undefined>(undefined); // undefined = loading
 
@@ -25,20 +23,9 @@ export class FirebaseAuthService {
   isLoading = computed(() => this._user() === undefined);
   isLoggedIn = computed(() => !!this._user());
 
-  constructor(
-    @Inject(FIREBASE_CONFIG_TOKEN) public firebaseOptions: FirebaseOptions
-  ) {
-    this.firebaseApp = initializeApp(this.firebaseOptions);
-    this.auth = getAuth(this.firebaseApp);
-
+  constructor() {
     onAuthStateChanged(this.auth, (user) => {
-      console.log(user);
       this._user.set(user);
-    });
-
-    // Optional side-effect for debugging
-    effect(() => {
-      console.log('User changed:', this._user());
     });
   }
 

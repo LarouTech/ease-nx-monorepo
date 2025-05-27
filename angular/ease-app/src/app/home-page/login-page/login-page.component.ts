@@ -68,6 +68,7 @@ export class LoginPageComponent {
       await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await this.firebaseAuth.login(email, password);
       console.log(response);
+      this.isLoading.set(false);
       this.router.navigate(['/', 'lobby']);
       return response;
     } catch (error) {

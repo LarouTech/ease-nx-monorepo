@@ -59,6 +59,7 @@ export class HomePageComponent implements OnInit {
       icon: isDark ? 'sun' : 'moon',
       action: () => this.toggleDarkMode(),
       label: 'dark mode',
+      backgroundColor: 'var(--secondary)',
     };
   }
 }

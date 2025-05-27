@@ -8,3 +8,8 @@ export * from './lib/snackbar/snackbar.component';
 export * from './lib/snackbar/snackbar.service';
 export * from './lib/toolbar/toolbar.service';
 export * from './lib/side-menu/side-menu.service';
+export * from './lib/nav-sub-pages/nav-sub-pages.component';
+export * from './lib/lobby-sub-page-layout/lobby-sub-page-layout.component';
+export * from './lib/menu-overlay/menu-overlay.component';
+export * from './lib/portfolio-card/portfolio-card.component';
+export * from './lib/table-cdk/table-cdk.component';

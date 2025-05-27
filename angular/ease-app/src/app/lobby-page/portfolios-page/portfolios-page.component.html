@@ -1,26 +1,7 @@
-<div
-  [ngStyle]="{ backgroundColor: 'var(--lightGray)' }"
-  class="flex flex-row justify-start items-center gap-x-5 h-10 py-2 px-4 rounded-lg"
->
-  <ng-container
-    *ngTemplateOutlet="linkRef; context: { linkName: 'list' }"
-  ></ng-container>
-  <ng-container
-    *ngTemplateOutlet="linkRef; context: { linkName: 'create' }"
-  ></ng-container>
+<div class="px-6">
+  <nav-sub-pages section="portfolio" [links]="navSubLinks"></nav-sub-pages>
 </div>
 
-<!-- NG TEMPLATE -->
-<ng-template #linkRef let-linkName="linkName">
-  <a
-    [ngStyle]="{ color: 'var(--text)' }"
-    class="capitalize flex flex-row justify-start items-center gap-x-3 font-bold"
-  >
-    <span>{{ linkName }}</span>
-    <svg-icon color="var(--secondary)" size="16px" name="caret"></svg-icon>
-  </a>
-</ng-template>
-
-<div class="min-h-screen h-full" [@routeAnimations]="prepareRoute(outlet)">
+<div class="min-h-screen h-full mt-4" [@routeAnimations]="prepareRoute(outlet)">
   <router-outlet #outlet="outlet"></router-outlet>
 </div>

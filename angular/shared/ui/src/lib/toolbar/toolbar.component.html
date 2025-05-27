@@ -13,7 +13,7 @@
     'padding-top': paddingVertical(),
     'padding-bottom': paddingVertical(),
   }"
-  class="h-20 flex flex-row justify-between items-center z-50"
+  class="h-22 flex flex-row justify-between items-center z-50"
 >
   <!-- branding -->
   <div
@@ -44,7 +44,7 @@
   @if(controls()) {
   <div
     id="controls"
-    class="flex flex-row justify-start items-end h-full transition-all"
+    class="flex flex-row justify-start items-center h-full transition-all"
   >
     @for (control of controls(); track $index) { @switch (control.type) {
     @case('icon-badge') {
@@ -69,10 +69,14 @@
 <ng-template #iconBadgeRef let-control="control">
   <button
     (click)="control.action()"
-    [ngStyle]="{ backgroundColor: 'var(--primary)' }"
+    [ngStyle]="{
+      backgroundColor: control.backgroundColor
+        ? control.backgroundColor
+        : 'var(--primary)'
+    }"
     class="w-8 h-8 flex items-center justify-center rounded-full mr-3 mb-2 cursor-pointer transform transition duration-150 ease-in-out hover:scale-105 hover:brightness-90"
   >
-    <svg-icon size="16px" color="#ffffff" [name]="control.icon!"></svg-icon>
+    <svg-icon color="#ffffff" size="16px" [name]="control.icon!"></svg-icon>
   </button>
 </ng-template>
 

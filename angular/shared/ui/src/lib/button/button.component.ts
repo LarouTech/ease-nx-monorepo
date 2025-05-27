@@ -47,7 +47,7 @@ export class ButtonComponent implements OnInit {
       case 'medium':
         return '4px 12px';
       case 'large':
-        return '4px 12px';
+        return '12px 12px';
       default:
         return '8px 12px';
     }

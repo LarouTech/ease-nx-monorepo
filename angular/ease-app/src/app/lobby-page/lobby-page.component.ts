@@ -63,7 +63,7 @@ export class LobbyPageComponent implements OnInit {
       label: 'logout',
     };
 
-    this.toolbarService.updateControls([darkModeControl, logoutControl]);
+    this.toolbarService.updateControls([logoutControl, darkModeControl]);
   }
 
   private getDarkModeControl(): ToolbarControlsProps {
@@ -73,6 +73,7 @@ export class LobbyPageComponent implements OnInit {
       icon: isDark ? 'sun' : 'moon',
       action: () => this.toggleDarkMode(),
       label: 'dark mode',
+      backgroundColor: 'var(--secondary)',
     };
   }
 }

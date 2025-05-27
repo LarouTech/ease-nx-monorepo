@@ -13,23 +13,23 @@ export const SIDEDMENU_PROPS = (router: Router): SidemenuItemProps[] => {
     {
       label: 'Porfolios',
       icon: 'portfolio',
-      action: () => router.navigate(['/', 'lobby', 'portfolio']),
+      action: () => router.navigate(['/', 'lobby', 'portfolios']),
       isSelected: false,
-      route: '/lobby/portfolio',
+      route: '/lobby/portfolios',
       submenuItems: [
         {
           label: 'List',
           icon: 'list',
-          action: () => router.navigate(['/', 'lobby', 'portfolio']),
+          action: () => router.navigate(['/', 'lobby', 'portfolios']),
           isSelected: false,
-          route: '/lobby/portfolio',
+          route: '/lobby/portfolios',
         },
         {
           label: 'Create',
           icon: 'add',
-          action: () => router.navigate(['/', 'lobby', 'portfolio', 'create']),
+          action: () => router.navigate(['/', 'lobby', 'portfolios', 'create']),
           isSelected: false,
-          route: '/lobby/portfolio/create',
+          route: '/lobby/portfolios/create',
         },
       ],
     },
@@ -55,7 +55,7 @@ export const SIDEDMENU_PROPS = (router: Router): SidemenuItemProps[] => {
     {
       label: 'Settings',
       icon: 'settings',
-      action: () => console.log('Settings clicked'),
+      action: () => router.navigate(['/', 'lobby', 'profile-creation']),
       isSelected: false,
     },
     {

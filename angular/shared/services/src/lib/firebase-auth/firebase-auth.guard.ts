@@ -1,26 +1,48 @@
-import { effect, EffectRef, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
 import { FirebaseAuthService } from './firebase-auth.service';
+import { ProfileService } from '../profile/profile.service';
 
-export const firebaseAuthGuard: CanActivateFn = () => {
+export const firebaseAuthGuard: CanActivateFn = async () => {
   const firebaseAuth = inject(FirebaseAuthService);
+  const profileService = inject(ProfileService);
   const router = inject(Router);
 
-  return new Promise<boolean>((resolve) => {
-    const effectRef: EffectRef = effect(() => {
-      const user = firebaseAuth.user();
+  const user = await waitForDefined(() => firebaseAuth.user());
 
-      // Wait until the auth state is known (not undefined)
-      if (user !== undefined) {
-        effectRef.destroy(); // ✅ Correctly destroy the effect
+  if (!user) {
+    router.navigate(['/']);
+    return false;
+  }
 
-        if (user) {
-          resolve(true);
-        } else {
-          router.navigate(['/']);
-          resolve(false);
-        }
-      }
-    });
-  });
+  let profile = await profileService.getProfile(user.uid);
+
+  if (!profile) {
+    console.warn('No profile found for user:', user.uid);
+    await profileService.creatProfile(user, { test: 'test' });
+    profile = await profileService.getProfile(user.uid);
+    router.navigate(['/lobby/profile-creation']);
+    return true;
+  }
+
+  profileService.profile_.set(profile);
+  return true;
 };
+
+// Utility function to poll until a value is defined
+function waitForDefined<T>(
+  getter: () => T | undefined,
+  interval = 100
+): Promise<T> {
+  return new Promise((resolve) => {
+    const check = () => {
+      const value = getter();
+      if (value !== undefined) {
+        resolve(value);
+      } else {
+        setTimeout(check, interval);
+      }
+    };
+    check();
+  });
+}

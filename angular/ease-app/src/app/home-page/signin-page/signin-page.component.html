@@ -70,7 +70,18 @@
           color="#ffffff"
           fontWeight="bold"
           [disabled]="signinForm.invalid"
-          >signin</button-custom
+        >
+          <div class="flex flex-row items-center justify-center space-x-2">
+            @if (isLoading()) {
+            <svg-icon
+              [ngClass]="{ 'animate-spin': isLoading() }"
+              class="duration-[3000]"
+              color="#ffffff"
+              name="loader"
+            ></svg-icon>
+            }
+            <span>signin</span>
+          </div></button-custom
         >
       </form>
 

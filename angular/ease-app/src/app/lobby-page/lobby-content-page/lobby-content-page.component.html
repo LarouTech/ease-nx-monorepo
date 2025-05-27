@@ -1,42 +1,34 @@
-<div
-  [ngStyle]="{ backgroundColor: 'var(--background)' }"
-  class="min-h-screen p-4"
->
-  <div [ngStyle]="{ color: 'var(--text)' }" class="max-w-screen-xl">
-    <h1 class="text-3xl font-bold mb-2">Welcome to EASE</h1>
-    <p class="mb-8">
-      Start a new cloud advisory intake, explore cost estimates, or manage your
-      submissions.
-    </p>
+<lobby-sub-page-layout [title]="'welcome' + ' ' + profile_()?.email">
+  <p class="mb-8">
+    Start a new cloud advisory intake, explore cost estimates, or manage your
+    submissions.
+  </p>
 
-    <div class="flex flex-wrap gap-6">
-      <!-- New Intake -->
-      @for (props of easeFeatureCardsProps; track $index) {
-      <a
-        routerLink="/intake/new"
-        class="cursor-pointer shadow hover:shadow-md rounded-2xl p-6 border border-gray-200 transition w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] flex flex-col items-start justify-start text-center gap-y-2"
+  <div class="flex flex-wrap gap-6">
+    <!-- New Intake -->
+    @for (props of easeFeatureCardsProps; track $index) {
+    <a
+      routerLink="/intake/new"
+      class="cursor-pointer shadow-xl rounded-2xl p-6 border w-full s flex flex-col items-start justify-start text-center gap-y-2"
+      [ngStyle]="{
+        color: 'var(--primary)',
+        backgroundColor: 'var(--background)',
+      }"
+    >
+      <div class="flex flex-row items-center justify-start gap-x-2 w-full mb-2">
+        <svg-icon [name]="props.icon" color="var(--primary)"></svg-icon>
+        <h2 class="text-lg font-bold capitalize">{{ props.title }}</h2>
+      </div>
+      <p
         [ngStyle]="{
-          color: 'var(--primary)',
-          backgroundColor: 'var(--background)',
+          color: 'var(--text)',
+          backgroundColor: 'var(--lighterGray)'
         }"
+        class="text-sm text-left py-2 px-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
       >
-        <div
-          class="flex flex-row items-center justify-start gap-x-2 w-full mb-2"
-        >
-          <svg-icon [name]="props.icon" color="var(--primary)"></svg-icon>
-          <h2 class="text-lg font-bold capitalize">{{ props.title }}</h2>
-        </div>
-        <p
-          [ngStyle]="{
-            color: 'var(--text)',
-            backgroundColor: 'var(--lighterGray)'
-          }"
-          class="text-sm text-left py-2 px-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
-        >
-          {{ props.description }}
-        </p>
-      </a>
-      }
-    </div>
+        {{ props.description }}
+      </p>
+    </a>
+    }
   </div>
-</div>
+</lobby-sub-page-layout>

@@ -1,0 +1,119 @@
+<lobby-sub-page-layout title="Let's Get to Know You!">
+  <section
+    [ngStyle]="{ backgroundColor: 'var(background)', color: 'var(--text)' }"
+    class="w-full h-full px-4 py-6 mb-40"
+  >
+    <p class="text-xl font-medium mb-4">
+      Create your profile and unlock a personalized experience just for you.
+    </p>
+
+    <h2 [ngStyle]="{ color: 'var(--primary)' }" class="text-lg font-bold mb-2">
+      Why we ask for your details:
+    </h2>
+
+    <p
+      [ngStyle]="{ color: 'var(--text)' }"
+      class="text-base leading-relaxed mb-4"
+    >
+      Sharing your
+      <span class="font-semibold">first name</span>,
+      <span class="font-semibold">last name</span>,
+      <span class="font-semibold">birthday</span>,
+      <span class="font-semibold">address</span>, and
+      <span class="font-semibold 0">image</span> helps us shape a unique journey
+      tailored to <em>you</em>. From remembering preferences to celebrating your
+      milestones, we aim to make every interaction smoother and more meaningful.
+    </p>
+
+    <p
+      [ngStyle]="{ color: 'var(--secondary)' }"
+      class="text-base leading-relaxed mb-6"
+    >
+      Go ahead — fill in your details and step into a smarter, more personal
+      experience.
+    </p>
+
+    <ul
+      [ngStyle]="{ backgroundColor: 'var(--lighterGray)' }"
+      class="border border-blue-100 rounded-xl p-4 space-y-2 text-sm shadow-sm"
+    >
+      <li class="flex items-start gap-2">
+        <span>✅</span> <span>A better fit for your needs</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span>🎁</span> <span>Exclusive, personalized content</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <span>🎈</span>
+        <span>A warm, human touch — because you're not just a number</span>
+      </li>
+    </ul>
+
+    <div class="flex items-start justify-between mt-16 gap-x-20">
+      <form
+        [ngStyle]="{ backgroundColor: 'var(--background)' }"
+        class="p-6 rounded-lg border border-[var(--primary)] shadow-2xl flex flex-col items-start justify-start space-y-4 w-[50%]"
+        [formGroup]="profileForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="mb-4">
+          <h2
+            [ngStyle]="{ color: 'var(--primary)' }"
+            class="text-2xl font-bold capitalize"
+          >
+            user Information
+          </h2>
+        </div>
+
+        <formfield
+          class="w-full"
+          label="given name"
+          name="givenName"
+        ></formfield>
+
+        <formfield
+          class="w-full"
+          label="family name"
+          name="familyName"
+        ></formfield>
+
+        <div class="flex flex-row gap-4 w-full">
+          <formfield class="w-full" label="address" name="address"></formfield>
+          <formfield class="w-full" label="city" name="city"></formfield>
+        </div>
+
+        <div class="flex flex-row gap-4 w-full">
+          <formfield
+            class="w-full"
+            label="postal code"
+            name="postalCode"
+          ></formfield>
+          <formfield
+            class="w-full"
+            label="province"
+            name="province"
+          ></formfield>
+          <formfield class="w-full" label="country" name="country"></formfield>
+        </div>
+        <formfield class="w-full" label="phone" name="phone"></formfield>
+        <formfield class="w-full" label="image" name="image"></formfield>
+
+        <button-custom
+          class="w-full mt-4"
+          name="login"
+          type="submit"
+          size="large"
+          backgroundColor="var(--accent)"
+          color="#ffffff"
+          fontWeight="bold"
+        >
+          <div class="flex flex-row items-center justify-center space-x-2">
+            <span>update profile</span>
+          </div>
+        </button-custom>
+      </form>
+
+      <img src="images/profile_image.svg" alt="" />
+    </div>
+  </section>
+</lobby-sub-page-layout>

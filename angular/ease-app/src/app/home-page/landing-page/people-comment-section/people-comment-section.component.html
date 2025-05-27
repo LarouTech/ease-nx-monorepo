@@ -27,7 +27,7 @@
           <svg-icon
             class="mr-2"
             size="24px"
-            color="var(--primary)"
+            color="var(--accent)"
             [name]="props.icon"
           ></svg-icon>
 
@@ -40,11 +40,11 @@
             class="w-10 h-10 rounded-full mr-3"
           />
           <div class="text-left">
-            <div [ngStyle]="{ color: 'var(--primary)' }" class="font-bold">
+            <div [ngStyle]="{ color: 'var(--secondary)' }" class="font-bold">
               {{ props.role }}
             </div>
             <div
-              [ngStyle]="{ color: 'var(--secondary)' }"
+              [ngStyle]="{ color: 'var(--gray)' }"
               class="text-sm font-semibold"
             >
               {{ props.company }}
@@ -58,7 +58,7 @@
     <!-- Call to action -->
     <div class="mt-12">
       <a
-        [ngStyle]="{ color: 'var(--primary)' }"
+        [ngStyle]="{ color: 'var(--gary)' }"
         href="#more-testimonials"
         class="inline-block hover:underline text-lg font-medium"
       >

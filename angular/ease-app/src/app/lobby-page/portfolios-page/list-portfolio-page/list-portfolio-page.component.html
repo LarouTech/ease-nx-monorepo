@@ -1,36 +1,43 @@
-<section
-  class="w-full h-full p-4"
-  [ngStyle]="{ backgroundColor: 'var(--background)' }"
->
-  <div class="mb-8" [ngStyle]="{ color: 'var(--text)' }">
-    <h1 class="text-3xl font-bold mb-1">Portfolios</h1>
-    <p [ngStyle]="{ color: 'var(--gray)' }" class="text-base">
-      Start a new cloud advisory intake, explore cost estimates, or manage your
-      submissions.
-    </p>
-  </div>
+<lobby-sub-page-layout title="portfolios">
+  <p [ngStyle]="{ color: 'var(--gray)' }" class="text-base mb-8">
+    Start a new cloud advisory intake, explore cost estimates, or manage your
+    submissions.
+  </p>
 
+  @if (portfolios.length === 0) {
+  <div
+    class="w-full flex flex-col items-center justify-center p-8 border border-dashed border-zinc-300 rounded-md shadow-sm text-center gap-y-4"
+  >
+    <svg-icon
+      [routerLink]="['/lobby/portfolios/create']"
+      class="cursor-pointer"
+      color="var(--primary)"
+      name="plus"
+    ></svg-icon>
+
+    <span [ngStyle]="{ color: 'var(--gray)' }" class="text-sm font-medium">
+      No portfolio created yet. Start your first cloud advisory intake.
+    </span>
+  </div>
+  } @else {
   <div class="flex flex-wrap gap-6">
-    @for (iteration of testArray; track $index) {
+    @for (portfolio of portfolios.slice(0, 3); track $index) {
     <div class="flex-[1_1_calc(33.333%_-_1rem)] max-w-[33.333%]">
       <portfolio-card
+        (deletedPortfolioEvent)="updatePortfolio($event)"
         class="w-full"
-        [ownerName]="'Alex Smith'"
-        [ownerRole]="'Product Owner – Architecture Intake'"
-        [intakeRequests]="[
-          {
-            id: 'REQ-001',
-            title: 'Review Request: New Workflow Engine',
-            link: '/requests/001'
-          },
-          {
-            id: 'REQ-002',
-            title: 'Assessment: Case Platform Update',
-            link: '/requests/002'
-          }
-        ]"
+        [portfolio]="portfolio"
       ></portfolio-card>
     </div>
     }
   </div>
-</section>
+
+  @if (portfolios.length > 3) {
+  <div class="mt-10">
+    <table-cdk
+      [dataSource]="portfolios.slice(3)"
+      [columns]="portfolioColumns"
+    ></table-cdk>
+  </div>
+  } }
+</lobby-sub-page-layout>

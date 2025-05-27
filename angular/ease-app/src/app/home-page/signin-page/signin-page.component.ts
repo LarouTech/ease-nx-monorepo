@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import {
@@ -10,6 +10,7 @@ import {
   ButtonComponent,
   FormfieldComponent,
   SnackbarService,
+  SvgIconComponent,
 } from '@ease-angular/ui';
 
 @Component({
@@ -20,6 +21,7 @@ import {
     ButtonComponent,
     RouterModule,
     ReactiveFormsModule,
+    SvgIconComponent,
   ],
   templateUrl: './signin-page.component.html',
   styleUrl: './signin-page.component.css',
@@ -31,6 +33,7 @@ export class SigninPageComponent {
   private colorService = inject(ColorPaletteService);
 
   isDarkMode_ = this.colorService.isDarkMode;
+  isLoading = signal(false);
 
   signinForm: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -39,6 +42,7 @@ export class SigninPageComponent {
   });
 
   async onSignin() {
+    this.isLoading.set(true);
     const getControlValue = (name: string) => {
       return this.signinForm.get(name)?.value;
     };
@@ -53,8 +57,11 @@ export class SigninPageComponent {
     }
 
     try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await this.firebaseAuth.signin(email, password);
       this.router.navigate(['/', 'lobby']);
+      this.isLoading.set(false);
+
       return response;
     } catch (error) {
       this.snackbar.show({
@@ -62,6 +69,7 @@ export class SigninPageComponent {
           'Signin failed. Please check your credentials or try again later',
         type: 'error',
       });
+      this.isLoading.set(false);
       return error;
     }
   }

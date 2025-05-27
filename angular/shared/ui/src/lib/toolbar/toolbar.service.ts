@@ -6,6 +6,7 @@ export interface ToolbarControlsProps {
   label?: string;
   action: () => void;
   type: 'button' | 'link' | 'dropdown' | 'menu' | 'icon-badge';
+  backgroundColor?: string;
 }
 
 @Injectable({

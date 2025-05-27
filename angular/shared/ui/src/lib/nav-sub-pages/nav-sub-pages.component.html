@@ -1,0 +1,39 @@
+<div
+  [ngStyle]="{
+    backgroundColor: 'var(--lighterGray)',
+    borderColor: 'var(--lightGray)'
+  }"
+  class="flex flex-row justify-start items-center gap-x-5 h-7 rounded-lg text-sm shadow-md"
+>
+  <div
+    [ngStyle]="{
+      color: 'var(--text)',
+      backgroundColor: 'var(--lightGray)'
+    }"
+    class="capitalize h-full flex items-center pr-4 pl-2 font-bold rounded-lg test"
+  >
+    {{ section() }}
+  </div>
+
+  @for (subLink of links(); track $index) {
+  <ng-container
+    *ngTemplateOutlet="linkRef; context: { link: subLink }"
+  ></ng-container>
+  }
+</div>
+
+<!-- NG TEMPLATE -->
+<ng-template #linkRef let-link="link">
+  @if(!link.hidden) {
+  <a
+    [routerLink]="[link.route]"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [ngStyle]="{ color: 'var(--text)' }"
+    class="capitalize flex flex-row justify-start items-center gap-x-3 font-bold"
+  >
+    <span>{{ link.label }}</span>
+    <svg-icon color="var(--gray)" size="16px" name="caret"></svg-icon>
+  </a>
+  }
+</ng-template>

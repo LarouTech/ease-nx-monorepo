@@ -45,8 +45,7 @@ export class SideMenuComponent implements OnInit {
   private router = inject(Router);
 
   navRef_ = viewChild<ElementRef<HTMLElement>>('navRef');
-  // colorPaletteService = inject(ColorPaletteService);
-  // colorPalette = this.colorPaletteService.colorPalette_;
+
   menuItems = input<SidemenuItemProps[]>([]);
   toolbarRef = input<ToolbarComponent>();
   backgroundColor = input<string>('var(--background');

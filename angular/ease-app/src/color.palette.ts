@@ -1,12 +1,12 @@
 import { ColorPalette } from '@ease-angular/services';
 
 export const COLOR_PALETTE: ColorPalette = {
-  primary: '#1e3a8a', // Deep matte navy – anchors, brand
-  secondary: '#3f83f8', // Brighter violet-indigo – clearly pops against primary
+  primary: '#1e3a8a', // Deep matte blue (navy-inspired, polished)
+  secondary: '#a16207', // Indigo - clean and modern
   accent: '#0d9488', // Deep teal - sophisticated, confident
-  background: '#f9fafb', // Very light gray - airy and clean
+  background: '#fafaf9', // Very light gray - airy and clean
   text: '#111827', // Near black - strong legibility
-  highlight: '#fef3c7', // Soft yellow - subtle attention
+  highlight: '#facc15', // Soft yellow - subtle attention
   gray: '#6b7280', // Slate gray - balanced neutrality
   lightGray: '#e5e7eb', // Very light gray - low contrast elements
   lighterGray: '#f3f4f6', // Near-white - cards/surfaces
@@ -17,12 +17,12 @@ export const COLOR_PALETTE: ColorPalette = {
 };
 
 export const DARK_COLOR_PALETTE: ColorPalette = {
-  primary: '#3b5bdb', // Refined royal blue – strong and confident
-  secondary: '#9f7aea', // Lighter violet – soft contrast to primary
-  accent: '#38bdf8', // Soft sky blue – clean, refined highlight
+  primary: '#38bdf8', // Refined royal blue – strong and confident
+  secondary: '#f59e0b', // Lighter violet – soft contrast to primary
+  accent: '#9d174d', // Soft sky blue – clean, refined highlight
   background: '#121417', // Matte charcoal – pure modern dark
   text: '#e2e8f0', // Soft light gray – perfect legibility
-  highlight: '#2563eb', // Deep blue – attention but elegant
+  highlight: '#facc15', // Deep blue – attention but elegant
   gray: '#94a3b8', // Cool gray – modern, minimal
   lightGray: '#64748b', // Lighter text or border contrast
   lighterGray: '#334155', // Card backgrounds, surfaces

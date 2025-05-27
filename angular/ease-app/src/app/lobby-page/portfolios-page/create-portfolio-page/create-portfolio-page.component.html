@@ -1,1 +1,92 @@
-<p>create-portfolio-page works!</p>,
+<lobby-sub-page-layout title="create portfolio">
+  <div class="flex flex-col items-start justify-start gap-y-5 mt-4 px-4">
+    <p
+      [ngStyle]="{ color: 'var(--secondary)' }"
+      class="text-sm w-full md:w-3/4 font-semibold"
+    >
+      A Portfolio is the top-level organizational unit within ease. It serves as
+      a container to group related digital initiatives—such as intake requests,
+      cloud cost estimates, and architecture reviews—under a single strategic
+      domain...
+    </p>
+    <p
+      [ngStyle]="{ color: 'var(--gray)' }"
+      class="text-sm w-full md:w-2/3 font-semibold"
+    >
+      By organizing work into Portfolios, ease enables better visibility,
+      accountability, and alignment across architecture, funding, and delivery
+      pipelines.
+    </p>
+
+    <div
+      class="flex flex-col lg:flex-row justify-start items-center gap-y-10 lg:gap-x-20 w-full"
+    >
+      <div
+        [ngStyle]="{ borderColor: 'var(--lightGray)' }"
+        class="p-6 md:p-10 shadow-2xl border rounded-lg mt-6 w-full lg:w-1/2"
+      >
+        <div
+          [ngStyle]="{ color: 'var(--text)' }"
+          class="capitalize mb-6 font-bold flex flex-col items-start justify-start gap-y-2"
+        >
+          <div class="flex flex-row items-center justify-start gap-x-3">
+            <svg-icon
+              size="36px"
+              color="var(--text)"
+              name="information"
+            ></svg-icon>
+            <h4 class="text-2xl">we need information from you!</h4>
+          </div>
+          <p [ngStyle]="{ color: 'var(--gray)' }" class="text-xs">
+            few simple steps to create your portfolio and start thriving with
+            EASE
+          </p>
+        </div>
+
+        <form
+          [formGroup]="creattePortfolioForm"
+          (ngSubmit)="onCreatePotfolio()"
+          action=""
+          class="flex flex-col items-start justify-start gap-y-8 w-full"
+        >
+          @for (props of createPortfolioFormProps; track $index) {
+          <formfield
+            class="w-full"
+            color="var(--text)"
+            [label]="props.label"
+            [name]="props.name"
+            [formControlName]="props.name"
+            borderColor="var(--primary)"
+          ></formfield>
+          }
+
+          <button-custom
+            [disabled]="creattePortfolioForm.invalid"
+            class="w-full mt-4"
+            size="large"
+            backgroundColor="var(--accent)"
+            type="submit"
+          >
+            <svg-icon
+              size="20px"
+              class="mr-2"
+              color="#ffffff"
+              name="portfolio"
+            ></svg-icon>
+            <span class="font-bold text-xl">create portfolio</span>
+          </button-custom>
+        </form>
+      </div>
+
+      <img
+        class="w-full md:w-2/3 lg:w-1/2 h-auto lg:mt-0"
+        [src]="
+          isDarkMode()
+            ? 'images/portfolio_image_dark.svg'
+            : 'images/portfolio_image.svg'
+        "
+        alt="Illustration showing a team collaborating..."
+      />
+    </div>
+  </div>
+</lobby-sub-page-layout>

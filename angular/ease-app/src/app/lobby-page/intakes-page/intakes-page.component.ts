@@ -1,17 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  type OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ColorPaletteService } from '@ease-angular/services';
-
-import { KeyValuePairsToArrayPipe } from '@ease-angular/pipes';
 
 @Component({
   selector: 'app-intakes-page',
-  imports: [KeyValuePairsToArrayPipe, CommonModule],
+  imports: [CommonModule],
   templateUrl: './intakes-page.component.html',
   styleUrl: './intakes-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

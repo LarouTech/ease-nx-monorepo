@@ -1,0 +1,12 @@
+<section class="px-8 py-6">
+  <div id="header" class="mb-2">
+    <h3
+      [ngStyle]="{ color: 'var(--text)' }"
+      class="text-3xl font-bold capitalize"
+    >
+      {{ title() }}
+    </h3>
+  </div>
+
+  <ng-content></ng-content>
+</section>

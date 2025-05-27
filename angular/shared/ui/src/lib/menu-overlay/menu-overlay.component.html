@@ -1,0 +1,28 @@
+<ng-content select="[menuTrigger]"></ng-content>
+
+<ng-template #menuContent>
+  <ul
+    [ngStyle]="{ backgroundColor: 'var(--lighterGray)', color: 'var(--text)' }"
+    class="h-full w-full rounded-md shadow-md text-sm border border-zinc-300 min-w-[100px]"
+  >
+    @for (item of menuItems; track $index) {
+    <li
+      (click)="item?.action()"
+      (keyup.enter)="item?.action()"
+      tabindex="0"
+      [ngStyle]="{ color: 'var(--primary)', borderColor: 'var(--lightGray)' }"
+      class="menu-item cursor-pointer capitalize text-xs font-bold tracking-wide flex flex-row items-center justify-start gap-x-1 px-2 py-2 border-b last:border-none"
+    >
+      @if( item.icon) {
+
+      <svg-icon
+        size="16px"
+        color="var(--primary)"
+        [name]="item.icon"
+      ></svg-icon>
+      }
+      <span class="">{{ item.label }}</span>
+    </li>
+    }
+  </ul>
+</ng-template>
