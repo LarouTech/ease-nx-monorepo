@@ -10,7 +10,8 @@ export const COLOR_PALETTE: ColorPalette = {
   gray: '#6b7280', // Slate gray - balanced neutrality
   lightGray: '#e5e7eb', // Very light gray - low contrast elements
   lighterGray: '#f3f4f6', // Near-white - cards/surfaces
-  success: '#22c55e', // Vivid green - success
+  // success: '#22c55e', // Vivid green - success
+  success: '#88d674', // Vivid green - success
   warning: '#f59e0b', // Orange-amber - caution
   error: '#ef4444', // Red - alerts/errors
   darkGray: '#374151', // Charcoal - overlays, modals
@@ -26,7 +27,7 @@ export const DARK_COLOR_PALETTE: ColorPalette = {
   gray: '#94a3b8', // Cool gray – modern, minimal
   lightGray: '#64748b', // Lighter text or border contrast
   lighterGray: '#334155', // Card backgrounds, surfaces
-  success: '#22c55e', // Fresh green – clear, but not blinding
+  success: '#88d674', // Fresh green – clear, but not blinding
   warning: '#facc15', // Muted yellow – effective without harshness
   error: '#f87171', // Soft red – alerting but sleek
   darkGray: '#1e293b', // Sidebar/nav elements

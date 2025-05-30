@@ -1,14 +1,22 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
 import { FirestoreService } from '../firestore/firestore.service';
-import { doc } from 'firebase/firestore';
+import { doc, Timestamp } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 
 export interface Profile {
-  [key: string]: any; // optionally replace with a more specific type if you know profile's structure
-  createdOn: Date;
-  updatedOn: Date;
+  createdOn: Timestamp;
+  updatedOn: Timestamp;
   userId: string;
   email: string;
+  givenName?: string;
+  familyName?: string;
+  address?: string;
+  city: string;
+  postalCode?: string;
+  province?: string;
+  country?: string;
+  phone?: string;
+  imageUrl?: string;
 }
 
 @Injectable({
@@ -23,7 +31,7 @@ export class ProfileService extends FirestoreService {
     super();
   }
 
-  async creatProfile(user: User, profile: Partial<Profile>) {
+  async createProfile(user: User, profile?: Partial<Profile>) {
     const userRef = doc(this.db, this.collectionName, user.uid);
 
     await this.set(userRef, {
@@ -33,6 +41,11 @@ export class ProfileService extends FirestoreService {
       userId: user.uid,
       email: user.email,
     });
+  }
+
+  async updateProfile(user: User, profile: Partial<Profile>) {
+    const userRef = doc(this.db, this.collectionName, user.uid);
+    await this.update(this.collectionName, userRef.id, profile);
   }
 
   async getProfile(id: string): Promise<Profile> {

@@ -8,3 +8,4 @@ export * from './lib/firestore/firestore.service';
 export * from './lib/firebase/firebase.provider';
 export * from './lib/portfolio/portfolio.service';
 export * from './lib/profile/profile.service';
+export * from './lib/firebase-storage/firebase-storage.service';

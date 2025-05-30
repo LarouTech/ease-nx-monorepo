@@ -5,20 +5,26 @@ import {
   ElementRef,
   inject,
   input,
-  SimpleChanges,
   viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { ButtonComponent } from '../button/button.component';
 import { ToolbarControlsProps, ToolbarService } from './toolbar.service';
-import { ColorPaletteService } from '@ease-angular/services';
 import { RouterModule } from '@angular/router';
+import { AvatarComponent } from '../avatar/avatar.component';
+import { FirebaseAuthService, ProfileService } from '@ease-angular/services';
 
 @Component({
   selector: 'toolbar',
   standalone: true,
-  imports: [CommonModule, SvgIconComponent, ButtonComponent, RouterModule],
+  imports: [
+    CommonModule,
+    SvgIconComponent,
+    ButtonComponent,
+    RouterModule,
+    AvatarComponent,
+  ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
   providers: [ToolbarService],
@@ -26,9 +32,12 @@ import { RouterModule } from '@angular/router';
 export class ToolbarComponent implements AfterViewInit {
   toolbarRef = viewChild<ElementRef<HTMLElement>>('toolbarRef');
   el = inject(ElementRef);
+  private authService = inject(FirebaseAuthService);
   private cdr = inject(ChangeDetectorRef);
-  // private colorPaletteService = inject(ColorPaletteService);
-  // colorPalette = this.colorPaletteService.colorPalette_;
+  private profileService = inject(ProfileService);
+  profile_ = this.profileService.profile_;
+  isLoggedIn = this.authService.isLoggedIn;
+
   brandName = input.required<string>();
   brandNameItalic = input(false);
   brandNameFontSize = input<string>('2.25rem');
@@ -49,8 +58,4 @@ export class ToolbarComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.cdr.detectChanges();
   }
-
-  // ngOnChanges(change: SimpleChanges) {
-  //   console.log(change);
-  // }
 }

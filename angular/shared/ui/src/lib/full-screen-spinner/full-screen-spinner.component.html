@@ -1,0 +1,23 @@
+@if(visible()) {
+<div
+  @fade
+  [ngStyle]="{ backgroundColor: 'var(--background)', top: topOffset() }"
+  class="fixed inset-0 bottom-0 z-50 flex flex-col items-center justify-center gap-y-4"
+>
+  <svg-icon
+    color="var(--primary)"
+    size="6rem"
+    name="loader"
+    class="animate-spin [animation-duration:4s]"
+  ></svg-icon>
+
+  <p [ngStyle]="{ color: 'var(--text)' }" class="text-xl font-bold">
+    {{ message() }}
+  </p>
+
+  <p class="font-semibold capitalize" [ngStyle]="{ color: 'var(--secondary)' }">
+    {{ currentActionMessage() }}
+  </p>
+</div>
+
+}

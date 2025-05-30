@@ -19,9 +19,11 @@ import {
 import {
   ButtonComponent,
   FormfieldComponent,
+  FullScreenSpinnerComponent,
   SnackbarService,
   SvgIconComponent,
 } from '@ease-angular/ui';
+import { simulateDelay } from '@ease/utils';
 
 @Component({
   selector: 'app-login-page',
@@ -32,6 +34,7 @@ import {
     RouterModule,
     ReactiveFormsModule,
     SvgIconComponent,
+    FullScreenSpinnerComponent,
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
@@ -45,6 +48,7 @@ export class LoginPageComponent {
   isDarkMode_ = this.colorService.isDarkMode;
 
   isLoading = signal(false);
+  isFullSpinnerLoading = signal(false);
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -65,11 +69,16 @@ export class LoginPageComponent {
     const password = getControlValue('password');
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      const response = await this.firebaseAuth.login(email, password);
-      console.log(response);
+      await simulateDelay(1000);
       this.isLoading.set(false);
+
+      this.isFullSpinnerLoading.set(true);
+      await simulateDelay(3000);
+
+      const response = await this.firebaseAuth.login(email, password);
+
       this.router.navigate(['/', 'lobby']);
+      this.isFullSpinnerLoading.set(false);
       return response;
     } catch (error) {
       console.log((error as Error).message);

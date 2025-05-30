@@ -13,3 +13,6 @@ export * from './lib/lobby-sub-page-layout/lobby-sub-page-layout.component';
 export * from './lib/menu-overlay/menu-overlay.component';
 export * from './lib/portfolio-card/portfolio-card.component';
 export * from './lib/table-cdk/table-cdk.component';
+export * from './lib/modal/modal.service';
+export * from './lib/full-screen-spinner/full-screen-spinner.component';
+export * from './lib/avatar/avatar.component';

@@ -11,14 +11,19 @@ import {
   ColorPaletteService,
   FirebaseAuthService,
 } from '@ease-angular/services';
-import { ToolbarControlsProps, ToolbarService } from '@ease-angular/ui';
+import {
+  FullScreenSpinnerComponent,
+  ToolbarControlsProps,
+  ToolbarService,
+} from '@ease-angular/ui';
 
 import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
+import { simulateDelay } from '@ease/utils';
 
 @Component({
   selector: 'app-lobby-page',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, FullScreenSpinnerComponent],
   templateUrl: './lobby-page.component.html',
   styleUrl: './lobby-page.component.css',
   animations: [FadeInFadeOut],
@@ -29,8 +34,7 @@ export class LobbyPageComponent implements OnInit {
   private router = inject(Router);
   private paletteService = inject(ColorPaletteService);
 
-  // Computed signal for reactive binding if needed
-  // isDarkMode = computed(() => this.paletteService.isDarkMode());
+  isLoading = signal(false);
 
   ngOnInit(): void {
     this.updateToolbar();
@@ -42,10 +46,14 @@ export class LobbyPageComponent implements OnInit {
   }
 
   async onLogout(): Promise<void> {
+    this.isLoading.set(true);
+    await simulateDelay(3000);
     try {
       await this.authService.logout();
       this.router.navigate(['/']);
+      this.isLoading.set(false);
     } catch (error) {
+      this.isLoading.set(false);
       console.error('Logout failed:', error);
     }
   }

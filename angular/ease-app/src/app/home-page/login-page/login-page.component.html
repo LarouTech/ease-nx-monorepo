@@ -70,7 +70,7 @@
             @if (isLoading()) {
             <svg-icon
               [ngClass]="{ 'animate-spin': isLoading() }"
-              class="duration-[3000]"
+              class="[animation-duration:4s]"
               color="#ffffff"
               name="loader"
             ></svg-icon>
@@ -105,4 +105,15 @@
       />
     </div>
   </div>
+
+  <full-screen-spinner
+    message="plase wait while logging you in..."
+    [visible]="isFullSpinnerLoading()"
+    [actionsMessages]="[
+      'validating user...',
+      'fetching profile...',
+      'preparing environement....'
+    ]"
+    topOffset="85px"
+  ></full-screen-spinner>
 </section>

@@ -9,9 +9,11 @@ import {
 import {
   ButtonComponent,
   FormfieldComponent,
+  FullScreenSpinnerComponent,
   SnackbarService,
   SvgIconComponent,
 } from '@ease-angular/ui';
+import { simulateDelay } from '@ease/utils';
 
 @Component({
   selector: 'app-signin-page',
@@ -22,6 +24,7 @@ import {
     RouterModule,
     ReactiveFormsModule,
     SvgIconComponent,
+    FullScreenSpinnerComponent,
   ],
   templateUrl: './signin-page.component.html',
   styleUrl: './signin-page.component.css',
@@ -34,6 +37,7 @@ export class SigninPageComponent {
 
   isDarkMode_ = this.colorService.isDarkMode;
   isLoading = signal(false);
+  isFullSpinnerLoading = signal(false);
 
   signinForm: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -57,11 +61,13 @@ export class SigninPageComponent {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await simulateDelay(2000);
+      this.isLoading.set(false);
+      this.isFullSpinnerLoading.set(true);
+
       const response = await this.firebaseAuth.signin(email, password);
       this.router.navigate(['/', 'lobby']);
-      this.isLoading.set(false);
-
+      this.isFullSpinnerLoading.set(false);
       return response;
     } catch (error) {
       this.snackbar.show({

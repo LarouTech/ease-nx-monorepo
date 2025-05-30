@@ -49,37 +49,72 @@
       </li>
     </ul>
 
-    <div class="flex items-start justify-between mt-16 gap-x-20">
+    <div class="mt-8 flex items-center justify-end">
+      <button
+        class="flex justify-start items-center gap-1 px-5 py-1 rounded-lg text-white font-medium italic shadow-md transition-all duration-200 hover:opacity-90 cursor-pointer"
+        [ngStyle]="{ backgroundColor: 'var(--primary)' }"
+        (click)="onSkip()"
+      >
+        <span class="uppercase tracking-wide text-sm">Skip</span>
+
+        <svg-icon
+          color="#ffffff"
+          [name]="isLoading() ? 'loader' : 'arrow_long'"
+          [ngClass]="{ 'animate-spin': isLoading() }"
+          class="duration-[1000]"
+        ></svg-icon>
+      </button>
+    </div>
+
+    <div class="flex items-start justify-between mt-6 gap-x-16">
       <form
         [ngStyle]="{ backgroundColor: 'var(--background)' }"
-        class="p-6 rounded-lg border border-[var(--primary)] shadow-2xl flex flex-col items-start justify-start space-y-4 w-[50%]"
+        class="p-10 rounded-lg border border-[var(--primary)] shadow-2xl flex flex-col items-start justify-start space-y-5 w-[45%]"
         [formGroup]="profileForm"
         (ngSubmit)="onSubmit()"
       >
-        <div class="mb-4">
-          <h2
-            [ngStyle]="{ color: 'var(--primary)' }"
-            class="text-2xl font-bold capitalize"
-          >
-            user Information
-          </h2>
+        <avatar
+          (imageUploadEvent)="onUploadAvatar($event)"
+          size="100px"
+          [profile]="profile_()"
+          [editOnClick]="true"
+        ></avatar>
+        <div
+          [ngStyle]="{ color: 'var(--secondary)' }"
+          class="capitalize mb-6 font-bold flex flex-col items-start justify-start gap-y-2"
+        >
+          <div class="flex flex-row items-center justify-start gap-x-3">
+            <h4 class="text-2xl">Start building your profile now.</h4>
+          </div>
         </div>
 
         <formfield
           class="w-full"
           label="given name"
           name="givenName"
+          formControlName="givenName"
         ></formfield>
 
         <formfield
           class="w-full"
           label="family name"
           name="familyName"
+          formControlName="familyName"
         ></formfield>
 
         <div class="flex flex-row gap-4 w-full">
-          <formfield class="w-full" label="address" name="address"></formfield>
-          <formfield class="w-full" label="city" name="city"></formfield>
+          <formfield
+            class="w-full"
+            label="address"
+            name="address"
+            formControlName="address"
+          ></formfield>
+          <formfield
+            class="w-full"
+            label="city"
+            name="city"
+            formControlName="city"
+          ></formfield>
         </div>
 
         <div class="flex flex-row gap-4 w-full">
@@ -87,16 +122,34 @@
             class="w-full"
             label="postal code"
             name="postalCode"
+            formControlName="postalCode"
           ></formfield>
           <formfield
             class="w-full"
             label="province"
             name="province"
+            formControlName="province"
           ></formfield>
-          <formfield class="w-full" label="country" name="country"></formfield>
+          <formfield
+            class="w-full"
+            label="country"
+            name="country"
+            formControlName="country"
+          ></formfield>
         </div>
-        <formfield class="w-full" label="phone" name="phone"></formfield>
-        <formfield class="w-full" label="image" name="image"></formfield>
+        <formfield
+          class="w-full"
+          label="phone"
+          name="phone"
+          type="tel"
+          formControlName="phone"
+        ></formfield>
+        <formfield
+          class="w-full hidden"
+          label="image"
+          name="image"
+          formControlName="imageUrl"
+        ></formfield>
 
         <button-custom
           class="w-full mt-4"
@@ -106,14 +159,23 @@
           backgroundColor="var(--accent)"
           color="#ffffff"
           fontWeight="bold"
+          [disabled]="false"
         >
           <div class="flex flex-row items-center justify-center space-x-2">
+            <svg-icon
+              color="#fffffff"
+              [ngClass]="{ 'animate-spin': isLoading() }"
+              class="duration-[3000]"
+              size="24px"
+              [name]="isLoading() ? 'loader' : 'update_profile'"
+            ></svg-icon>
+
             <span>update profile</span>
           </div>
         </button-custom>
       </form>
 
-      <img src="images/profile_image.svg" alt="" />
+      <img class="" src="images/profile_image.svg" alt="" />
     </div>
   </section>
 </lobby-sub-page-layout>

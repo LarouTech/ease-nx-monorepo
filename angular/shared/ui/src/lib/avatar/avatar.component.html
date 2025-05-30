@@ -1,0 +1,57 @@
+@let avartarSize = size(); @let userProfile = profile();
+
+<!-- Avatar Container -->
+<div
+  class="avatar-container relative rounded-full flex items-center justify-center uppercase font-semibold shadow-sm shadow-gray-300"
+  [ngStyle]="{
+    height: avartarSize,
+    width: avartarSize,
+    fontSize: fontSize(),
+    borderColor: 'var(--primary)',
+    backgroundColor: 'var(--lighterGray)',
+    color: 'var(--text)',
+    borderWidth:  imageUrl() ? '0px' : '0px',
+  }"
+  [ngClass]="{ 'cursor-pointer': editOnClick() }"
+  tabindex="0"
+  (click)="onAvatarUploadClick()"
+  (keydown.enter)="onAvatarUploadClick()"
+  (keydown.space)="onAvatarUploadClick()"
+>
+  <!-- Avatar Image -->
+  @if (imageUrl()) {
+  <img
+    [src]="imageUrl()"
+    alt="User avatar"
+    class="rounded-full w-full h-full object-cover"
+  />
+  } @else {
+  <!-- Initials -->
+  <span
+    [ngClass]="{ 'avatar-text': imageUrl() }"
+    class="absolute flex flex-col items-center justify-center"
+  >
+    @if (userProfile) { @if (userProfile.givenName && userProfile.familyName) {
+    {{ userProfile.givenName.slice(0, 1) + userProfile.familyName.slice(0, 1) }}
+    } @else {
+    {{ userProfile.email.slice(0, 1) }}
+    } }
+  </span>
+  }
+
+  <!-- Camera Icon -->
+  @if (editOnClick()) {
+  <div class="avatar-icon absolute flex flex-col items-center justify-center">
+    <svg-icon color="var(--text)" [size]="fontSize()" name="camera"></svg-icon>
+  </div>
+  }
+</div>
+
+<!-- Hidden File Input -->
+<input
+  type="file"
+  accept="image/*"
+  #fileInput
+  class="hidden"
+  (change)="onAvatarFileSelected($event)"
+/>

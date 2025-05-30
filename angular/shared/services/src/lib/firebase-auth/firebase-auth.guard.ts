@@ -19,7 +19,7 @@ export const firebaseAuthGuard: CanActivateFn = async () => {
 
   if (!profile) {
     console.warn('No profile found for user:', user.uid);
-    await profileService.creatProfile(user, { test: 'test' });
+    await profileService.createProfile(user);
     profile = await profileService.getProfile(user.uid);
     router.navigate(['/lobby/profile-creation']);
     return true;

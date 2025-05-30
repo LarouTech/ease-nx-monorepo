@@ -9,12 +9,14 @@ import {
 } from 'firebase/auth';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { FirebaseService } from '../firebase/firebase.service';
+import { ProfileService } from '../profile/profile.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
   private firebase = inject(FirebaseService);
+  private profileService = inject(ProfileService);
   auth: Auth = this.firebase.getFirebaseAuthInstance();
 
   private _user = signal<User | null | undefined>(undefined); // undefined = loading
@@ -63,6 +65,7 @@ export class FirebaseAuthService {
   async logout() {
     try {
       const response = await signOut(this.auth);
+      this.profileService.profile_.set(null);
       return response;
     } catch (error) {
       console.log(error);

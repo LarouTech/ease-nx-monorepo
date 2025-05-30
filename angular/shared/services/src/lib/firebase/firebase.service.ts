@@ -3,6 +3,7 @@ import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
 import { FIREBASE_CONFIG_TOKEN } from './firebase-config.token';
 import { Firestore, getFirestore } from 'firebase/firestore';
 import { Auth, getAuth } from 'firebase/auth';
+import { FirebaseStorage, getStorage } from 'firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ export class FirebaseService {
   private firebaseApp: FirebaseApp;
   private firestoreInstance: Firestore;
   private auth: Auth;
+  private storage: FirebaseStorage;
 
   constructor(
     @Inject(FIREBASE_CONFIG_TOKEN) public firebaseOptions: FirebaseOptions
@@ -18,6 +20,7 @@ export class FirebaseService {
     this.firebaseApp = initializeApp(this.firebaseOptions);
     this.firestoreInstance = getFirestore(this.firebaseApp);
     this.auth = getAuth(this.firebaseApp);
+    this.storage = getStorage(this.firebaseApp);
   }
 
   getFirestoreInstance(): Firestore {
@@ -26,5 +29,9 @@ export class FirebaseService {
 
   getFirebaseAuthInstance(): Auth {
     return this.auth;
+  }
+
+  getFirebaseStorageInstance(): FirebaseStorage {
+    return this.storage;
   }
 }

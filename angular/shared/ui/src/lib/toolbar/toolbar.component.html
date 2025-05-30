@@ -41,27 +41,33 @@
   </div>
 
   <!-- controls -->
-  @if(controls()) {
-  <div
-    id="controls"
-    class="flex flex-row justify-start items-center h-full transition-all"
-  >
-    @for (control of controls(); track $index) { @switch (control.type) {
-    @case('icon-badge') {
-    <ng-container
-      *ngTemplateOutlet="iconBadgeRef; context: { control }"
-    ></ng-container>
-    } @case ('link') {
-    <ng-container
-      *ngTemplateOutlet="linkRef; context: { control }"
-    ></ng-container>
-    } @case ('button') {
-    <ng-container
-      *ngTemplateOutlet="linkRef; context: { control }"
-    ></ng-container>
-    } } }
+  <div class="flex flex-row items-center justify-start h-full">
+    @if(controls()) {
+    <div
+      id="controls"
+      class="flex flex-row justify-start items-center h-full transition-all"
+    >
+      @for (control of controls(); track $index) { @switch (control.type) {
+      @case('icon-badge') {
+      <ng-container
+        *ngTemplateOutlet="iconBadgeRef; context: { control }"
+      ></ng-container>
+      } @case ('link') {
+      <ng-container
+        *ngTemplateOutlet="linkRef; context: { control }"
+      ></ng-container>
+      } @case ('button') {
+      <ng-container
+        *ngTemplateOutlet="linkRef; context: { control }"
+      ></ng-container>
+      } } }
+    </div>
+
+    } @if(isLoggedIn()) {
+    <avatar size="40px" class="mb-2" [profile]="profile_()"></avatar>
+
+    }
   </div>
-  }
 </nav>
 
 <!-- Template references -->

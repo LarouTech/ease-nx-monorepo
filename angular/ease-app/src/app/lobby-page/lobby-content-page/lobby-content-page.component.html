@@ -1,4 +1,10 @@
-<lobby-sub-page-layout [title]="'welcome' + ' ' + profile_()?.email">
+<lobby-sub-page-layout
+  [title]="
+    profile_()!.givenName && profile_()!.familyName
+      ? 'welcome' + ' ' + profile_()!.givenName + ' ' + profile_()!.familyName
+      : 'welcome' + ' ' + profile_()!.email
+  "
+>
   <p class="mb-8">
     Start a new cloud advisory intake, explore cost estimates, or manage your
     submissions.

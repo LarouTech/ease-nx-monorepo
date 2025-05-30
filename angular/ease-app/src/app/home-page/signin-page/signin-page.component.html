@@ -110,4 +110,14 @@
       />
     </div>
   </div>
+  <full-screen-spinner
+    message="plase wait while logging you in..."
+    [visible]="isFullSpinnerLoading()"
+    [actionsMessages]="[
+      'validating user...',
+      'fetching profile...',
+      'preparing environement....'
+    ]"
+    topOffset="85px"
+  ></full-screen-spinner>
 </section>
