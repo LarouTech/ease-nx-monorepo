@@ -1,24 +1,7 @@
-<!-- <div
-  class="flex flex-row items-center gap-x-10 text-center font-bold capitalize"
->
-  <div>
-    <h3>dark palette</h3>
-    @for (color of darkPalette | keyValuePairsToArray; track $index) {
+<div class="px-6">
+  <nav-sub-pages section="intakes" [links]="navSubLinks"></nav-sub-pages>
+</div>
 
-    <div class="h-10 w-[200px]" [ngStyle]="{ backgroundColor: color.value }">
-      {{ color.key }}
-    </div>
-
-    }
-  </div>
-  <div>
-    <h3>light palette</h3>
-    @for (color of lightPalette | keyValuePairsToArray; track $index) {
-
-    <div class="h-10 w-[200px]" [ngStyle]="{ backgroundColor: color.value }">
-      {{ color.key }}
-    </div>
-
-    }
-  </div>
-</div> -->
+<div class="min-h-screen h-full mt-4" [@routeAnimations]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>

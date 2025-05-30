@@ -10,7 +10,7 @@
     borderColor: 'var(--primary)',
     backgroundColor: 'var(--lighterGray)',
     color: 'var(--text)',
-    borderWidth:  imageUrl() ? '0px' : '0px',
+    borderWidth:  imageUrl() ? '0px' : '2px',
   }"
   [ngClass]="{ 'cursor-pointer': editOnClick() }"
   tabindex="0"
@@ -28,7 +28,7 @@
   } @else {
   <!-- Initials -->
   <span
-    [ngClass]="{ 'avatar-text': imageUrl() }"
+    [ngClass]="{ 'avatar-text': editOnClick() }"
     class="absolute flex flex-col items-center justify-center"
   >
     @if (userProfile) { @if (userProfile.givenName && userProfile.familyName) {
@@ -43,6 +43,9 @@
   @if (editOnClick()) {
   <div class="avatar-icon absolute flex flex-col items-center justify-center">
     <svg-icon color="var(--text)" [size]="fontSize()" name="camera"></svg-icon>
+    <span [ngStyle]="{ color: 'var(--gray)' }" class="text-[10px] capitalize"
+      >upload</span
+    >
   </div>
   }
 </div>

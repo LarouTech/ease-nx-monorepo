@@ -1,10 +1,11 @@
 <div class="flex flex-row flex-wrap gap-6 w-full shadow-xl rounded-2xl">
   <div
     @fadeOut
-    class="cursor-pointer rounded-2xl py-8 px-6 border border-gray-200 w-full flex flex-col justify-start items-start gap-y-5 relative"
+    class="cursor-pointer rounded-2xl py-8 px-6 border w-full flex flex-col justify-start items-start gap-y-5 relative"
     [ngStyle]="{
       color: 'var(--primary)',
-      backgroundColor: 'var(--background)'
+      backgroundColor: 'var(--background)',
+      borderColor: 'var(--primary)'
     }"
   >
     <ng-container *ngTemplateOutlet="menuRef"></ng-container>

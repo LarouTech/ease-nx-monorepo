@@ -39,11 +39,27 @@ export const SIDEDMENU_PROPS = (router: Router): SidemenuItemProps[] => {
       action: () => router.navigate(['/', 'lobby', 'intakes']),
       isSelected: false,
       route: '/lobby/intakes',
+      submenuItems: [
+        {
+          label: 'List',
+          icon: 'list',
+          action: () => router.navigate(['/', 'lobby', 'intakes']),
+          isSelected: false,
+          route: '/lobby/intakes',
+        },
+        {
+          label: 'Create',
+          icon: 'add',
+          action: () => router.navigate(['/', 'lobby', 'intakes', 'create']),
+          isSelected: false,
+          route: '/lobby/intakes/create',
+        },
+      ],
     },
     {
       label: 'Cost Estimator',
       icon: 'estimate',
-      action: () => console.log('Intakes clicked'),
+      action: () => router.navigate(['/', 'lobby', 'cost-estimator']),
       isSelected: false,
     },
     {

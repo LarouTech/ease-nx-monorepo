@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { firebaseAuthGuard } from '@ease-angular/services';
 import { PortfolioRoutes } from './portfolios-page/portfolio.routes';
+import { IntakesRoutes } from './intakes-page/intakes.routes';
 
 export const LobbyRoutes: Routes = [
   {
@@ -18,12 +19,14 @@ export const LobbyRoutes: Routes = [
         data: { animation: 'LobbyContentPage' },
       },
       ...PortfolioRoutes,
+      ...IntakesRoutes,
       {
-        path: 'intakes',
+        path: 'cost-estimator',
         loadComponent: () =>
-          import('./intakes-page/intakes-page.component').then(
-            (c) => c.IntakesPageComponent
+          import('./cost-estimator/cost-estimator.component').then(
+            (c) => c.CostEstimatorComponent
           ),
+        children: [],
       },
       {
         path: 'profile-creation',
