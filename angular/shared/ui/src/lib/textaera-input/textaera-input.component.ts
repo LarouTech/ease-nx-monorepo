@@ -2,32 +2,31 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   forwardRef,
-  Input,
   HostBinding,
+  Input,
   input,
   output,
-  inject,
+  type OnInit,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SvgIconComponent } from '../svg-icon/svg-icon.component';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'formfield',
-  standalone: true,
-  imports: [CommonModule, SvgIconComponent],
-  templateUrl: './formfield.component.html',
-  styleUrl: './formfield.component.css',
+  selector: 'textaera-input',
+  imports: [CommonModule],
+  templateUrl: './textaera-input.component.html',
+  styleUrl: './textaera-input.component.css',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormfieldComponent),
+      useExisting: forwardRef(() => TextaeraInputComponent),
       multi: true,
     },
   ],
 })
-export class FormfieldComponent implements ControlValueAccessor {
+export class TextaeraInputComponent {
   label = input<string>();
   name = input.required<string>();
+  row = input<number>(10);
   placeholder = input<string>('');
   hint = input<string>();
   type = input<string>('text');
@@ -42,7 +41,9 @@ export class FormfieldComponent implements ControlValueAccessor {
 
   valueChanged = output<string>();
 
-  @HostBinding('attr.disabled') @Input() disabled = false;
+  @HostBinding('attr.disabled')
+  @Input()
+  disabled = false;
 
   value = '';
   onChange: (value: string) => void = () => {

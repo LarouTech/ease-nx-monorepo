@@ -1,0 +1,75 @@
+<form id="section-1" [formGroup]="businessContextForm">
+  <div
+    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow space-y-6"
+  >
+    <div class="flex flex-row items-center justify-start space-x-2">
+      <svg-icon size="36px" color="var(--secondary)" name="document"></svg-icon>
+      <h2 class="text-2xl font-bold">Business Context</h2>
+    </div>
+
+    <div>
+      <textaera-input
+        label="Business Driver / Objective"
+        name="businessDriver"
+        formControlName="businessDriver"
+      ></textaera-input>
+    </div>
+
+    <div>
+      <textaera-input
+        label="Problem Statement or Opportunity"
+        name="problemStatement"
+        formControlName="problemStatement"
+      ></textaera-input>
+    </div>
+
+    <div class="flex flex-row items-center justify-between w-full space-x-5">
+      <select-input
+        class="w-[50%]"
+        formControlName="isPartOfLargerInitative"
+        name="isPartOfLargerProgram"
+        label="Is this part of a larger program or initiative?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+
+      <formfield
+        class="w-[50%]"
+        formControlName="initiative"
+        name="initiative"
+        label="If yes, specify the initiative name"
+      ></formfield>
+    </div>
+
+    <div class="flex flex-row items-center justify-between w-full space-x-5">
+      <select-input
+        class="w-[50%]"
+        formControlName="isDeadlineOrRegulatory"
+        name="isDeadlineOrRegulatory"
+        label="Is there a deadline or regulatory requirement?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+
+      <formfield
+        class="w-[50%]"
+        formControlName="deadline"
+        name="initiative"
+        label="Specify Deadline (if applicable)"
+        type="date"
+      ></formfield>
+    </div>
+
+    <div>
+      <textaera-input
+        label="Impact if not implemented"
+        name="impactIfNotImpelemented"
+        formControlName="impactIfNotImpelemented"
+      ></textaera-input>
+    </div>
+  </div>
+</form>

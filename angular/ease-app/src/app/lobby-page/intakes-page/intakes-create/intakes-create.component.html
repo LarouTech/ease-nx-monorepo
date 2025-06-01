@@ -1,1 +1,39 @@
-<lobby-sub-page-layout title="Create Intake"></lobby-sub-page-layout>
+<lobby-sub-page-layout title="Create Intake">
+  <main class="flex items-start justify-start mt-10">
+    <form
+      #formRef
+      [formGroup]="intakeForm"
+      (ngSubmit)="onSubmit()"
+      class="w-[80%] space-y-10 px-6"
+    >
+      <requestor-information-form
+        #requestorInformtionRef
+        (formChangEvent)="onFormUpdate($event, requestorInformtionRef.formName)"
+      ></requestor-information-form>
+
+      <business-context
+        #businessContextRef
+        (formChangEvent)="onFormUpdate($event, businessContextRef.formName)"
+      ></business-context>
+    </form>
+
+    <div
+      id="legend"
+      class="w-full text(--gray) text-xs flex flex-row justify-end items-end fixed right-10 top-40"
+    >
+      <ul class="tracking-wide flex flex-col gap-y-1">
+        @for (section of formSections; track $index) {
+        <li
+          (click)="onClickSectionMenuItem(`section-${$index}`)"
+          (keydown.enter)="onClickSectionMenuItem(`section-${$index}`)"
+          tabindex="0"
+          class="cursor-pointer hover:text-[var(--primary)]"
+          [id]="`${section}-${$index}`"
+        >
+          {{ section }}
+        </li>
+        }
+      </ul>
+    </div>
+  </main>
+</lobby-sub-page-layout>

@@ -16,3 +16,5 @@ export * from './lib/table-cdk/table-cdk.component';
 export * from './lib/modal/modal.service';
 export * from './lib/full-screen-spinner/full-screen-spinner.component';
 export * from './lib/avatar/avatar.component';
+export * from './lib/select-input/select-input.component';
+export * from './lib/textaera-input/textaera-input.component';

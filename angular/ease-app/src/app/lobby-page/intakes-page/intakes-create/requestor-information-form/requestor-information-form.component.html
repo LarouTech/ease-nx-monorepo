@@ -1,0 +1,47 @@
+<form id="section-0" [formGroup]="requestorInformationForm">
+  <div
+    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow-lg space-y-6"
+  >
+    <div class="flex flex-row items-center justify-start space-x-2">
+      <svg-icon size="36px" color="var(--secondary)" name="info"></svg-icon>
+      <h2 class="text-2xl font-bold">Requestor Information</h2>
+    </div>
+
+    <div>
+      <formfield
+        label="Requestor Name"
+        name="name"
+        formControlName="name"
+      ></formfield>
+    </div>
+
+    <div>
+      <formfield
+        label="Branch/Division"
+        name="branch"
+        formControlName="branch"
+      ></formfield>
+    </div>
+
+    <div>
+      <formfield label="Title" name="title" formControlName="title"></formfield>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <formfield
+          label="Email"
+          name="email"
+          formControlName="email"
+        ></formfield>
+      </div>
+      <div>
+        <formfield
+          label="Phone"
+          name="phone"
+          formControlName="phone"
+        ></formfield>
+      </div>
+    </div>
+  </div>
+</form>
