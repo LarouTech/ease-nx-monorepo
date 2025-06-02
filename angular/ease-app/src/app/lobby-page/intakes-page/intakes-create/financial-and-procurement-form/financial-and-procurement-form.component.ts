@@ -6,8 +6,8 @@ import {
   DestroyRef,
   inject,
   input,
+  OnInit,
   output,
-  type OnInit,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -17,6 +17,7 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  CheckboxGroupComponent,
   FormfieldComponent,
   SelectInputComponent,
   SvgIconComponent,
@@ -25,17 +26,19 @@ import {
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
-  selector: 'business-context',
+  selector: 'financial-and-procurement-form',
   imports: [
-    SelectInputComponent,
-    ReactiveFormsModule,
     CommonModule,
-    TextaeraInputComponent,
+    ReactiveFormsModule,
     FormfieldComponent,
     SvgIconComponent,
+    SelectInputComponent,
+    TextaeraInputComponent,
+    FormfieldComponent,
+    CheckboxGroupComponent,
   ],
-  templateUrl: './business-context.component.html',
-  styleUrl: './business-context.component.css',
+  templateUrl: './financial-and-procurement-form.component.html',
+  styleUrl: './financial-and-procurement-form.component.css',
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [
@@ -50,16 +53,14 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     ]),
   ],
 })
-export class BusinessContextComponent implements OnInit {
+export class FinancialAndProcurementFormComponent implements OnInit {
   private destroyRef$ = inject(DestroyRef);
-  businessContextForm!: FormGroup;
+  finacialAndProcurmentForm!: FormGroup;
 
   id = input.required<string>();
   formChangEvent = output<FormGroup>();
 
-  formName = 'businessContext';
-
-  focusColor = 'var(--primary';
+  formName = 'financialAndProcurement';
 
   ngOnInit() {
     this.initializeForm();
@@ -67,27 +68,27 @@ export class BusinessContextComponent implements OnInit {
   }
 
   private formChangeEmitter() {
-    this.businessContextForm.valueChanges
+    this.finacialAndProcurmentForm.valueChanges
       .pipe(
         debounceTime(1000), // wait 300ms after last change
         distinctUntilChanged(), // only emit if value actually changes
         takeUntilDestroyed(this.destroyRef$)
       )
       .subscribe((d) => {
-        console.log(d);
-        this.formChangEvent.emit(this.businessContextForm);
+        this.formChangEvent.emit(this.finacialAndProcurmentForm);
       });
   }
 
   private initializeForm() {
-    this.businessContextForm = new FormGroup({
-      businessDriver: new FormControl('', Validators.required),
-      problemStatement: new FormControl('', Validators.required),
-      isPartOfLargerInitative: new FormControl('', Validators.required),
-      initiative: new FormControl('', Validators.required),
-      isDeadlineOrRegulatory: new FormControl('', Validators.required),
-      deadline: new FormControl('', Validators.required),
-      impactIfNotImpelemented: new FormControl('', Validators.required),
+    this.finacialAndProcurmentForm = new FormGroup({
+      isFundingSecured: new FormControl('', Validators.required),
+      estimatedTotalBudget: new FormControl('', Validators.required),
+      fundingSource: new FormControl('', Validators.required),
+      licenseOrCloudServicesNeeded: new FormControl('', Validators.required),
+      procurementType: new FormControl('', Validators.required),
+      hasProcurementVehicleIdentified: new FormControl('', Validators.required),
+      expectedProcurementTimeline: new FormControl('', Validators.required),
+      isCostEstimationSupportRequire: new FormControl('', Validators.required),
     });
   }
 }

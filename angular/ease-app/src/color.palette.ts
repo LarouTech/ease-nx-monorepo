@@ -11,7 +11,7 @@ export const COLOR_PALETTE: ColorPalette = {
   lightGray: '#e5e7eb', // Very light gray - low contrast elements
   lighterGray: '#f3f4f6', // Near-white - cards/surfaces
   // success: '#22c55e', // Vivid green - success
-  success: '#88d674', // Vivid green - success
+  success: '#228B22', // Vivid green - success
   warning: '#f59e0b', // Orange-amber - caution
   error: '#ef4444', // Red - alerts/errors
   darkGray: '#374151', // Charcoal - overlays, modals

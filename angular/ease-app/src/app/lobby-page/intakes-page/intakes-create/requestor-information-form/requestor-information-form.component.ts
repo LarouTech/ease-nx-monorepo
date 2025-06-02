@@ -1,8 +1,10 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
+  input,
   output,
   type OnInit,
 } from '@angular/core';
@@ -21,7 +23,19 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
   imports: [FormfieldComponent, ReactiveFormsModule, SvgIconComponent],
   templateUrl: './requestor-information-form.component.html',
   styleUrl: './requestor-information-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        // When element is added
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        // When element is removed
+        animate('300ms ease-out', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class RequestorInformationFormComponent implements OnInit {
   private destroyRef$ = inject(DestroyRef);
@@ -29,6 +43,7 @@ export class RequestorInformationFormComponent implements OnInit {
 
   formName = 'requestorInformation';
 
+  id = input.required<string>();
   formChangEvent = output<FormGroup>();
 
   ngOnInit() {

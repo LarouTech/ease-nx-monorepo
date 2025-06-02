@@ -1,1 +1,22 @@
-<p>form-card works!</p>,
+<div
+  class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow-lg space-y-6 relative"
+>
+  <div class="flex flex-row items-center justify-start space-x-2">
+    @if(icon()) {
+    <svg-icon size="36px" color="var(--secondary)" [name]="icon()!"></svg-icon>
+    }
+    <h2 class="text-2xl font-bold">{{ title() }}</h2>
+  </div>
+
+  @if (form().valid) {
+  <svg-icon
+    @fadeInOut
+    color="var(--success)"
+    name="valid"
+    class="absolute top-4 right-4"
+    size="32px"
+  ></svg-icon>
+  }
+
+  <ng-content></ng-content>
+</div>

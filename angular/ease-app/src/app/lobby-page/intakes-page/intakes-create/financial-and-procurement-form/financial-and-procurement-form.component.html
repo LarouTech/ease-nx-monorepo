@@ -1,0 +1,109 @@
+<form [id]="id()" [formGroup]="finacialAndProcurmentForm" class="relative">
+  <div
+    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow space-y-6 relative"
+  >
+    <div class="flex flex-row items-center justify-start space-x-2">
+      <svg-icon size="36px" color="var(--secondary)" name="finance"></svg-icon>
+      <h2 class="text-2xl font-bold">Financial and Procurement</h2>
+    </div>
+
+    @if (finacialAndProcurmentForm.valid) {
+    <svg-icon
+      @fadeInOut
+      color="var(--success)"
+      name="valid"
+      class="absolute top-4 right-4"
+    ></svg-icon>
+    }
+
+    <div class="w-full flex flex-row items-center justify-start space-x-4">
+      <select-input
+        class="w-[50%]"
+        name="isFundingSecured"
+        formControlName="isFundingSecured"
+        label="Is funding secured for this initiative?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'Partially', value: 'partially' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+
+      <formfield
+        class="w-[50%]"
+        label="Estimated Total Budget"
+        name="estimatedTotalBudget"
+        formControlName="estimatedTotalBudget"
+      ></formfield>
+    </div>
+
+    <div>
+      <select-input
+        name="fundingSource"
+        formControlName="fundingSource"
+        label="Funding Source"
+        [options]="[
+          { label: 'Internal', value: 'internal' },
+          { label: 'Grant', value: 'grant' },
+          { label: 'Donation', value: 'donation' },
+          { label: 'Special Allocation', value: 'specialAllocation' }
+        ]"
+      />
+    </div>
+
+    <div>
+      <select-input
+        name="licenseOrCloudServicesNeeded"
+        formControlName="licenseOrCloudServicesNeeded"
+        label="Are new licenses or cloud services needed?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+    </div>
+
+    <div>
+      <checkbox-group
+        label="Procurement Type"
+        name="procurementType"
+        formControlName="procurementType"
+        [options]="['SaaS', 'IaaS', 'PaaS', 'Consulting Services', 'Licenses']"
+      ></checkbox-group>
+    </div>
+
+    <div class="w-full flex flex-row items-center justify-start space-x-4">
+      <select-input
+        class="w-[50%]"
+        name="hasProcurementVehicleIdentified"
+        formControlName="hasProcurementVehicleIdentified"
+        label="Has a procurement vehicle been identified?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+
+      <formfield
+        class="w-[50%]"
+        label="Expected Procurement Timeline"
+        formControlName="expectedProcurementTimeline"
+        name="expectedProcurementTimeline"
+        type="date"
+      ></formfield>
+    </div>
+
+    <div>
+      <select-input
+        class="w-[50%]"
+        name="isCostEstimationSupportRequire"
+        formControlName="isCostEstimationSupportRequire"
+        label="Do you require support with cost estimation?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+    </div>
+  </div>
+</form>

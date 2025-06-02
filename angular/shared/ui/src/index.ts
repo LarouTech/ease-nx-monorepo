@@ -18,3 +18,5 @@ export * from './lib/full-screen-spinner/full-screen-spinner.component';
 export * from './lib/avatar/avatar.component';
 export * from './lib/select-input/select-input.component';
 export * from './lib/textaera-input/textaera-input.component';
+export * from './lib/form-card/form-card.component';
+export * from './lib/checkbox-group/checkbox-group.component';

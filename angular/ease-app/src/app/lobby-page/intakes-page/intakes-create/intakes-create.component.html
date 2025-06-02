@@ -1,39 +1,105 @@
 <lobby-sub-page-layout title="Create Intake">
-  <main class="flex items-start justify-start mt-10">
+  <main class="flex items-start justify-start mt-10 mb-100">
     <form
       #formRef
       [formGroup]="intakeForm"
       (ngSubmit)="onSubmit()"
-      class="w-[80%] space-y-10 px-6"
+      class="w-[80%] space-y-10 px-6 flex flex-col justify-start items-start"
     >
       <requestor-information-form
+        class="w-full"
+        id="section-0"
         #requestorInformtionRef
         (formChangEvent)="onFormUpdate($event, requestorInformtionRef.formName)"
       ></requestor-information-form>
 
       <business-context
+        class="w-full"
+        id="section-1"
         #businessContextRef
         (formChangEvent)="onFormUpdate($event, businessContextRef.formName)"
       ></business-context>
+
+      <project-details-form
+        class="w-full"
+        id="section-2"
+        #projectDetailsRef
+        (formChangEvent)="onFormUpdate($event, projectDetailsRef.formName)"
+      ></project-details-form>
+
+      <technical-considerations-form
+        class="w-full"
+        id="section-3"
+        #technicalConsiderationsRef
+        (formChangEvent)="
+          onFormUpdate($event, technicalConsiderationsRef.formName)
+        "
+      ></technical-considerations-form>
+
+      <data-and-security-form
+        class="w-full"
+        id="section-4"
+        #dataAndSecurityRef
+        (formChangEvent)="onFormUpdate($event, dataAndSecurityRef.formName)"
+      >
+      </data-and-security-form>
+
+      <financial-and-procurement-form
+        class="w-full"
+        id="section-5"
+        #financialAndProcurementRef
+        (formChangEvent)="
+          onFormUpdate($event, financialAndProcurementRef.formName)
+        "
+      ></financial-and-procurement-form>
     </form>
 
     <div
-      id="legend"
-      class="w-full text(--gray) text-xs flex flex-row justify-end items-end fixed right-10 top-40"
+      #formNavigationRef
+      id="formNav"
+      class="fixed right-10 top-40 transition-transform duration-200 ease-in-out"
     >
       <ul class="tracking-wide flex flex-col gap-y-1">
-        @for (section of formSections; track $index) {
+        @for (section of formSections(); track $index) {
         <li
-          (click)="onClickSectionMenuItem(`section-${$index}`)"
-          (keydown.enter)="onClickSectionMenuItem(`section-${$index}`)"
+          [ngStyle]="{
+            color: section.active ? 'var(--secondary)' : 'var(--text)'
+          }"
+          [ngClass]="{ 'font-bold': section.active }"
+          (click)="onClickSectionMenuItem(section, `section-${$index}`)"
+          (keydown.enter)="onClickSectionMenuItem(section, `section-${$index}`)"
           tabindex="0"
-          class="cursor-pointer hover:text-[var(--primary)]"
+          class="cursor-pointer hover:text-[var(--primary)] text-xs"
           [id]="`${section}-${$index}`"
         >
-          {{ section }}
+          @if (intakeForm.get(section.name)?.valid) {
+          <span class="mr-2 text-[var(--success)] font-semibold">✓</span>
+          }
+          <span
+            class="font-semibold"
+            [ngClass]="{
+              'text-[var(--success)]': intakeForm.get(section.name)?.valid
+            }"
+            >{{ section.label }}</span
+          >
         </li>
         }
       </ul>
+
+      <div class="mt-8 flex flex-col space-y-3">
+        <button
+          (click)="onSaveProgress()"
+          class="text-xs px-2 py-1 rounded-md capitalize bg-[var(--accent)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all"
+        >
+          save progress
+        </button>
+        <button
+          (click)="onResetForm()"
+          class="text-xs px-2 py-1 rounded-md capitalize bg-[var(--primary)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all"
+        >
+          clear form
+        </button>
+      </div>
     </div>
   </main>
 </lobby-sub-page-layout>

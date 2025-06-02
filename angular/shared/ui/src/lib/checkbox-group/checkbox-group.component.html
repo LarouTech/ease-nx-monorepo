@@ -1,0 +1,47 @@
+<!-- Outer container: same structure as your form-field -->
+<div class="flex flex-col space-y-1">
+  <!-- Conditionally show label -->
+  @if(label()) {
+  <label
+    [ngStyle]="{ color: color() }"
+    class="text-xs font-bold mb-5"
+    [for]="name()"
+  >
+    {{ label() }}
+  </label>
+  }
+
+  <!-- Checkbox options row -->
+  <div class="flex flex-row flex-wrap gap-x-4 gap-y-2">
+    @for (option of options(); track $index) {
+    <label class="cursor-pointer flex items-center space-x-2" [for]="option">
+      <!-- Hidden native checkbox for a11y and form integration -->
+      <input
+        type="checkbox"
+        class="peer hidden"
+        [id]="option"
+        [checked]="isChecked(option)"
+        (change)="toggleOption(option)"
+        [disabled]="disabled"
+      />
+
+      <!-- Custom checkbox box -->
+      <div
+        class="w-5 h-5 flex flex-col items-center justify-center rounded border border-gray-400 transition-all peer-checked:bg-[var(--primary)] peer-checked:border-[var(--primary)] peer-checked:after:content-['✓'] peer-checked:after:text-[var(--text)] peer-checked:after:text-sm peer-checked:after:font-bold peer-checked:after:flex peer-checked:after:justify-center peer-checked:after:items-center peer-disabled:opacity-50"
+      ></div>
+
+      <!-- Option label -->
+      <span class="text-xs text-[var(--text)] capitalize">
+        {{ option }}
+      </span>
+    </label>
+    }
+  </div>
+
+  <!-- Optional hint -->
+  @if(hint()) {
+  <span [ngStyle]="{ color: hintColor() }" class="text-xs font-semibold">
+    {{ hint() }}
+  </span>
+  }
+</div>

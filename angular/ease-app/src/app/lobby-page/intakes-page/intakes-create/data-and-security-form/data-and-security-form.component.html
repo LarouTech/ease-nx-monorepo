@@ -1,0 +1,130 @@
+<form [id]="id()" [formGroup]="dataAndSecurityForm" class="relative">
+  <div
+    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow space-y-6 relative"
+  >
+    <div class="flex flex-row items-center justify-start space-x-2">
+      <svg-icon size="36px" color="var(--secondary)" name="security"></svg-icon>
+      <h2 class="text-2xl font-bold">Data and Security</h2>
+    </div>
+
+    @if (dataAndSecurityForm.valid) {
+    <svg-icon
+      @fadeInOut
+      color="var(--success)"
+      name="valid"
+      class="absolute top-4 right-4"
+    ></svg-icon>
+    }
+
+    <div>
+      <checkbox-group
+        label="What type of data will be processed/stored?"
+        name="dataTypeStored"
+        formControlName="dataTypeStored"
+        [options]="['Financial', 'HR', 'Operational', 'Public', 'other']"
+      ></checkbox-group>
+    </div>
+
+    <div class="w-full flex flex-row items-center justify-start space-x-4">
+      <select-input
+        class="w-[50%]"
+        name="isPersonalInformationInvolved"
+        formControlName="isPersonalInformationInvolved"
+        label="Is sensitive or personal information involved?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+
+      <select-input
+        class="w-[50%]"
+        name="isDataStoreOrTransmitExternally"
+        formControlName="isDataStoreOrTransmitExternally"
+        label="Does this system store or transmit data externally?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+    </div>
+
+    <div>
+      <select-input
+        name="dataStorageLocation"
+        formControlName="dataStorageLocation"
+        label="Where will the data be stored?"
+        [options]="[
+          { label: 'Canada', value: 'canada' },
+          { label: 'USA', value: 'usa' },
+          { label: 'Europe', value: 'europe' },
+          { label: 'Asia', value: 'asia' }
+        ]"
+      />
+    </div>
+
+    <div class="w-full flex flex-row items-center justify-start space-x-4">
+      <select-input
+        class="w-[50%]"
+        name="isEncryptionAtRest"
+        formControlName="isEncryptionAtRest"
+        label="Is encryption at rest require?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+      <select-input
+        class="w-[50%]"
+        name="isEncryptionInTransit"
+        formControlName="isEncryptionInTransit"
+        label="Is encryption at in-transit require?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+    </div>
+
+    <div>
+      <checkbox-group
+        label="Compliance Requirements"
+        formControlName="complianceRequirements"
+        name="complianceRequirements"
+        [options]="[
+          'PIEPA',
+          'ATIP',
+          'GDPR',
+          'GC Accesbility',
+          'Departmental Policy'
+        ]"
+      ></checkbox-group>
+    </div>
+
+    <div>
+      <select-input
+        class="w-[50%]"
+        name="isSecurityThreatAndRiskAssessment"
+        formControlName="isSecurityThreatAndRiskAssessment"
+        label="Has a Security Threat and Risk Assessment (STRA) been completed or planned?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'Planned', value: 'planned' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+    </div>
+
+    <div>
+      <select-input
+        name="isRemoteAccessRequire"
+        formControlName="isRemoteAccessRequire"
+        label="Will the solution require secure remote access (e.g., VPN, SSH)?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          { label: 'No', value: 'no' }
+        ]"
+      />
+    </div>
+  </div>
+</form>

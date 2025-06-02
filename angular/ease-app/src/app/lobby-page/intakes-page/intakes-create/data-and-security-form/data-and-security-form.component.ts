@@ -17,25 +17,23 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  FormfieldComponent,
+  CheckboxGroupComponent,
   SelectInputComponent,
   SvgIconComponent,
-  TextaeraInputComponent,
 } from '@ease-angular/ui';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
-  selector: 'business-context',
+  selector: 'data-and-security-form',
   imports: [
-    SelectInputComponent,
-    ReactiveFormsModule,
-    CommonModule,
-    TextaeraInputComponent,
-    FormfieldComponent,
     SvgIconComponent,
+    CommonModule,
+    ReactiveFormsModule,
+    CheckboxGroupComponent,
+    SelectInputComponent,
   ],
-  templateUrl: './business-context.component.html',
-  styleUrl: './business-context.component.css',
+  templateUrl: './data-and-security-form.component.html',
+  styleUrl: './data-and-security-form.component.css',
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [
@@ -50,16 +48,14 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     ]),
   ],
 })
-export class BusinessContextComponent implements OnInit {
+export class DataAndSecurityFormComponent implements OnInit {
   private destroyRef$ = inject(DestroyRef);
-  businessContextForm!: FormGroup;
+  dataAndSecurityForm!: FormGroup;
 
   id = input.required<string>();
   formChangEvent = output<FormGroup>();
 
-  formName = 'businessContext';
-
-  focusColor = 'var(--primary';
+  formName = 'dataAndSecurity';
 
   ngOnInit() {
     this.initializeForm();
@@ -67,7 +63,7 @@ export class BusinessContextComponent implements OnInit {
   }
 
   private formChangeEmitter() {
-    this.businessContextForm.valueChanges
+    this.dataAndSecurityForm.valueChanges
       .pipe(
         debounceTime(1000), // wait 300ms after last change
         distinctUntilChanged(), // only emit if value actually changes
@@ -75,19 +71,24 @@ export class BusinessContextComponent implements OnInit {
       )
       .subscribe((d) => {
         console.log(d);
-        this.formChangEvent.emit(this.businessContextForm);
+        this.formChangEvent.emit(this.dataAndSecurityForm);
       });
   }
 
   private initializeForm() {
-    this.businessContextForm = new FormGroup({
-      businessDriver: new FormControl('', Validators.required),
-      problemStatement: new FormControl('', Validators.required),
-      isPartOfLargerInitative: new FormControl('', Validators.required),
-      initiative: new FormControl('', Validators.required),
-      isDeadlineOrRegulatory: new FormControl('', Validators.required),
-      deadline: new FormControl('', Validators.required),
-      impactIfNotImpelemented: new FormControl('', Validators.required),
+    this.dataAndSecurityForm = new FormGroup({
+      dataTypeStored: new FormControl('', Validators.required),
+      isPersonalInformationInvolved: new FormControl('', Validators.required),
+      isDataStoreOrTransmitExternally: new FormControl('', Validators.required),
+      dataStorageLocation: new FormControl('', Validators.required),
+      isEncryptionAtRest: new FormControl('', Validators.required),
+      isEncryptionInTransit: new FormControl('', Validators.required),
+      complianceRequirements: new FormControl('', Validators.required),
+      isSecurityThreatAndRiskAssessment: new FormControl(
+        '',
+        Validators.required
+      ),
+      isRemoteAccessRequire: new FormControl('', Validators.required),
     });
   }
 }

@@ -1,0 +1,235 @@
+<form [id]="id()" [formGroup]="technicalConsiderationsForm">
+  <div
+    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow-lg space-y-6 relative"
+  >
+    <div class="flex flex-row items-center justify-start space-x-2">
+      <svg-icon size="36px" color="var(--secondary)" name="tools"></svg-icon>
+      <h2 class="text-2xl font-bold">Technical Considerations</h2>
+    </div>
+
+    @if (technicalConsiderationsForm.valid) {
+    <svg-icon
+      @fadeInOut
+      color="var(--success)"
+      name="valid"
+      class="absolute top-4 right-4"
+      size="32px"
+    ></svg-icon>
+    }
+
+    <!-- content -->
+
+    <div>
+      <select-input
+        formControlName="anticipatedHostingLocation"
+        name="anticipatedHostingLocation"
+        label="Anticipated Hosting Location"
+        [options]="[
+          { label: 'Public Cloud', value: 'publicCloud' },
+          {
+            label: 'Private Cloud',
+            value: 'privateCloud'
+          },
+          { label: 'On-Premises', value: 'onPremises' },
+          {
+            label: 'Hybrid',
+            value: 'hybrid'
+          }
+        ]"
+      />
+    </div>
+
+    <div>
+      <checkbox-group
+        formControlName="expectedEnvironments"
+        name="expectedEnvironments"
+        label="Expected Environment(s)"
+        [options]="['Dev', 'Test', 'UAT', 'Prod', 'Sandbox']"
+      ></checkbox-group>
+    </div>
+
+    <div>
+      <select-input
+        formControlName="dataClassificationLevel"
+        name="dataClassificationLevel"
+        label="Data Classification Level"
+        [options]="[
+          { label: 'Unclassified', value: 'unclassified' },
+          {
+            label: 'Protected A',
+            value: 'protectedA'
+          },
+          {
+            label: 'Protected B',
+            value: 'protectedB'
+          },
+          {
+            label: 'Protected C',
+            value: 'protectedC'
+          },
+          { label: 'Classified', value: 'classified' }
+        ]"
+      />
+    </div>
+
+    <div>
+      <textaera-input
+        label="Integration Requirements"
+        name="integrationRequirements"
+        formControlName="integrationRequirements"
+      ></textaera-input>
+    </div>
+
+    <div>
+      <select-input
+        formControlName="authenticationAndAuthorizationNeeds"
+        name="authenticationAndAuthorizationNeeds"
+        label="Authentication and Authorization Needs"
+        [options]="[
+          { label: 'GC Login', value: 'gcLogin' },
+          {
+            label: 'Azure AD',
+            value: 'azureAD'
+          },
+          {
+            label: 'SSO',
+            value: 'sso'
+          },
+          {
+            label: 'Other',
+            value: 'other'
+          }
+        ]"
+      />
+    </div>
+
+    <div>
+      <textaera-input
+        label="Elaborate"
+        name="authenticationAndAuthorizationNeedsElaborate"
+        formControlName="authenticationAndAuthorizationNeedsElaborate"
+      ></textaera-input>
+    </div>
+
+    <div>
+      <textaera-input
+        label="Anticipated Volume or Load"
+        name="anticipatedVolumeOrLoad"
+        formControlName="anticipatedVolumeOrLoad"
+      ></textaera-input>
+    </div>
+
+    <div>
+      <textaera-input
+        label="Performance or Availability Requirements"
+        name="performanceOrAvailibilityRequirements"
+        formControlName="performanceOrAvailibilityRequirements"
+      ></textaera-input>
+    </div>
+
+    <div>
+      <textaera-input
+        label="Security Considerations or Constraints"
+        name="securityConsiderationsOrConstraints"
+        formControlName="securityConsiderationsOrConstraints"
+      ></textaera-input>
+    </div>
+
+    <div>
+      <select-input
+        #disasterRecoverySelectRef
+        formControlName="disasterRecoveryBusinessContinuityNeeds"
+        name="disasterRecoveryBusinessContinuityNeeds"
+        label="Disaster Recovery / Business Continuity Needs"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          {
+            label: 'No',
+            value: 'no'
+          }
+        ]"
+      />
+    </div>
+
+    @if (disasterRecoverySelectRef.value === 'yes') {
+    <div>
+      <textaera-input
+        label="Disaster Recovery / Business Continuity Needs - More"
+        name="disasterRecoveryBusinessContinuityNeedsMore"
+        formControlName="disasterRecoveryBusinessContinuityNeedsMore"
+      ></textaera-input>
+    </div>
+    }
+
+    <div>
+      <select-input
+        formControlName="doesItRequireInternetAccess"
+        name="doesItRequireInternetAccess"
+        label="Does it require internet access?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          {
+            label: 'No',
+            value: 'no'
+          }
+        ]"
+      />
+    </div>
+
+    <div>
+      <select-input
+        #dependecyOnLegacySelectRef
+        formControlName="dependencyOnLegacySystems"
+        name="dependencyOnLegacySystems"
+        label="Dependency on Legacy Systems?"
+        [options]="[
+          { label: 'Yes', value: 'yes' },
+          {
+            label: 'No',
+            value: 'no'
+          }
+        ]"
+      />
+    </div>
+
+    @if (dependecyOnLegacySelectRef.value === 'yes') {
+    <div>
+      <textaera-input
+        label="Dependency on Legacy Systems? - More"
+        name="dependencyOnLegacySystemsMore"
+        formControlName="dependencyOnLegacySystemsMore"
+      ></textaera-input>
+    </div>
+    }
+
+    <div class="w-full flex flex-row items-center justify-start space-x-4">
+      <div class="w-full">
+        <formfield
+          label="Estimated Data Storage Requirements"
+          name="estimatedDataStorageRequirements"
+          formControlName="estimatedDataStorageRequirements"
+          type="number"
+        ></formfield>
+      </div>
+
+      <div class="w-full">
+        <select-input
+          formControlName="dataStorageUnit"
+          name="dataStorageUnit"
+          label="Storage Unit"
+          [options]="[
+            { label: 'MB', value: 'megabytes' },
+            {
+              label: 'GB',
+              value: 'gigabytes'
+            },
+            {
+              label: 'TB',
+              value: 'terabytes'
+            }
+          ]"
+        />
+      </div>
+    </div>
+  </div>
+</form>
