@@ -1,15 +1,5 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  input,
-  output,
-  type OnInit,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, input, output, type OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -18,38 +8,23 @@ import {
 } from '@angular/forms';
 import {
   CheckboxGroupComponent,
+  FormCardComponent,
   SelectInputComponent,
-  SvgIconComponent,
 } from '@ease-angular/ui';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'data-and-security-form',
   imports: [
-    SvgIconComponent,
     CommonModule,
     ReactiveFormsModule,
     CheckboxGroupComponent,
     SelectInputComponent,
+    FormCardComponent,
   ],
   templateUrl: './data-and-security-form.component.html',
   styleUrl: './data-and-security-form.component.css',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        // When element is added
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        // When element is removed
-        animate('300ms ease-out', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class DataAndSecurityFormComponent implements OnInit {
-  private destroyRef$ = inject(DestroyRef);
   dataAndSecurityForm!: FormGroup;
 
   id = input.required<string>();
@@ -59,20 +34,10 @@ export class DataAndSecurityFormComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.formChangeEmitter();
   }
 
-  private formChangeEmitter() {
-    this.dataAndSecurityForm.valueChanges
-      .pipe(
-        debounceTime(1000), // wait 300ms after last change
-        distinctUntilChanged(), // only emit if value actually changes
-        takeUntilDestroyed(this.destroyRef$)
-      )
-      .subscribe((d) => {
-        console.log(d);
-        this.formChangEvent.emit(this.dataAndSecurityForm);
-      });
+  onFormUpdate(form: FormGroup) {
+    this.formChangEvent.emit(form);
   }
 
   private initializeForm() {

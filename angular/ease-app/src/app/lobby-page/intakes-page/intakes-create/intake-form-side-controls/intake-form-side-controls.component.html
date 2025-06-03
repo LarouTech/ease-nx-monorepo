@@ -1,0 +1,61 @@
+<div
+  #formNavigationRef
+  id="formNav"
+  class="fixed right-10 top-40 transition-transform duration-200 ease-in-out"
+>
+  <ul class="tracking-wide flex flex-col gap-y-1">
+    @for (section of formSections(); track $index) {
+    <li
+      [ngStyle]="{
+        color: section.active ? 'var(--secondary)' : 'var(--text)'
+      }"
+      [ngClass]="{ 'font-bold': section.active }"
+      (click)="onClickSectionMenuItem(section, `section-${$index}`)"
+      (keydown.enter)="onClickSectionMenuItem(section, `section-${$index}`)"
+      tabindex="0"
+      class="cursor-pointer hover:text-[var(--primary)] text-xs"
+      [id]="`${section}-${$index}`"
+    >
+      @if (intakeForm()!.get(section.name)?.valid) {
+      <span class="mr-2 text-[var(--success)] font-semibold">✓</span>
+      }
+      <span
+        class="font-semibold"
+        [ngClass]="{
+          'text-[var(--success)]': intakeForm()!.get(section.name)?.valid
+        }"
+        >{{ section.label }}</span
+      >
+    </li>
+    }
+  </ul>
+
+  <div class="mt-8 flex flex-col space-y-3">
+    <button
+      (click)="onSaveProgress()"
+      [ngStyle]="{ color: isDarkMode() ? '#000000' : '#ffffff' }"
+      class="text-xs px-2 py-1 rounded-md capitalize bg-[var(--primary)] font-semibold cursor-pointer hover:opacity-50 transition-all"
+    >
+      save progress
+    </button>
+    <button
+      (click)="onResetForm()"
+      class="text-xs px-2 py-1 rounded-md capitalize bg-[var(--accent)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all"
+    >
+      clear form
+    </button>
+    <button
+      [disabled]="intakeForm().invalid"
+      [ngClass]="
+        intakeForm().invalid
+          ? 'hover:none opacity-55 cursor-not-allowed bg-[var(--gray)]'
+          : 'cursor-pointer hover:opacity-50 transition-all bg-[var(--success)]'
+      "
+      [ngStyle]="{ color: isDarkMode() ? '#000000' : '#ffffff' }"
+      (click)="onCreateIntake()"
+      class="text-xs px-2 py-1 rounded-md capitalize font-semibold"
+    >
+      Create Intake
+    </button>
+  </div>
+</div>

@@ -13,7 +13,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-form-card',
+  selector: 'intake-form-card',
   imports: [SvgIconComponent, ReactiveFormsModule],
   templateUrl: './form-card.component.html',
   styleUrl: './form-card.component.css',

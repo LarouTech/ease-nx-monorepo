@@ -1,0 +1,89 @@
+<intake-form-card
+  title="Dependencies and Approvals"
+  icon="approval"
+  (formChangEvent)="onFormUpdate($event)"
+  [form]="dependenciesAndApprovalsForm"
+>
+  <form
+    [formGroup]="dependenciesAndApprovalsForm"
+    class="flex flex-col items-start justify-start space-y-6"
+  >
+    <select-input
+      #isDependenciesRef
+      class="w-full"
+      name="isDependencies"
+      formControlName="isDependencies"
+      label="Are there dependencies on other systems/projects?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]"
+    ></select-input>
+
+    @if (isDependenciesRef.value === 'yes') {
+    <textaera-input
+      class="w-full"
+      label="Describe Dependencies"
+      name="describeDependencies"
+      formControlName="describeDependencies"
+    ></textaera-input>
+    }
+
+    <select-input
+      #isApprovalPendingRef
+      class="w-full"
+      name="isApprovalsPending"
+      formControlName="isApprovalsPending"
+      label="Are any approvals or decisions pending?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]"
+    ></select-input>
+
+    @if (isApprovalPendingRef.value === 'yes') {
+    <textaera-input
+      class="w-full"
+      label="Describe Approvals and/or Decisons"
+      name="describeApprovals"
+      formControlName="describeApprovals"
+    ></textaera-input>
+    }
+
+    <select-input
+      class="w-full"
+      name="isAllApprovalsObtained"
+      formControlName="isAllApprovalsObtained"
+      label="Have all required approvals been obtained?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' },
+        { label: 'Not yet applicable', value: 'notYetApplicable' }
+      ]"
+    ></select-input>
+
+    <select-input
+      class="w-full"
+      name="isGovernanceSupportNeeds"
+      formControlName="isGovernanceSupportNeeds"
+      label="Do you require support for governance or approvals?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]"
+    ></select-input>
+
+    <select-input
+      class="w-full"
+      name="isArchietureReviewCompleted"
+      formControlName="isArchietureReviewCompleted"
+      label="Architecture review already completed?"
+      [options]="[
+        { label: 'Not Started', value: 'notStarted' },
+        { label: 'In Progress', value: 'inProgress' },
+        { label: 'Completed ', value: 'completed' },
+        { label: 'Not Applicable ', value: 'notApplicable' }
+      ]"
+    ></select-input>
+  </form>
+</intake-form-card>

@@ -1,0 +1,103 @@
+<intake-form-card
+  (formChangEvent)="onFormUpdate($event)"
+  title="Timeline and Delivery"
+  icon="calendar"
+  [form]="timelineAndDeliveryForm"
+>
+  <form
+    [formGroup]="timelineAndDeliveryForm"
+    class="flex flex-col items-start justify-start space-y-6"
+  >
+    <div class="flex flex-row items-center justify-start space-x-4 w-full">
+      <formfield
+        class="w-full"
+        name="requestedStartDate"
+        formControlName="requestedStartDate"
+        label="Requested Start Date"
+        type="date"
+      ></formfield>
+
+      <formfield
+        class="w-full"
+        name="targetGoLiveDate"
+        formControlName="targetGoLiveDate"
+        label="Target Go-Live / Delivery Date"
+        type="date"
+      ></formfield>
+    </div>
+
+    <select-input
+      #isHardDeadlineSelectRef
+      class="w-full"
+      formControlName="isHardDeadline"
+      name="isHardDeadline"
+      label="Is there a hard deadline?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        {
+          label: 'No',
+          value: 'no'
+        }
+      ]"
+    />
+
+    @if(isHardDeadlineSelectRef.value === 'yes') {
+    <textaera-input
+      class="w-full"
+      label="Hard Deadline Details"
+      formControlName="hardDeadlineDetails"
+      name="hardDeadlineDetails"
+    ></textaera-input>
+    }
+
+    <select-input
+      #isLinkedToExternalInitiativeSelectRef
+      class="w-full"
+      formControlName="isLinkedToExternalInitiative"
+      name="isLinkedToExternalInitiative"
+      label="Is the delivery linked to an external program or initiative?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        {
+          label: 'No',
+          value: 'no'
+        }
+      ]"
+    />
+
+    @if(isLinkedToExternalInitiativeSelectRef.value === 'yes') {
+    <textaera-input
+      class="w-full"
+      label="External Initiative Details"
+      formControlName="externalInitiativeDetails"
+      name="externalInitiativeDetails"
+    ></textaera-input>
+    }
+
+    <select-input
+      class="w-full"
+      label="Level of urgency"
+      name="levelOfUrgency"
+      formControlName="levelOfUrgency"
+      [options]="[
+        { label: 'Low', value: 'low' },
+        { label: 'Medium', value: 'medium' },
+        { label: 'High', value: 'high' },
+        { label: 'Critical', value: 'critical' }
+      ]"
+    ></select-input>
+
+    <select-input
+      class="w-full"
+      label="Delivery Model"
+      name="deliveryModel"
+      formControlName="deliveryModel"
+      [options]="[
+        { label: 'Agile', value: 'agile' },
+        { label: 'Waterfall', value: 'waterfall' },
+        { label: 'Hybrid', value: 'hybrid' },
+        { label: 'Not yet determined', value: 'notYetDetermined' }
+      ]"
+    ></select-input>
+  </form>
+</intake-form-card>

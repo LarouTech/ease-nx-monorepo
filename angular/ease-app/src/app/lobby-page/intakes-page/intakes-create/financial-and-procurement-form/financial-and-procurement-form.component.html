@@ -1,21 +1,13 @@
-<form [id]="id()" [formGroup]="finacialAndProcurmentForm" class="relative">
-  <div
-    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow space-y-6 relative"
+<intake-form-card
+  title="Financial and Procurement"
+  icon="finance"
+  (formChangEvent)="onFormUpdate($event)"
+  [form]="finacialAndProcurmentForm"
+>
+  <form
+    [formGroup]="finacialAndProcurmentForm"
+    class="flex flex-col items-start justify-start space-y-6"
   >
-    <div class="flex flex-row items-center justify-start space-x-2">
-      <svg-icon size="36px" color="var(--secondary)" name="finance"></svg-icon>
-      <h2 class="text-2xl font-bold">Financial and Procurement</h2>
-    </div>
-
-    @if (finacialAndProcurmentForm.valid) {
-    <svg-icon
-      @fadeInOut
-      color="var(--success)"
-      name="valid"
-      class="absolute top-4 right-4"
-    ></svg-icon>
-    }
-
     <div class="w-full flex flex-row items-center justify-start space-x-4">
       <select-input
         class="w-[50%]"
@@ -37,40 +29,37 @@
       ></formfield>
     </div>
 
-    <div>
-      <select-input
-        name="fundingSource"
-        formControlName="fundingSource"
-        label="Funding Source"
-        [options]="[
-          { label: 'Internal', value: 'internal' },
-          { label: 'Grant', value: 'grant' },
-          { label: 'Donation', value: 'donation' },
-          { label: 'Special Allocation', value: 'specialAllocation' }
-        ]"
-      />
-    </div>
+    <select-input
+      class="w-full"
+      name="fundingSource"
+      formControlName="fundingSource"
+      label="Funding Source"
+      [options]="[
+        { label: 'Internal', value: 'internal' },
+        { label: 'Grant', value: 'grant' },
+        { label: 'Donation', value: 'donation' },
+        { label: 'Special Allocation', value: 'specialAllocation' }
+      ]"
+    />
 
-    <div>
-      <select-input
-        name="licenseOrCloudServicesNeeded"
-        formControlName="licenseOrCloudServicesNeeded"
-        label="Are new licenses or cloud services needed?"
-        [options]="[
-          { label: 'Yes', value: 'yes' },
-          { label: 'No', value: 'no' }
-        ]"
-      />
-    </div>
+    <select-input
+      class="w-full"
+      name="licenseOrCloudServicesNeeded"
+      formControlName="licenseOrCloudServicesNeeded"
+      label="Are new licenses or cloud services needed?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]"
+    />
 
-    <div>
-      <checkbox-group
-        label="Procurement Type"
-        name="procurementType"
-        formControlName="procurementType"
-        [options]="['SaaS', 'IaaS', 'PaaS', 'Consulting Services', 'Licenses']"
-      ></checkbox-group>
-    </div>
+    <checkbox-group
+      class="w-full"
+      label="Procurement Type"
+      name="procurementType"
+      formControlName="procurementType"
+      [options]="['SaaS', 'IaaS', 'PaaS', 'Consulting Services', 'Licenses']"
+    ></checkbox-group>
 
     <div class="w-full flex flex-row items-center justify-start space-x-4">
       <select-input
@@ -85,7 +74,7 @@
       />
 
       <formfield
-        class="w-[50%]"
+        class="w-full"
         label="Expected Procurement Timeline"
         formControlName="expectedProcurementTimeline"
         name="expectedProcurementTimeline"
@@ -93,17 +82,15 @@
       ></formfield>
     </div>
 
-    <div>
-      <select-input
-        class="w-[50%]"
-        name="isCostEstimationSupportRequire"
-        formControlName="isCostEstimationSupportRequire"
-        label="Do you require support with cost estimation?"
-        [options]="[
-          { label: 'Yes', value: 'yes' },
-          { label: 'No', value: 'no' }
-        ]"
-      />
-    </div>
-  </div>
-</form>
+    <select-input
+      class="w-full"
+      name="isCostEstimationSupportRequire"
+      formControlName="isCostEstimationSupportRequire"
+      label="Do you require support with cost estimation?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]"
+    />
+  </form>
+</intake-form-card>

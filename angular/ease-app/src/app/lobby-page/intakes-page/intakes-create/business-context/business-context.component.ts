@@ -1,15 +1,5 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-  input,
-  output,
-  type OnInit,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, input, output, type OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,12 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  FormCardComponent,
   FormfieldComponent,
   SelectInputComponent,
-  SvgIconComponent,
   TextaeraInputComponent,
 } from '@ease-angular/ui';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'business-context',
@@ -32,26 +21,12 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     CommonModule,
     TextaeraInputComponent,
     FormfieldComponent,
-    SvgIconComponent,
+    FormCardComponent,
   ],
   templateUrl: './business-context.component.html',
   styleUrl: './business-context.component.css',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        // When element is added
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        // When element is removed
-        animate('300ms ease-out', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class BusinessContextComponent implements OnInit {
-  private destroyRef$ = inject(DestroyRef);
   businessContextForm!: FormGroup;
 
   id = input.required<string>();
@@ -59,24 +34,12 @@ export class BusinessContextComponent implements OnInit {
 
   formName = 'businessContext';
 
-  focusColor = 'var(--primary';
-
   ngOnInit() {
     this.initializeForm();
-    this.formChangeEmitter();
   }
 
-  private formChangeEmitter() {
-    this.businessContextForm.valueChanges
-      .pipe(
-        debounceTime(1000), // wait 300ms after last change
-        distinctUntilChanged(), // only emit if value actually changes
-        takeUntilDestroyed(this.destroyRef$)
-      )
-      .subscribe((d) => {
-        console.log(d);
-        this.formChangEvent.emit(this.businessContextForm);
-      });
+  onFormUpdate(form: FormGroup) {
+    this.formChangEvent.emit(form);
   }
 
   private initializeForm() {

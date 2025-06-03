@@ -1,7 +1,5 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
@@ -9,7 +7,6 @@ import {
   OnInit,
   output,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormControl,
   FormGroup,
@@ -18,12 +15,10 @@ import {
 } from '@angular/forms';
 import {
   CheckboxGroupComponent,
+  FormCardComponent,
   FormfieldComponent,
   SelectInputComponent,
-  SvgIconComponent,
-  TextaeraInputComponent,
 } from '@ease-angular/ui';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'financial-and-procurement-form',
@@ -31,30 +26,15 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     CommonModule,
     ReactiveFormsModule,
     FormfieldComponent,
-    SvgIconComponent,
     SelectInputComponent,
-    TextaeraInputComponent,
     FormfieldComponent,
     CheckboxGroupComponent,
+    FormCardComponent,
   ],
   templateUrl: './financial-and-procurement-form.component.html',
   styleUrl: './financial-and-procurement-form.component.css',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        // When element is added
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        // When element is removed
-        animate('300ms ease-out', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class FinancialAndProcurementFormComponent implements OnInit {
-  private destroyRef$ = inject(DestroyRef);
   finacialAndProcurmentForm!: FormGroup;
 
   id = input.required<string>();
@@ -64,21 +44,11 @@ export class FinancialAndProcurementFormComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.formChangeEmitter();
   }
 
-  private formChangeEmitter() {
-    this.finacialAndProcurmentForm.valueChanges
-      .pipe(
-        debounceTime(1000), // wait 300ms after last change
-        distinctUntilChanged(), // only emit if value actually changes
-        takeUntilDestroyed(this.destroyRef$)
-      )
-      .subscribe((d) => {
-        this.formChangEvent.emit(this.finacialAndProcurmentForm);
-      });
+  onFormUpdate(form: FormGroup) {
+    this.formChangEvent.emit(form);
   }
-
   private initializeForm() {
     this.finacialAndProcurmentForm = new FormGroup({
       isFundingSecured: new FormControl('', Validators.required),

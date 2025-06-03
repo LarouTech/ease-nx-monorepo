@@ -52,54 +52,27 @@
           onFormUpdate($event, financialAndProcurementRef.formName)
         "
       ></financial-and-procurement-form>
+
+      <timeline-and-delivery
+        class="w-full"
+        id="section-6"
+        #timelineAndDeliveryRef
+        (formChangEvent)="onFormUpdate($event, timelineAndDeliveryRef.formName)"
+      ></timeline-and-delivery>
+
+      <dependencies-and-approvals-form
+        class="w-full"
+        id="section-7"
+        #dependenciesAndApprovalRef
+        (formChangEvent)="
+          onFormUpdate($event, dependenciesAndApprovalRef.formName)
+        "
+      ></dependencies-and-approvals-form>
     </form>
 
-    <div
-      #formNavigationRef
-      id="formNav"
-      class="fixed right-10 top-40 transition-transform duration-200 ease-in-out"
-    >
-      <ul class="tracking-wide flex flex-col gap-y-1">
-        @for (section of formSections(); track $index) {
-        <li
-          [ngStyle]="{
-            color: section.active ? 'var(--secondary)' : 'var(--text)'
-          }"
-          [ngClass]="{ 'font-bold': section.active }"
-          (click)="onClickSectionMenuItem(section, `section-${$index}`)"
-          (keydown.enter)="onClickSectionMenuItem(section, `section-${$index}`)"
-          tabindex="0"
-          class="cursor-pointer hover:text-[var(--primary)] text-xs"
-          [id]="`${section}-${$index}`"
-        >
-          @if (intakeForm.get(section.name)?.valid) {
-          <span class="mr-2 text-[var(--success)] font-semibold">✓</span>
-          }
-          <span
-            class="font-semibold"
-            [ngClass]="{
-              'text-[var(--success)]': intakeForm.get(section.name)?.valid
-            }"
-            >{{ section.label }}</span
-          >
-        </li>
-        }
-      </ul>
-
-      <div class="mt-8 flex flex-col space-y-3">
-        <button
-          (click)="onSaveProgress()"
-          class="text-xs px-2 py-1 rounded-md capitalize bg-[var(--accent)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all"
-        >
-          save progress
-        </button>
-        <button
-          (click)="onResetForm()"
-          class="text-xs px-2 py-1 rounded-md capitalize bg-[var(--primary)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all"
-        >
-          clear form
-        </button>
-      </div>
-    </div>
+    <app-intake-form-side-controls
+      [intakeForm]="intakeForm"
+      [controls]="formSections"
+    ></app-intake-form-side-controls>
   </main>
 </lobby-sub-page-layout>

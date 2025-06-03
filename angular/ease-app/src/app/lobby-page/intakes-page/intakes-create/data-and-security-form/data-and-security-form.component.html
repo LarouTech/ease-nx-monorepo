@@ -1,29 +1,20 @@
-<form [id]="id()" [formGroup]="dataAndSecurityForm" class="relative">
-  <div
-    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow space-y-6 relative"
+<intake-form-card
+  title="Data and Secuirty"
+  icon="security"
+  (formChangEvent)="onFormUpdate($event)"
+  [form]="dataAndSecurityForm"
+>
+  <form
+    [formGroup]="dataAndSecurityForm"
+    class="flex flex-col items-start justify-start space-y-6"
   >
-    <div class="flex flex-row items-center justify-start space-x-2">
-      <svg-icon size="36px" color="var(--secondary)" name="security"></svg-icon>
-      <h2 class="text-2xl font-bold">Data and Security</h2>
-    </div>
-
-    @if (dataAndSecurityForm.valid) {
-    <svg-icon
-      @fadeInOut
-      color="var(--success)"
-      name="valid"
-      class="absolute top-4 right-4"
-    ></svg-icon>
-    }
-
-    <div>
-      <checkbox-group
-        label="What type of data will be processed/stored?"
-        name="dataTypeStored"
-        formControlName="dataTypeStored"
-        [options]="['Financial', 'HR', 'Operational', 'Public', 'other']"
-      ></checkbox-group>
-    </div>
+    <checkbox-group
+      class="w-full"
+      label="What type of data will be processed/stored?"
+      name="dataTypeStored"
+      formControlName="dataTypeStored"
+      [options]="['Financial', 'HR', 'Operational', 'Public', 'other']"
+    ></checkbox-group>
 
     <div class="w-full flex flex-row items-center justify-start space-x-4">
       <select-input
@@ -49,19 +40,18 @@
       />
     </div>
 
-    <div>
-      <select-input
-        name="dataStorageLocation"
-        formControlName="dataStorageLocation"
-        label="Where will the data be stored?"
-        [options]="[
-          { label: 'Canada', value: 'canada' },
-          { label: 'USA', value: 'usa' },
-          { label: 'Europe', value: 'europe' },
-          { label: 'Asia', value: 'asia' }
-        ]"
-      />
-    </div>
+    <select-input
+      class="w-full"
+      name="dataStorageLocation"
+      formControlName="dataStorageLocation"
+      label="Where will the data be stored?"
+      [options]="[
+        { label: 'Canada', value: 'canada' },
+        { label: 'USA', value: 'usa' },
+        { label: 'Europe', value: 'europe' },
+        { label: 'Asia', value: 'asia' }
+      ]"
+    />
 
     <div class="w-full flex flex-row items-center justify-start space-x-4">
       <select-input
@@ -86,24 +76,23 @@
       />
     </div>
 
-    <div>
-      <checkbox-group
-        label="Compliance Requirements"
-        formControlName="complianceRequirements"
-        name="complianceRequirements"
-        [options]="[
-          'PIEPA',
-          'ATIP',
-          'GDPR',
-          'GC Accesbility',
-          'Departmental Policy'
-        ]"
-      ></checkbox-group>
-    </div>
+    <checkbox-group
+      class="w-full"
+      label="Compliance Requirements"
+      formControlName="complianceRequirements"
+      name="complianceRequirements"
+      [options]="[
+        'PIEPA',
+        'ATIP',
+        'GDPR',
+        'GC Accesbility',
+        'Departmental Policy'
+      ]"
+    ></checkbox-group>
 
-    <div>
+    <div class="w-full flex flex-row items-center justify-start space-x-4">
       <select-input
-        class="w-[50%]"
+        class="w-full"
         name="isSecurityThreatAndRiskAssessment"
         formControlName="isSecurityThreatAndRiskAssessment"
         label="Has a Security Threat and Risk Assessment (STRA) been completed or planned?"
@@ -113,10 +102,9 @@
           { label: 'No', value: 'no' }
         ]"
       />
-    </div>
 
-    <div>
       <select-input
+        class="w-full"
         name="isRemoteAccessRequire"
         formControlName="isRemoteAccessRequire"
         label="Will the solution require secure remote access (e.g., VPN, SSH)?"
@@ -126,5 +114,5 @@
         ]"
       />
     </div>
-  </div>
-</form>
+  </form>
+</intake-form-card>

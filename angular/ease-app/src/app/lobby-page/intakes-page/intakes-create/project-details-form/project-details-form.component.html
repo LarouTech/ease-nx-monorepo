@@ -1,113 +1,96 @@
-<form [id]="id()" [formGroup]="projectDetailsForm">
-  <div
-    class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow-lg space-y-6"
+<intake-form-card
+  (formChangEvent)="onFormUpdate($event)"
+  [form]="projectDetailsForm"
+  title="Project Details"
+  icon="project"
+>
+  <form
+    [formGroup]="projectDetailsForm"
+    class="flex flex-col items-start justify-start space-y-6"
   >
-    <div class="flex flex-row items-center justify-start space-x-2">
-      <svg-icon size="36px" color="var(--secondary)" name="project"></svg-icon>
-      <h2 class="text-2xl font-bold">Project Details</h2>
-    </div>
+    <formfield
+      class="w-full"
+      label="Proposed Name of Initiative"
+      name="initiativeName"
+      formControlName="initiativeName"
+    ></formfield>
 
-    @if (projectDetailsForm.valid) {
-    <svg-icon
-      @fadeInOut
-      color="var(--success)"
-      name="valid"
-      class="absolute top-4 right-4"
-    ></svg-icon>
-    }
+    <select-input
+      class="w-full"
+      formControlName="typeOfRequest"
+      name="typeOfRequest"
+      label="Type of Request"
+      [options]="[
+        { label: 'New SaaS Acquisition', value: 'newSaaSAcquisition' },
+        {
+          label: 'Cloud-native Application',
+          value: 'cloudNativeApplication'
+        },
+        { label: 'Cloud Migration', value: 'cloudMigration' },
+        {
+          label: 'Change to Existing System',
+          value: 'changeToExisitingSystem'
+        },
+        { label: 'Proof of Concept / Pilot', value: 'proofOfConceptOrPilot' }
+      ]"
+    />
 
-    <div>
-      <formfield
-        label="Proposed Name of Initiative"
-        name="initiativeName"
-        formControlName="initiativeName"
-      ></formfield>
-    </div>
+    <textaera-input
+      class="w-full"
+      label="Brief Description of Solution"
+      name="solutionDescription"
+      formControlName="solutionDescription"
+    ></textaera-input>
 
-    <div>
-      <select-input
-        formControlName="typeOfRequest"
-        name="typeOfRequest"
-        label="Type of Request"
-        [options]="[
-          { label: 'New SaaS Acquisition', value: 'newSaaSAcquisition' },
-          {
-            label: 'Cloud-native Application',
-            value: 'cloudNativeApplication'
-          },
-          { label: 'Cloud Migration', value: 'cloudMigration' },
-          {
-            label: 'Change to Existing System',
-            value: 'changeToExisitingSystem'
-          },
-          { label: 'Proof of Concept / Pilot', value: 'proofOfConceptOrPilot' }
-        ]"
-      />
-    </div>
+    <textaera-input
+      class="w-full"
+      label="Target Users / Stakeholders"
+      name="targetUsersAndStakeholders"
+      formControlName="targetUsersAndStakeholders"
+    ></textaera-input>
 
-    <div>
-      <textaera-input
-        label="Brief Description of Solution"
-        name="solutionDescription"
-        formControlName="solutionDescription"
-      ></textaera-input>
-    </div>
+    <formfield
+      class="w-full"
+      label="Number of End Users (estimated)"
+      name="numberOfEndUsers"
+      formControlName="numberOfEndUsers"
+      type="number"
+    ></formfield>
 
-    <div>
-      <textaera-input
-        label="Target Users / Stakeholders"
-        name="targetUsersAndStakeholders"
-        formControlName="targetUsersAndStakeholders"
-      ></textaera-input>
-    </div>
+    <select-input
+      class="w-full"
+      formControlName="isSolutionAlreadyIdentified"
+      name="isSolutionAlreadyIdentified"
+      label="Has a technical solution already been identified?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]"
+    />
 
-    <div>
-      <formfield
-        label="Number of End Users (estimated)"
-        name="numberOfEndUsers"
-        formControlName="numberOfEndUsers"
-        type="number"
-      ></formfield>
-    </div>
+    <select-input
+      class="w-full"
+      formControlName="isVendorAlreadyIdentified"
+      name="isVendorAlreadyIdentified"
+      label="Is there a vendor already identified?"
+      [options]="[
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]"
+    />
 
-    <div>
-      <select-input
-        formControlName="isSolutionAlreadyIdentified"
-        name="isSolutionAlreadyIdentified"
-        label="Has a technical solution already been identified?"
-        [options]="[
-          { label: 'Yes', value: 'yes' },
-          { label: 'No', value: 'no' }
-        ]"
-      />
-    </div>
+    <textaera-input
+      class="w-full"
+      label="Are there existing tools/platforms being considered?"
+      name="isExisitingToolsOrPlatformsConsidered"
+      formControlName="isExisitingToolsOrPlatformsConsidered"
+    ></textaera-input>
 
-    <div>
-      <select-input
-        formControlName="isVendorAlreadyIdentified"
-        name="isVendorAlreadyIdentified"
-        label="Is there a vendor already identified?"
-        [options]="[
-          { label: 'Yes', value: 'yes' },
-          { label: 'No', value: 'no' }
-        ]"
-      />
-    </div>
-
-    <div>
-      <textaera-input
-        label="Are there existing tools/platforms being considered?"
-        name="isExisitingToolsOrPlatformsConsidered"
-        formControlName="isExisitingToolsOrPlatformsConsidered"
-      ></textaera-input>
-    </div>
-
-    <div>
-      <textaera-input
-        label="Current pain points with existing system (if any)"
-        name="currentPainPoints"
-        formControlName="currentPainPoints"
-      ></textaera-input>
-    </div>
-  </div>
-</form>
+    <textaera-input
+      class="w-full"
+      label="Current pain points with existing system (if any)"
+      name="currentPainPoints"
+      formControlName="currentPainPoints"
+    ></textaera-input>
+  </form>
+</intake-form-card>

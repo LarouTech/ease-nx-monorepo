@@ -1,4 +1,4 @@
-<form [id]="id()" [formGroup]="requestorInformationForm">
+<!-- <form [id]="id()" [formGroup]="requestorInformationForm">
   <div
     class="bg-[var(--background)] border border-[var(--primary)] p-10 rounded-lg shadow-lg space-y-6 relative"
   >
@@ -54,4 +54,52 @@
       </div>
     </div>
   </div>
-</form>
+</form> -->
+
+<intake-form-card
+  [form]="requestorInformationForm"
+  icon="info"
+  title="Requestor Information"
+  (formChangEvent)="onFormUpdate($event)"
+>
+  <form
+    [formGroup]="requestorInformationForm"
+    class="flex flex-col items-start justify-start space-y-6"
+  >
+    <formfield
+      class="w-full"
+      label="Requestor Name"
+      name="name"
+      formControlName="name"
+    ></formfield>
+
+    <formfield
+      class="w-full"
+      label="Branch/Division"
+      name="branch"
+      formControlName="branch"
+    ></formfield>
+
+    <formfield
+      class="w-full"
+      label="Title"
+      name="title"
+      formControlName="title"
+    ></formfield>
+
+    <div class="flex flex-row justify-start items-center space-x-4 w-full">
+      <formfield
+        class="w-[50%]"
+        label="Email"
+        name="email"
+        formControlName="email"
+      ></formfield>
+      <formfield
+        class="w-[50%]"
+        label="Phone"
+        name="phone"
+        formControlName="phone"
+      ></formfield>
+    </div>
+  </form>
+</intake-form-card>

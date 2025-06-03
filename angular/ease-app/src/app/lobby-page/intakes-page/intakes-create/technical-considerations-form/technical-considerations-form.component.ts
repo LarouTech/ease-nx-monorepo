@@ -1,6 +1,4 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
@@ -8,7 +6,6 @@ import {
   output,
   type OnInit,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormControl,
   FormGroup,
@@ -17,41 +14,26 @@ import {
 } from '@angular/forms';
 import {
   CheckboxGroupComponent,
+  FormCardComponent,
   FormfieldComponent,
   SelectInputComponent,
-  SvgIconComponent,
   TextaeraInputComponent,
 } from '@ease-angular/ui';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'technical-considerations-form',
   imports: [
     FormfieldComponent,
     ReactiveFormsModule,
-    SvgIconComponent,
     SelectInputComponent,
     TextaeraInputComponent,
     CheckboxGroupComponent,
+    FormCardComponent,
   ],
   templateUrl: './technical-considerations-form.component.html',
   styleUrl: './technical-considerations-form.component.css',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        // When element is added
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        // When element is removed
-        animate('300ms ease-out', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class TechnicalConsiderationsFormComponent implements OnInit {
-  private destroyRef$ = inject(DestroyRef);
   technicalConsiderationsForm!: FormGroup;
 
   formName = 'technicalConsiderations';
@@ -61,19 +43,10 @@ export class TechnicalConsiderationsFormComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.formChangeEmitter();
   }
 
-  private formChangeEmitter() {
-    this.technicalConsiderationsForm.valueChanges
-      .pipe(
-        debounceTime(1000), // wait 300ms after last change
-        distinctUntilChanged(), // only emit if value actually changes
-        takeUntilDestroyed(this.destroyRef$)
-      )
-      .subscribe(() => {
-        this.formChangEvent.emit(this.technicalConsiderationsForm);
-      });
+  onFormUpdate(form: FormGroup) {
+    this.formChangEvent.emit(form);
   }
 
   private initializeForm() {

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
@@ -8,7 +7,6 @@ import {
   output,
   type OnInit,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormControl,
   FormGroup,
@@ -16,29 +14,26 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  FormCardComponent,
   FormfieldComponent,
   SelectInputComponent,
-  SvgIconComponent,
   TextaeraInputComponent,
 } from '@ease-angular/ui';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'project-details-form',
   imports: [
     CommonModule,
-    SvgIconComponent,
     ReactiveFormsModule,
     FormfieldComponent,
     TextaeraInputComponent,
     SelectInputComponent,
+    FormCardComponent,
   ],
   templateUrl: './project-details-form.component.html',
   styleUrl: './project-details-form.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectDetailsFormComponent implements OnInit {
-  private destroyRef$ = inject(DestroyRef);
   projectDetailsForm!: FormGroup;
 
   formName = 'projectDetails';
@@ -48,19 +43,10 @@ export class ProjectDetailsFormComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
-    this.formChangeEmitter();
   }
 
-  private formChangeEmitter() {
-    this.projectDetailsForm.valueChanges
-      .pipe(
-        debounceTime(1000), // wait 300ms after last change
-        distinctUntilChanged(), // only emit if value actually changes
-        takeUntilDestroyed(this.destroyRef$)
-      )
-      .subscribe(() => {
-        this.formChangEvent.emit(this.projectDetailsForm);
-      });
+  onFormUpdate(form: FormGroup) {
+    this.formChangEvent.emit(form);
   }
 
   private initializeForm() {
