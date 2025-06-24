@@ -8,8 +8,11 @@ import {
   Firestore,
   getDoc,
   getDocs,
+  query,
+  QuerySnapshot,
   setDoc,
   updateDoc,
+  where,
 } from 'firebase/firestore';
 import { inject, Injectable } from '@angular/core';
 import { FirebaseService } from '../firebase/firebase.service';
@@ -67,10 +70,13 @@ export class FirestoreService {
     }
   }
 
-  async readAll(collectionName: string): Promise<DocumentData[]> {
+  async readAll<T>(collectionName: string): Promise<T> {
     try {
       const querySnapshot = await getDocs(collection(this.db, collectionName));
-      return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      return querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as T;
     } catch (error) {
       throw new Error(
         this.formatErrorMessage('readAll', collectionName, null, error)
@@ -78,23 +84,47 @@ export class FirestoreService {
     }
   }
 
-  async readById(
-    collectionName: string,
-    id: string
-  ): Promise<DocumentData | null> {
+  async readById<T>(collectionName: string, id: string): Promise<T> {
     try {
       const docRef = doc(this.db, collectionName, id);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        return { id: docSnap.id, ...docSnap.data() };
+        return { id: docSnap.id, ...docSnap.data() } as T;
       } else {
         // Return null silently if not found (or you can throw error if preferred)
-        return null;
+        return null as T;
       }
     } catch (error) {
       throw new Error(
         this.formatErrorMessage('readById', collectionName, id, error)
+      );
+    }
+  }
+
+  async queryBy<T>(
+    field: string,
+    value: string,
+    collectionName: string
+  ): Promise<T[]> {
+    try {
+      const myCollection = collection(this.db, collectionName);
+      const q = query(myCollection, where(field, '==', value));
+      const snapshot = await getDocs(q);
+
+      // Return raw data
+      return snapshot.docs.map((doc) => ({
+        id: doc.id, // include document ID if needed
+        ...doc.data(), // spread the document fields
+      })) as T[];
+    } catch (error: any) {
+      throw new Error(
+        this.formatErrorMessage(
+          'query',
+          collectionName,
+          field,
+          error?.message || error
+        )
       );
     }
   }

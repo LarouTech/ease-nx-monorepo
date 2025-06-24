@@ -24,7 +24,7 @@ export const IntakesRoutes: Routes = [
         data: { animation: 'IntakesCreatePage' },
       },
       {
-        path: 'edit/:id',
+        path: ':id',
         loadComponent: () =>
           import('./intakes-edit/intakes-edit.component').then(
             (c) => c.IntakesEditComponent

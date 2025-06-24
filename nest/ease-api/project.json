@@ -18,21 +18,9 @@
       }
     },
     "serve": {
-      "continuous": true,
-      "executor": "@nx/js:node",
-      "defaultConfiguration": "development",
-      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "ease-api:build",
-        "runBuildTargetDependencies": false
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "ease-api:build:development"
-        },
-        "production": {
-          "buildTarget": "ease-api:build:production"
-        }
+        "command": "nodemon"
       }
     },
     "test": {

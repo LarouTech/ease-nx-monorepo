@@ -1,1 +1,33 @@
-<lobby-sub-page-layout title="cost estimator"></lobby-sub-page-layout>
+@let proposal = (architectureProposal$ | async);
+
+<lobby-sub-page-layout title="architecture proposal">
+  <div class="mt-2 mb-4">
+    <h3 class="text-xl mb-1 font-bold text-[var(--primary)]">
+      {{ (proposal?.architecture)!.title }}
+    </h3>
+    <p class="text-sm px-1 italic text-[var(--gray)]">
+      {{ proposal?.architecture?.details }}
+    </p>
+  </div>
+
+  <div
+    class="w-full h-full text-[var(--text)] flex items-start justify-start gap-x-4 p-8 border border-[var(--primary)] rounded-lg shadow-lg"
+  >
+    <div class="h-full">
+      <ul class="h-full">
+        @for (mermaidNode of proposal?.diagram?.nodeExplanations; track $index)
+        { @for (entry of (mermaidNode | keyvalue); track $index) {
+        <li class="text-sm mb-3 last:mb-0">
+          <strong class="text-[var(--secondary)]">{{ entry.key }}:</strong>
+          {{ entry.value }}
+        </li>
+        } }
+      </ul>
+    </div>
+
+    <div
+      class="mermaid w-full bg-white rounded-lg p-6"
+      [innerHTML]="proposal?.diagram?.mermaid"
+    ></div>
+  </div>
+</lobby-sub-page-layout>

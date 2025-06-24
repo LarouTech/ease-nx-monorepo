@@ -45,9 +45,9 @@
       clear form
     </button>
     <button
-      [disabled]="intakeForm().invalid"
+      [disabled]="intakeForm().invalid && !devMode"
       [ngClass]="
-        intakeForm().invalid
+        intakeForm().invalid && !devMode
           ? 'hover:none opacity-55 cursor-not-allowed bg-[var(--gray)]'
           : 'cursor-pointer hover:opacity-50 transition-all bg-[var(--success)]'
       "
@@ -55,7 +55,7 @@
       (click)="onCreateIntake()"
       class="text-xs px-2 py-1 rounded-md capitalize font-semibold"
     >
-      Create Intake
+      @if(devMode) { Create Fictional Intake } @else {Create Intake}
     </button>
   </div>
 </div>

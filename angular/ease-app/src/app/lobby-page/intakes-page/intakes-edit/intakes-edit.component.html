@@ -1,1 +1,370 @@
-<p>intakes-edit works!</p>,
+@let intake = intake_(); @if(intake) {
+<lobby-sub-page-layout
+  [title]="`Intake Overview: ${intake.projectDetails.initiativeName}`"
+>
+  <div class="p-6 space-y-8 text-gray-800">
+    <!-- Page Header -->
+    <div
+      class="text-3xl font-bold text-gray-900 border-b pb-4 flex items-center gap-3"
+    >
+      <svg
+        class="w-8 h-8 text-indigo-600"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 17v-2a4 4 0 014-4h6m2 4a8 8 0 11-16 0 8 8 0 0116 0z"
+        />
+      </svg>
+      Intake Request Summary
+    </div>
+
+    <!-- SECTION TEMPLATE -->
+    <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+      <h2 class="text-lg font-semibold text-indigo-700 border-b pb-2 mb-4">
+        Requestor Information
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="font-medium text-gray-600">Name:</span>
+          {{ intake.requestorInformation.name }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Email:</span>
+          {{ intake.requestorInformation.email }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Phone:</span>
+          {{ intake.requestorInformation.phone }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Branch:</span>
+          {{ intake.requestorInformation.branch }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Title:</span>
+          {{ intake.requestorInformation.title }}
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+      <h2 class="text-lg font-semibold text-indigo-700 border-b pb-2 mb-4">
+        Business Context
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="font-medium text-gray-600">Initiative:</span>
+          {{ intake.businessContext.initiative }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Deadline:</span>
+          {{ intake.businessContext.deadline }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600"
+            >Is Regulatory or Deadline Driven:</span
+          >
+          {{ intake.businessContext.isDeadlineOrRegulatory }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600"
+            >Part of Larger Initiative:</span
+          >
+          {{ intake.businessContext.isPartOfLargerInitative }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Problem Statement:</span>
+          {{ intake.businessContext.problemStatement }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Business Driver:</span>
+          {{ intake.businessContext.businessDriver }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600"
+            >Impact if Not Implemented:</span
+          >
+          {{ intake.businessContext.impactIfNotImpelemented }}
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+      <h2 class="text-lg font-semibold text-indigo-700 border-b pb-2 mb-4">
+        Project Details
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="font-medium text-gray-600">Initiative Name:</span>
+          {{ intake.projectDetails.initiativeName }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Request Type:</span>
+          {{ intake.projectDetails.typeOfRequest }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Solution Description:</span>
+          {{ intake.projectDetails.solutionDescription }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Vendor Identified:</span>
+          {{ intake.projectDetails.isVendorAlreadyIdentified }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Current Pain Points:</span>
+          {{ intake.projectDetails.currentPainPoints }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Target Users:</span>
+          {{ intake.projectDetails.targetUsersAndStakeholders }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600"
+            >Alternatives Considered:</span
+          >
+          {{ intake.projectDetails.isExisitingToolsOrPlatformsConsidered }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Solution Identified:</span>
+          {{ intake.projectDetails.isSolutionAlreadyIdentified }}
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+      <h2 class="text-lg font-semibold text-indigo-700 border-b pb-2 mb-4">
+        Timeline & Delivery
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="font-medium text-gray-600">Urgency:</span>
+          {{ intake.timelineAndDelivery.levelOfUrgency }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Delivery Model:</span>
+          {{ intake.timelineAndDelivery.deliveryModel }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Start Date:</span>
+          {{ intake.timelineAndDelivery.requestedStartDate }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Go-Live Date:</span>
+          {{ intake.timelineAndDelivery.targetGoLiveDate }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Hard Deadline:</span>
+          {{ intake.timelineAndDelivery.isHardDeadline }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Hard Deadline Details:</span>
+          {{ intake.timelineAndDelivery.hardDeadlineDetails }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600"
+            >Linked to External Initiative:</span
+          >
+          {{ intake.timelineAndDelivery.isLinkedToExternalInitiative }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600"
+            >External Initiative Details:</span
+          >
+          {{ intake.timelineAndDelivery.externalInitiativeDetails }}
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+      <h2 class="text-lg font-semibold text-indigo-700 border-b pb-2 mb-4">
+        Data & Security
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="font-medium text-gray-600">PII Involved:</span>
+          {{ intake.dataAndSecurity.isPersonalInformationInvolved }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">TRAs Required:</span>
+          {{ intake.dataAndSecurity.isSecurityThreatAndRiskAssessment }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Encryption (At Rest):</span>
+          {{ intake.dataAndSecurity.isEncryptionAtRest }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600"
+            >Encryption (In Transit):</span
+          >
+          {{ intake.dataAndSecurity.isEncryptionInTransit }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Remote Access Required:</span>
+          {{ intake.dataAndSecurity.isRemoteAccessRequire }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Storage Location:</span>
+          {{ intake.dataAndSecurity.dataStorageLocation }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">External Transmission:</span>
+          {{ intake.dataAndSecurity.isDataStoreOrTransmitExternally }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Data Types:</span>
+          <ul class="list-disc list-inside ml-2 mt-1">
+            <li *ngFor="let type of intake.dataAndSecurity.dataTypeStored">
+              {{ type }}
+            </li>
+          </ul>
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600"
+            >Compliance Requirements:</span
+          >
+          <ul class="list-disc list-inside ml-2 mt-1">
+            <li
+              *ngFor="let item of intake.dataAndSecurity.complianceRequirements"
+            >
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+      <h2 class="text-lg font-semibold text-indigo-700 border-b pb-2 mb-4">
+        Technical Considerations
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="font-medium text-gray-600">Hosting Location:</span>
+          {{ intake.technicalConsiderations.anticipatedHostingLocation }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Load:</span>
+          {{ intake.technicalConsiderations.anticipatedVolumeOrLoad }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Storage Required:</span>
+          {{ intake.technicalConsiderations.estimatedDataStorageRequirements }}
+          {{ intake.technicalConsiderations.dataStorageUnit }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Disaster Recovery:</span>
+          {{
+            intake.technicalConsiderations
+              .disasterRecoveryBusinessContinuityNeeds
+          }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Recovery Details:</span>
+          {{
+            intake.technicalConsiderations
+              .disasterRecoveryBusinessContinuityNeedsMore
+          }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600"
+            >Performance Requirements:</span
+          >
+          {{
+            intake.technicalConsiderations.performanceOrAvailibilityRequirements
+          }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Authentication:</span>
+          {{
+            intake.technicalConsiderations.authenticationAndAuthorizationNeeds
+          }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Authentication Details:</span>
+          {{
+            intake.technicalConsiderations
+              .authenticationAndAuthorizationNeedsElaborate
+          }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Legacy Systems:</span>
+          {{ intake.technicalConsiderations.dependencyOnLegacySystems }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Legacy Details:</span>
+          {{ intake.technicalConsiderations.dependencyOnLegacySystemsMore }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600"
+            >Integration Requirements:</span
+          >
+          {{ intake.technicalConsiderations.integrationRequirements }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Security Constraints:</span>
+          {{
+            intake.technicalConsiderations.securityConsiderationsOrConstraints
+          }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Environments:</span>
+          <ul class="list-disc list-inside ml-2 mt-1">
+            <li
+              *ngFor="
+                let env of intake.technicalConsiderations.expectedEnvironments
+              "
+            >
+              {{ env }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+      <h2 class="text-lg font-semibold text-indigo-700 border-b pb-2 mb-4">
+        Dependencies & Approvals
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div>
+          <span class="font-medium text-gray-600"
+            >Architecture Review Completed:</span
+          >
+          {{ intake.dependenciesAndApprovals.isArchietureReviewCompleted }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Dependencies:</span>
+          {{ intake.dependenciesAndApprovals.isDependencies }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Dependency Details:</span>
+          {{ intake.dependenciesAndApprovals.describeDependencies }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Approvals Obtained:</span>
+          {{ intake.dependenciesAndApprovals.isAllApprovalsObtained }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600">Approvals Pending:</span>
+          {{ intake.dependenciesAndApprovals.isApprovalsPending }}
+        </div>
+        <div class="md:col-span-2">
+          <span class="font-medium text-gray-600">Approval Details:</span>
+          {{ intake.dependenciesAndApprovals.describeApprovals }}
+        </div>
+        <div>
+          <span class="font-medium text-gray-600"
+            >Governance Support Needed:</span
+          >
+          {{ intake.dependenciesAndApprovals.isGovernanceSupportNeeds }}
+        </div>
+      </div>
+    </div>
+  </div>
+</lobby-sub-page-layout>
+}

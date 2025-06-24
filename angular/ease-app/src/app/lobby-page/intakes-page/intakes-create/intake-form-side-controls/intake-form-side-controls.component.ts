@@ -12,7 +12,16 @@ import {
   type OnInit,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ColorPaletteService } from '@ease-angular/services';
+import { Router } from '@angular/router';
+import {
+  ColorPaletteService,
+  FICTIONAL_INTAKEFORM,
+  FirebaseAuthService,
+  IntakeService,
+  ProfileService,
+} from '@ease-angular/services';
+import { SnackbarService } from '@ease-angular/ui';
+import { IntakeDto } from '@ease/dto';
 
 export interface SideNavigationHelperProps {
   label: string;
@@ -28,12 +37,19 @@ export interface SideNavigationHelperProps {
 })
 export class IntakeFormSideControlsComponent implements OnInit {
   private colorService = inject(ColorPaletteService);
+  private firebaseAuth = inject(FirebaseAuthService);
+  private intakeService = inject(IntakeService);
+  private snackbarService = inject(SnackbarService);
+  private router = inject(Router);
+  private profileService = inject(ProfileService);
 
   isDarkMode = this.colorService.isDarkMode;
 
   private renderer = inject(Renderer2);
   controls = input.required<SideNavigationHelperProps[]>();
   intakeForm = input.required<FormGroup>();
+
+  devMode = true;
 
   formNavigationRef =
     viewChild<ElementRef<HTMLDivElement>>('formNavigationRef');
@@ -44,8 +60,6 @@ export class IntakeFormSideControlsComponent implements OnInit {
 
   ngOnInit(): void {
     this.formSections.set(this.controls());
-
-    console.log(this.intakeForm());
   }
 
   @HostListener('window:scroll', [])
@@ -123,8 +137,28 @@ export class IntakeFormSideControlsComponent implements OnInit {
     });
   }
 
-  onCreateIntake() {
-    console.log('create');
-    return;
+  async onCreateIntake() {
+    try {
+      const intake = this.devMode
+        ? FICTIONAL_INTAKEFORM
+        : (this.intakeForm().getRawValue() as IntakeDto);
+
+      const user = this.firebaseAuth.getCurrentUser();
+
+      await this.intakeService.createIntake(
+        intake,
+        this.profileService.profile_()
+      );
+
+      this.snackbarService.show({
+        type: 'success',
+        message: 'Intake has been successfully created',
+        icon: 'plus',
+      });
+
+      this.router.navigate(['/', 'lobby', 'intakes']);
+    } catch (error) {
+      console.error('Failed to create intake:', error);
+    }
   }
 }

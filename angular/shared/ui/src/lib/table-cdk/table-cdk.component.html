@@ -1,36 +1,125 @@
+@let pagination = isPaginator(); @let source = pagination ? pagedData() :
+dataSource();
+
 <table
   cdk-table
-  [dataSource]="dataSource()"
-  class="w-full border border-gray-300 rounded-md overflow-hidden shadow-sm"
+  [dataSource]="source"
+  class="w-full rounded-xl overflow-hidden shadow-lg border border-[var(--gray)]"
 >
   <ng-container
     *ngFor="let column of columns()"
     [cdkColumnDef]="column.columnDef"
   >
+    <!-- Header Cell -->
     <th
       [ngStyle]="{
         backgroundColor: 'var(--background)',
-        color: 'var(--primary)'
+        color: 'var(--primary)',
+        cursor: column.sort ? 'pointer' : 'default'
       }"
       cdk-header-cell
       *cdkHeaderCellDef
-      class="border-b p-3 text-left text-sm font-semibold"
+      (click)="column.sort ? toggleSort(column.columnDef) : null"
+      class="text-left text-xs font-semibold px-4 py-3 border-b border-[var(--gray)] uppercase tracking-wide select-none"
     >
       {{ column.header }}
+
+      @if (column.sort) {
+      <span class="text-[var(--text)]">
+        @if (sortColumn() === column.columnDef) {
+        <span>
+          @if(sortDirection() === 'asc') {
+          <span>▲</span>
+
+          } @if(sortDirection() === 'desc') {
+          <span>▼</span>
+
+          }
+        </span>
+        } @if(sortColumn() !== column.columnDef) {
+        <span class="">↕</span>
+
+        }
+      </span>
+      }
     </th>
-    <td cdk-cell *cdkCellDef="let element" class="p-3 text-sm border-b">
+    <!-- Data Cell -->
+    <td
+      cdk-cell
+      *cdkCellDef="let element"
+      class="px-4 py-3 text-xs text-[var(--text)] border-b border-[var(--lightGray)]"
+    >
       {{ column.cell(element) }}
     </td>
   </ng-container>
 
+  <!-- Header & Row Definitions -->
   <tr
     cdk-header-row
     *cdkHeaderRowDef="displayedColumns()"
-    class="bg-gray-50"
+    class="bg-[var(--background)] shadow-sm"
   ></tr>
   <tr
+    (click)="clickEvent.emit(row)"
     cdk-row
     *cdkRowDef="let row; columns: displayedColumns()"
-    class="hover:bg-[var(--lightGray)]"
+    class="hover:bg-[var(--lightGray)] even:bg-[var(--lighterGray)] transition-colors duration-200"
   ></tr>
 </table>
+
+@if(pagination) {
+<!-- <app-paginator [dataSource]="source"></app-paginator> -->
+<div class="flex justify-end items-center mt-6 space-x-2 text-xs select-none">
+  <!-- First Page -->
+  <button
+    (click)="pageIndex.set(0)"
+    [disabled]="pageIndex() === 0"
+    class="px-2 py-1 rounded border text-[var(--primary)] hover:bg-[var(--lightGray)] disabled:opacity-40"
+  >
+    « First
+  </button>
+
+  <!-- Prev Page -->
+  <button
+    (click)="prevPage()"
+    [disabled]="pageIndex() === 0"
+    class="px-2 py-1 rounded border text-[var(--primary)] hover:bg-[var(--lightGray)] disabled:opacity-40"
+  >
+    ‹ Prev
+  </button>
+
+  <!-- Page Numbers -->
+  <ng-container *ngFor="let page of visiblePages()">
+    <button
+      (click)="pageIndex.set(page)"
+      class="px-3 py-1 rounded border"
+      [ngClass]="{
+        'bg-[var(--accent)] text-white': pageIndex() === page,
+        'hover:bg-[var(--lightGray)] text-[var(--primary)]':
+          pageIndex() !== page
+      }"
+    >
+      {{ page + 1 }}
+    </button>
+  </ng-container>
+
+  <!-- Next Page -->
+  <button
+    (click)="nextPage()"
+    [disabled]="pageIndex() >= totalPages() - 1"
+    class="px-2 py-1 rounded border text-[var(--primary)] hover:bg-[var(--lightGray)] disabled:opacity-40"
+  >
+    Next ›
+  </button>
+
+  <!-- Last Page -->
+  <button
+    (click)="pageIndex.set(totalPages() - 1)"
+    [disabled]="pageIndex() >= totalPages() - 1"
+    class="px-2 py-1 rounded border text-[var(--primary)] hover:bg-[var(--lightGray)] disabled:opacity-40"
+  >
+    Last »
+  </button>
+</div>
+
+}

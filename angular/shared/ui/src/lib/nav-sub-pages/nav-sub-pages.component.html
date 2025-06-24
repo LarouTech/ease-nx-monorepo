@@ -1,25 +1,40 @@
-<div
-  [ngStyle]="{
-    backgroundColor: 'var(--lighterGray)',
-    borderColor: 'var(--lightGray)'
-  }"
-  class="flex flex-row justify-start items-center gap-x-5 h-7 rounded-lg text-sm shadow-md"
->
+<div class="flex items-center justify-start gap-x-4">
+  <a
+    (click)="onBack()"
+    (keyup.enter)="onBack()"
+    tabindex="0"
+    role="button"
+    class="bg-[var(--accent)] capitalize px-4 py-1 rounded-lg text-sm flex flex-row items-center justify-start gap-x-1 cursor-pointer"
+  >
+    <svg-icon size="12px" color="#ffffff" name="back"></svg-icon>
+    <span>back</span>
+  </a>
+
   <div
     [ngStyle]="{
-      color: 'var(--text)',
-      backgroundColor: 'var(--lightGray)'
+      backgroundColor: 'var(--lighterGray)',
+      borderColor: 'var(--lightGray)'
     }"
-    class="capitalize h-full flex items-center pr-4 pl-2 font-bold rounded-lg test"
+    class="flex flex-row justify-start items-center gap-x-5 h-7 rounded-lg text-sm shadow-md w-full"
   >
-    {{ section() }}
-  </div>
+    <div class="flex flex-row items-center justify-start gap-x-5 h-7">
+      <div
+        [ngStyle]="{
+          color: 'var(--text)',
+          backgroundColor: 'var(--lightGray)'
+        }"
+        class="capitalize h-full flex items-center pr-4 pl-2 font-bold rounded-lg test"
+      >
+        {{ section() }}
+      </div>
 
-  @for (subLink of links(); track $index) {
-  <ng-container
-    *ngTemplateOutlet="linkRef; context: { link: subLink }"
-  ></ng-container>
-  }
+      @for (subLink of links(); track $index) {
+      <ng-container
+        *ngTemplateOutlet="linkRef; context: { link: subLink }"
+      ></ng-container>
+      }
+    </div>
+  </div>
 </div>
 
 <!-- NG TEMPLATE -->

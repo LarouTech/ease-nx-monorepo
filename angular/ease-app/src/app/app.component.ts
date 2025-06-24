@@ -20,10 +20,13 @@ import {
 import { CommonModule, ViewportScroller } from '@angular/common';
 import {
   ColorPaletteService,
+  FICTIONAL_INTAKEFORM,
   FirebaseAuthService,
 } from '@ease-angular/services';
 import { FadeInFadeOut } from '@ease-nx-monorepo/animations';
 import { filter } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Component({
   imports: [

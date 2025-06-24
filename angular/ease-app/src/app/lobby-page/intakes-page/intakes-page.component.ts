@@ -41,8 +41,8 @@ export class IntakesPageComponent implements OnInit, AfterViewInit {
       route: '/lobby/intakes/create',
     },
     {
-      label: 'edit',
-      route: '/lobby/inatkes/edit',
+      label: 'view',
+      route: '/lobby/intakes/:id',
       hidden: true, // This will be hidden until a portfolio is selected
     },
   ];
@@ -66,10 +66,9 @@ export class IntakesPageComponent implements OnInit, AfterViewInit {
   private updateEditLink(): void {
     const route = this.getChildRoute(this.route);
     route.params.subscribe((params) => {
-      const currentUrl = this.router.url;
-      if (currentUrl.includes('edit') && params['id']) {
+      if (params['id']) {
         this.navSubLinks[2].hidden = false;
-        this.navSubLinks[2].route = `/lobby/portfolios/edit/${params['id']}`;
+        this.navSubLinks[2].route = `/lobby/intakes/${params['id']}`;
       } else {
         this.navSubLinks[2].hidden = true;
       }

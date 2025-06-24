@@ -9,3 +9,7 @@ export * from './lib/firebase/firebase.provider';
 export * from './lib/portfolio/portfolio.service';
 export * from './lib/profile/profile.service';
 export * from './lib/firebase-storage/firebase-storage.service';
+export * from './lib/intake/intake.service';
+export * from './lib/intake/intake.interfaces';
+export * from './lib/intake/intake.sample';
+export * from './lib/architect-agent/architect-agent.service';

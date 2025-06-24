@@ -1,17 +1,25 @@
 <div
   class="px-8 py-3 rounded-md shadow-lg text-white animate-fade-in-out text-sm flex flex-row items-center justify-start space-x-1"
-  [ngClass]="{
-    'bg-green-600': !config.backgroundColor && config.type === 'success',
-    'bg-red-600': !config.backgroundColor && config.type === 'error',
-    'bg-amber-600': !config.backgroundColor && config.type === 'warning',
-    'bg-blue-600': !config.backgroundColor && config.type === 'info'
+  [ngStyle]="{
+    backgroundColor: config.backgroundColor
+      ? config.backgroundColor
+      : config.type === 'success'
+      ? 'var(--success)'
+      : config.type === 'error'
+      ? 'var(--error)'
+      : config.type === 'warning'
+      ? 'var(--warning)'
+      : config.type === 'info'
+      ? 'var(--primary)'
+      : '',
+    color: config.color ? config.color : '#000000',
+    fontWeight: config.fontWeight ? config.fontWeight : 'bold'
   }"
-  [ngStyle]="{backgroundColor: config.backgroundColor, color: config.color ? config.color : '#ffffff', fontWeight: config.fontWeight ? config.fontWeight : 'bold', }"
 >
   @if(config.icon) {
   <svg-icon
     size="16px"
-    [color]="config.color ? config.color : '#ffffff'"
+    [color]="config.color ? config.color : '#000000'"
     [name]="config.icon"
   ></svg-icon>
   }

@@ -13,7 +13,6 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  CheckboxGroupComponent,
   FormCardComponent,
   SelectInputComponent,
   TextaeraInputComponent,
@@ -27,7 +26,6 @@ import {
     ReactiveFormsModule,
     SelectInputComponent,
     TextaeraInputComponent,
-    CheckboxGroupComponent,
   ],
   templateUrl: './dependencies-and-approvals-form.component.html',
   styleUrl: './dependencies-and-approvals-form.component.css',
@@ -39,7 +37,7 @@ export class DependenciesAndApprovalsFormComponent implements OnInit {
   id = input.required<string>();
   formChangEvent = output<FormGroup>();
 
-  formName = 'financialAndProcurement';
+  formName = 'dependenciesAndApprovals';
 
   ngOnInit() {
     this.initializeForm();

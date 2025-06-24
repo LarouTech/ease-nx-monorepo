@@ -1,5 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { RouterModule } from '@angular/router';
 
@@ -22,4 +27,10 @@ export interface NavSubPagesLink {
 export class NavSubPagesComponent {
   section = input.required<string>();
   links = input.required<NavSubPagesLink[]>();
+
+  private location = inject(Location);
+
+  onBack() {
+    this.location.back();
+  }
 }

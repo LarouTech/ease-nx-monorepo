@@ -49,10 +49,10 @@ export class ProfileService extends FirestoreService {
   }
 
   async getProfile(id: string): Promise<Profile> {
-    return (await this.readById(
+    return await this.readById<Profile>(
       this.collectionName,
 
       id
-    )) as Promise<Profile>;
+    );
   }
 }

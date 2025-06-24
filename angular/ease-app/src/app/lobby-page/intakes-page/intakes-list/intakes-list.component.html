@@ -1,1 +1,27 @@
-<lobby-sub-page-layout title="Intakes"></lobby-sub-page-layout>
+<lobby-sub-page-layout title="Intakes">
+  <div class="w-full flex flex-col justify-start items-start space-y-6">
+    <div class="w-full text-right">
+      <button
+        (click)="filterIntakes()"
+        style="background-color: var(--accent)"
+        [ngStyle]="{
+          backgroundColor: isFilteredByOwner()
+            ? 'var(--secondary)'
+            : 'var(--accent)'
+        }"
+        class="text-white cursor-pointer px-4 py-2 text-xs font-semibold rounded-md transition duration-200 ease-in-out hover:shadow-md hover:scale-[1.01] active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--accent)]"
+      >
+        @if (isFilteredByOwner()) { All Intakes } @else { My Intakes }
+      </button>
+    </div>
+
+    <table-cdk
+      class="w-full"
+      [dataSource]="datasource"
+      [columns]="columnDef"
+      [isPaginator]="true"
+      [paginatorRows]="15"
+      (clickEvent)="onTableClickRow($event)"
+    ></table-cdk>
+  </div>
+</lobby-sub-page-layout>

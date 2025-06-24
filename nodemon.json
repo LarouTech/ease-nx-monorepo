@@ -1,0 +1,6 @@
+{
+  "watch": ["nest/ease-api/src"],
+  "ext": "ts",
+  "ignore": ["**/*.spec.ts"],
+  "exec": "npx ts-node nest/ease-api/src/main.ts"
+}
