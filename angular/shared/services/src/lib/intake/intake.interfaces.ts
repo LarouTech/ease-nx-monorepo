@@ -1,11 +1,14 @@
 import { IntakeDto } from '@ease/dto';
+import { Timestamp } from 'firebase/firestore';
+
 export interface Intake extends IntakeDto {
   ownerId: string;
-  createdOn: Date;
+  createdOn: Timestamp;
   familyName?: string;
   givenName?: string;
   email: string;
   id?: string;
+  isArchProposal?: boolean;
 }
 
 // export interface IntakeDto {

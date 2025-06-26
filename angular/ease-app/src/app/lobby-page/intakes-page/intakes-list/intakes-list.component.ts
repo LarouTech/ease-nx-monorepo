@@ -15,10 +15,11 @@ import {
   TableCdkComponent,
 } from '@ease-angular/ui';
 import { dateToYYYYMMDD } from '@ease/utils';
+import { Timestamp } from 'firebase/firestore';
 
 interface IntakeListTableColDef {
   createdBy: string;
-  createdOn: Date;
+  createdOn: Timestamp;
   initiative: string;
   deadline: Date;
   requestorName: string;

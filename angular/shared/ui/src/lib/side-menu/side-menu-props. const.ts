@@ -57,6 +57,23 @@ export const SIDEDMENU_PROPS = (router: Router): SidemenuItemProps[] => {
       ],
     },
     {
+      label: 'Architecture Proposals',
+      icon: 'plan',
+      action: () => router.navigate(['/', 'lobby', 'architecture-proposals']),
+      isSelected: false,
+      route: '/lobby/architecture-proposals',
+      submenuItems: [
+        {
+          label: 'List',
+          icon: 'list',
+          action: () =>
+            router.navigate(['/', 'lobby', 'architecture-proposals']),
+          isSelected: false,
+          route: '/lobby/architecture-proposals',
+        },
+      ],
+    },
+    {
       label: 'Cost Estimator',
       icon: 'estimate',
       action: () => router.navigate(['/', 'lobby', 'cost-estimator']),

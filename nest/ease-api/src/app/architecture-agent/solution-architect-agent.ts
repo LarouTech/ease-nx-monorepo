@@ -70,6 +70,7 @@ Return an object using the following structure:
 
 🧭 Additional rules:
 - Only output a single, well-formed JavaScript object.
+- Sentences as part of the javascript object values must be segrate with ;.
 - Mermaid must use **escaped newlines (\\n)**.
 - Node names must include prefixes (Node1, Node2, etc.) and be alphanumeric with underscores.
 - Output must be valid JavaScript — no trailing commas, no syntax errors.

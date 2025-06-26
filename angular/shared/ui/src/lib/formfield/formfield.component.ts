@@ -7,6 +7,7 @@ import {
   input,
   output,
   inject,
+  OnInit,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
@@ -25,7 +26,7 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
     },
   ],
 })
-export class FormfieldComponent implements ControlValueAccessor {
+export class FormfieldComponent implements ControlValueAccessor, OnInit {
   label = input<string>();
   name = input.required<string>();
   placeholder = input<string>('');
@@ -39,12 +40,20 @@ export class FormfieldComponent implements ControlValueAccessor {
   borderWidth = input<string>();
   borderStyle = input<string>();
   focusColor = input<string>('var(--primary');
+  labelColor = input<string>();
 
   valueChanged = output<string>();
+
+  initialValue = input<string>('');
 
   @HostBinding('attr.disabled') @Input() disabled = false;
 
   value = '';
+
+  ngOnInit() {
+    this.value = this.initialValue() || '';
+  }
+
   onChange: (value: string) => void = () => {
     this.valueChanged.emit(this.value);
   };

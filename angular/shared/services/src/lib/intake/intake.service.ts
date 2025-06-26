@@ -4,6 +4,7 @@ import { Intake } from './intake.interfaces';
 import { User } from 'firebase/auth';
 import { Profile } from '../profile/profile.service';
 import { IntakeDto } from '@ease/dto';
+import { Timestamp } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class IntakeService extends FirestoreService {
 
     const intake: Intake = {
       ...dto,
-      createdOn: new Date(),
+      createdOn: new Timestamp(Date.now() / 1000, 0),
       email,
       givenName,
       familyName,

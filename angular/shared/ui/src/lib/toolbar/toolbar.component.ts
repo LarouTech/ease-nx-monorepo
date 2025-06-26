@@ -58,4 +58,12 @@ export class ToolbarComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.cdr.detectChanges();
   }
+
+  onBrandClick() {
+    if (this.isFixed()) {
+      this.el.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
 }

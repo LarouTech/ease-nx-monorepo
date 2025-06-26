@@ -8,16 +8,27 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { LobbySubPageLayoutComponent } from '@ease-angular/ui';
+import {
+  AccordionComponent,
+  LobbySubPageLayoutComponent,
+  SvgIconComponent,
+} from '@ease-angular/ui';
 import mermaid from 'mermaid';
 import { FICTIONAL_INTAKEFORM } from '@ease-angular/services';
 import { from, map, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IntakeDto } from '@ease/dto';
+import { ArchitectureDiagramComponent } from './architecture-diagram/architecture-diagram.component';
 
 @Component({
   selector: 'app-cost-estimator',
-  imports: [CommonModule, LobbySubPageLayoutComponent],
+  imports: [
+    CommonModule,
+    LobbySubPageLayoutComponent,
+    ArchitectureDiagramComponent,
+    AccordionComponent,
+    SvgIconComponent,
+  ],
   templateUrl: './cost-estimator.component.html',
   styleUrl: './cost-estimator.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

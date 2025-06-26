@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import { RouterModule } from '@angular/router';
+import { ColorPaletteService } from '@ease-angular/services';
 
 export interface NavSubPagesLink {
   label: string;
@@ -29,6 +30,9 @@ export class NavSubPagesComponent {
   links = input.required<NavSubPagesLink[]>();
 
   private location = inject(Location);
+  private colorPallete = inject(ColorPaletteService);
+
+  isDarkMode = this.colorPallete.isDarkMode;
 
   onBack() {
     this.location.back();

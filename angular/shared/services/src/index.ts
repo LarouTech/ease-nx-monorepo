@@ -12,4 +12,3 @@ export * from './lib/firebase-storage/firebase-storage.service';
 export * from './lib/intake/intake.service';
 export * from './lib/intake/intake.interfaces';
 export * from './lib/intake/intake.sample';
-export * from './lib/architect-agent/architect-agent.service';

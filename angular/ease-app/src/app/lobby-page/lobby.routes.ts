@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { firebaseAuthGuard } from '@ease-angular/services';
 import { PortfolioRoutes } from './portfolios-page/portfolio.routes';
 import { IntakesRoutes } from './intakes-page/intakes.routes';
+import { architecturePorposalsRoutes } from './architecture-proposals/architecture-proposals.routes';
 
 export const LobbyRoutes: Routes = [
   {
@@ -20,6 +21,7 @@ export const LobbyRoutes: Routes = [
       },
       ...PortfolioRoutes,
       ...IntakesRoutes,
+      ...architecturePorposalsRoutes,
       {
         path: 'cost-estimator',
         loadComponent: () =>

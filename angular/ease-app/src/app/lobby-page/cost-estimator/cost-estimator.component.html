@@ -1,33 +1,135 @@
 @let proposal = (architectureProposal$ | async);
 
 <lobby-sub-page-layout title="architecture proposal">
-  <div class="mt-2 mb-4">
-    <h3 class="text-xl mb-1 font-bold text-[var(--primary)]">
-      {{ (proposal?.architecture)!.title }}
-    </h3>
-    <p class="text-sm px-1 italic text-[var(--gray)]">
-      {{ proposal?.architecture?.details }}
-    </p>
-  </div>
+  <div class="gap-y-2 flex flex-col items-start justify-start">
+    <div class="my-4">
+      <div class="flex flex-row items-center gap-x-2 mb-3">
+        <svg-icon color="var(--secondary)" name="arrow"></svg-icon>
+        <h3 class="text-[var(--primary)] font-bold text-xl">
+          {{ (proposal?.architecture)!.title }}
+        </h3>
+      </div>
 
-  <div
-    class="w-full h-full text-[var(--text)] flex items-start justify-start gap-x-4 p-8 border border-[var(--primary)] rounded-lg shadow-lg"
-  >
-    <div class="h-full">
-      <ul class="h-full">
-        @for (mermaidNode of proposal?.diagram?.nodeExplanations; track $index)
-        { @for (entry of (mermaidNode | keyvalue); track $index) {
-        <li class="text-sm mb-3 last:mb-0">
-          <strong class="text-[var(--secondary)]">{{ entry.key }}:</strong>
-          {{ entry.value }}
-        </li>
-        } }
+      <ul class="list-disc pl-12 text-base">
+        @for (item of proposal?.architecture!.details.split(';').slice(0, -1);
+        track $index) {
+        <li class="text-sm capitalize text-[var(--gray)]">{{ item }}</li>
+        }
       </ul>
     </div>
 
-    <div
-      class="mermaid w-full bg-white rounded-lg p-6"
-      [innerHTML]="proposal?.diagram?.mermaid"
-    ></div>
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'business goals',
+          dataArray: proposal?.projectNeedsSummary
+            ?.businessGoals!.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
+
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'technical requirements',
+          dataArray: proposal?.projectNeedsSummary
+            ?.technicalRequirements!.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
+
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'integration strategy',
+          dataArray: proposal?.integrationStrategy
+            ?.description!.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
+
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'performance & availability',
+          dataArray: proposal?.performanceAndAvailability
+            ?.description!.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
+
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'Security & Compliance',
+          dataArray: proposal?.securityAndCompliance
+            ?.description!.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
+
+    <accordion title="architecture diagram" class="w-full">
+      <architecture-diagram
+        class="w-full"
+        [architectureProposal]="proposal!"
+      ></architecture-diagram>
+    </accordion>
+
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'assumptions',
+          dataArray: proposal
+            ?.assumptionsAndRisks!.assumptions.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
+
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'risks',
+          dataArray: proposal
+            ?.assumptionsAndRisks!.risks.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
+
+    <ng-container
+      *ngTemplateOutlet="
+        accordionRef;
+        context: {
+          title: 'Clarification Needed',
+          dataArray: proposal?.assumptionsAndRisks
+            ?.clarificationsNeeded!.split(';')
+            .slice(0, -1)
+        }
+      "
+    ></ng-container>
   </div>
 </lobby-sub-page-layout>
+
+<!-- TEMPLATE REFRENCE -->
+<ng-template #accordionRef let-title="title" let-dataArray="dataArray">
+  <accordion [title]="title" class="w-full">
+    <ul class="list-disc pl-12 text-base">
+      @for (item of dataArray; track $index) {
+      <li class="text-sm capitalize text-[var(--gray)]">{{ item }}</li>
+      }
+    </ul>
+  </accordion>
+</ng-template>

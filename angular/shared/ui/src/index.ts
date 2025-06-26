@@ -20,3 +20,4 @@ export * from './lib/select-input/select-input.component';
 export * from './lib/textaera-input/textaera-input.component';
 export * from './lib/form-card/form-card.component';
 export * from './lib/checkbox-group/checkbox-group.component';
+export * from './lib/accordion/accordion.component';
