@@ -43,3 +43,6 @@ Thumbs.db
 
 .angular
 .env
+
+nest\ease-api\ease-pk.json
+nest/ease-api/ease-pk.json

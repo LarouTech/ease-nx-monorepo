@@ -1,138 +1,368 @@
-/* eslint-disable no-useless-escape */
-import { IntakeDto } from '@ease/dto';
-import { ArchiecturePlatform } from '@ease/types';
-import { Injectable } from '@nestjs/common';
-import solutionArchitectAgent from './solution-architect-agent';
-import formatIntakeAsPrompts from './format-intake-as-prompts';
+import { Injectable, Logger } from '@nestjs/common';
 import { run } from '@openai/agents';
 import { ArchitectureProposal } from '@ease/interfaces';
+import { ArchitecturePropsalDto } from '@ease/dto';
+import { FirebaseService } from '../firebase-admin/firebase.service';
+import solutionArchitectAgent from './solution-architect-agent';
+import formatIntakeAsPrompts from './format-intake-as-prompts';
+import { MermaidFormatter } from './mermaid-formatter.service';
+import { ArchiecturePlatform } from '@ease/types';
 
-export interface ArchitecturePropsalDto {
-  intake: IntakeDto;
-  platform: ArchiecturePlatform;
-}
-
+/**
+ * Service for managing architecture proposals using AI agents
+ */
 @Injectable()
 export class ArchitectureAgentService {
-  async createArchitectureProposal(dto: ArchitecturePropsalDto) {
+  private readonly logger = new Logger(ArchitectureAgentService.name);
+  private readonly ARCHITECTURE_COLLECTION = 'architecture-proposal';
+  private readonly INTAKES_COLLECTION = 'intakes';
+
+  constructor(
+    private readonly firebaseService: FirebaseService,
+    private readonly mermaidFormatter: MermaidFormatter
+  ) {}
+
+  async deleteArchitectureProposal(
+    id: string,
+    intakeId: string
+  ): Promise<{
+    success: boolean;
+    message: string;
+    intakeId: string;
+    id: string;
+  }> {
+    const firestore = this.firebaseService.getFirestore();
+
+    try {
+      // Use a transaction to ensure atomicity
+      const result = await firestore.runTransaction(async (transaction) => {
+        // Check if documents exist before deletion
+        const archProposalRef = firestore
+          .collection(this.ARCHITECTURE_COLLECTION)
+          .doc(id);
+        const intakeRef = firestore
+          .collection(this.INTAKES_COLLECTION)
+          .doc(intakeId);
+
+        const [archProposalDoc, intakeDoc] = await Promise.all([
+          transaction.get(archProposalRef),
+          transaction.get(intakeRef),
+        ]);
+
+        if (!archProposalDoc.exists) {
+          throw new Error(`Architecture proposal with ID ${id} does not exist`);
+        }
+
+        if (!intakeDoc.exists) {
+          throw new Error(`Intake with ID ${intakeId} does not exist`);
+        }
+
+        // Perform the deletion and update atomically
+        transaction.delete(archProposalRef);
+        transaction.update(intakeRef, {
+          archProposalId: null,
+          updatedAt: new Date(),
+        });
+
+        return { archProposalId: id, intakeId };
+      });
+
+      this.logger.log(
+        `Successfully deleted architecture proposal ${id} and updated intake ${intakeId}`
+      );
+
+      return {
+        success: true,
+        message: `Architecture proposal deleted successfully`,
+        intakeId: result.intakeId,
+        id: result.archProposalId,
+      };
+    } catch (error) {
+      this.logger.error(`Failed to delete architecture proposal ${id}:`, error);
+
+      // Re-throw with more context
+      if (error instanceof Error && error.message.includes('does not exist')) {
+        throw new Error(error.message);
+      }
+
+      throw new Error(
+        `Failed to delete architecture proposal: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
+  }
+
+  /**
+   * Creates a new architecture proposal based on provided intake data
+   * @param dto - Architecture proposal data transfer object
+   * @returns Promise<ArchitectureProposal> - The created architecture proposal
+   * @throws Error if creation fails
+   */
+  async createArchitectureProposal(
+    dto: ArchitecturePropsalDto
+  ): Promise<ArchitectureProposal> {
+    this.validateCreateProposalInput(dto);
+
     const { platform, intake } = dto;
     const prompt = formatIntakeAsPrompts(intake);
 
     try {
-      const result = await run(solutionArchitectAgent(platform), prompt);
-
-      if (!result.finalOutput) {
-        throw new Error('No final output from agent');
-      }
-
-      // Attempt to parse stringified object safely
-      let parsedOutput: ArchitectureProposal;
-
-      try {
-        parsedOutput = eval('(' + result.finalOutput + ')'); // ⚠️ Only use if you're certain the source is safe
-      } catch (parseError) {
-        console.error('Failed to parse finalOutput:', parseError);
-        throw new Error('Invalid format in finalOutput');
-      }
-
-      parsedOutput.diagram.mermaid = this.formatForMermaid(
-        parsedOutput.diagram.mermaid as string
+      this.logger.log(
+        `Creating architecture proposal for intake ID: ${intake.id}`
       );
 
-      console.log(parsedOutput.diagram.mermaid);
+      const agentResult = await this.runArchitectureAgent(platform, prompt);
+      const parsedOutput = this.parseAgentOutput(agentResult.finalOutput ?? '');
+      const formattedProposal = this.formatProposal(parsedOutput);
 
-      return parsedOutput;
+      if (!intake.id) {
+        throw new Error('Intake ID is required');
+      }
+      const id = await this.saveProposal(formattedProposal, intake.id);
+
+      this.logger.log(
+        `Successfully created architecture proposal for intake ID: ${intake.id}`
+      );
+      return { ...formattedProposal, id };
     } catch (error) {
-      console.error('createArchitectureProposal failed:', error);
+      this.logger.error(
+        `Failed to create architecture proposal for intake ID: ${intake.id}`,
+        error
+      );
       throw error;
     }
   }
 
   /**
-   * Formats LLM output for proper Mermaid.js rendering
-   * @param {string} llmOutput - Raw output from LLM containing \n characters
-   * @returns {string} - Properly formatted Mermaid diagram string
+   * Retrieves an architecture proposal by ID
+   * @param id - The proposal ID
+   * @returns Promise<ArchitectureProposal | null> - The architecture proposal or null if not found
+   * @throws Error if retrieval fails
    */
-  formatForMermaid(output: string): string {
-    // Replace \n with actual newlines and clean up extra whitespace
-    let formatted = output
-      .replace(/\\n/g, '\n') // Convert \n to actual newlines
-      .trim(); // Remove leading/trailing whitespace
+  async getArchitectureProposal(
+    id: string
+  ): Promise<ArchitectureProposal | null> {
+    this.validateId(id);
 
-    // Split into lines for line-by-line processing
-    let lines = formatted.split('\n');
+    const firestore = this.firebaseService.getFirestore();
 
-    // Process each line
-    lines = lines.map((line) => {
-      let processedLine = line.trim();
+    try {
+      this.logger.log(`Retrieving architecture proposal with ID: ${id}`);
 
-      // Skip empty lines and diagram type declarations
-      if (
-        !processedLine ||
-        processedLine.startsWith('graph') ||
-        processedLine.startsWith('flowchart')
-      ) {
-        return processedLine;
+      const docRef = firestore.collection(this.ARCHITECTURE_COLLECTION).doc(id);
+      const docSnap = await docRef.get();
+
+      if (!docSnap.exists) {
+        this.logger.warn(`Architecture proposal with ID ${id} not found`);
+        return null;
       }
 
-      // Fix edge label spacing issues - remove spaces around pipes in edge labels
-      // Match patterns like: --> | label | or -->| label | or --> |label|
-      processedLine = processedLine.replace(
-        /(-->|<--|<-->|==|\.\.|~~>)\s*\|\s*([^|]+)\s*\|\s*/g,
-        '$1|$2|'
+      const proposal = docSnap.data() as ArchitectureProposal;
+      this.logger.log(
+        `Successfully retrieved architecture proposal with ID: ${id}`
+      );
+      return proposal;
+    } catch (error) {
+      this.logger.error(
+        `Failed to retrieve architecture proposal with ID ${id}`,
+        error
+      );
+      throw new Error(
+        `Could not fetch proposal: ${this.getErrorMessage(error)}`
+      );
+    }
+  }
+
+  /**
+   * Validates input for creating architecture proposal
+   * @private
+   */
+  private validateCreateProposalInput(dto: ArchitecturePropsalDto): void {
+    if (!dto) {
+      throw new Error('Architecture proposal DTO is required');
+    }
+
+    if (!dto.platform) {
+      throw new Error('Platform is required');
+    }
+
+    if (!dto.intake) {
+      throw new Error('Intake data is required');
+    }
+
+    if (!dto.intake.id) {
+      throw new Error('Intake ID is required');
+    }
+  }
+
+  /**
+   * Validates ID parameter
+   * @private
+   */
+  private validateId(id: string): void {
+    if (!id || typeof id !== 'string' || id.trim().length === 0) {
+      throw new Error('Valid ID is required');
+    }
+  }
+
+  /**
+   * Runs the solution architect agent
+   * @private
+   */
+  private async runArchitectureAgent(platform: string, prompt: string) {
+    try {
+      const result = await run(
+        solutionArchitectAgent(platform as ArchiecturePlatform),
+        prompt
       );
 
-      // If line doesn't have edge labels but has arrows, ensure proper spacing
-      if (
-        /(-->|<--|<-->|==|\.\.|~~>)/.test(processedLine) &&
-        !/\|/.test(processedLine)
-      ) {
-        processedLine = processedLine.replace(
-          /(\S+)\s*(-->|<--|<-->|==|\.\.|~~>)\s*(\S+)/g,
-          '$1 $2 $3'
+      if (!result.finalOutput) {
+        throw new Error('No final output from architecture agent');
+      }
+
+      return result;
+    } catch (error) {
+      this.logger.error('Architecture agent execution failed', error);
+      throw new Error(`Agent execution failed: ${this.getErrorMessage(error)}`);
+    }
+  }
+
+  /**
+   * Safely parses agent output
+   * @private
+   */
+  private parseAgentOutput(finalOutput: string): ArchitectureProposal {
+    try {
+      // Using JSON.parse instead of eval for security
+      // If the output is not valid JSON, this will throw an error
+      const parsedOutput = JSON.parse(finalOutput);
+
+      // Validate that the parsed output has the expected structure
+      if (!this.isValidArchitectureProposal(parsedOutput)) {
+        throw new Error('Invalid architecture proposal structure');
+      }
+
+      return parsedOutput as ArchitectureProposal;
+    } catch (parseError) {
+      this.logger.error('Failed to parse agent output', parseError);
+
+      // Fallback: Try to use eval only if JSON.parse fails
+      // This is still risky but maintains backward compatibility
+      try {
+        const evalResult = eval('(' + finalOutput + ')');
+        if (!this.isValidArchitectureProposal(evalResult)) {
+          throw new Error('Invalid architecture proposal structure from eval');
+        }
+        return evalResult as ArchitectureProposal;
+      } catch (evalError) {
+        this.logger.error(
+          'Failed to parse agent output with eval fallback',
+          evalError
         );
+        throw new Error('Invalid format in agent output');
       }
+    }
+  }
 
-      return processedLine;
-    });
-
-    // Filter out empty lines and rejoin
-    formatted = lines.filter((line) => line.trim().length > 0).join('\n');
-
-    // Fix node labels that contain problematic characters
-    // Replace square brackets with quotes for labels containing special chars
-    formatted = formatted.replace(
-      /\[([^\]]*[(),\/&][^\]]*)\]/g,
-      function (match, content) {
-        // If content contains problematic characters, wrap in quotes
-        return `["${content}"]`;
-      }
+  /**
+   * Validates if the parsed output is a valid architecture proposal
+   * @private
+   */
+  private isValidArchitectureProposal(obj: any): boolean {
+    return (
+      obj &&
+      typeof obj === 'object' &&
+      obj.diagram &&
+      typeof obj.diagram === 'object'
     );
+  }
 
-    // Sanitize edge labels - clean up problematic characters in edge labels only
-    formatted = formatted.replace(/\|([^|]+)\|/g, function (match, label) {
-      // Clean up edge labels but keep them readable
-      const cleanLabel = label
-        .replace(/[()]/g, '') // Remove parentheses
-        .replace(/\s{2,}/g, ' ') // Replace multiple spaces with single space
-        .trim();
+  /**
+   * Formats the proposal for storage
+   * @private
+   */
+  private formatProposal(proposal: ArchitectureProposal): ArchitectureProposal {
+    if (proposal.diagram?.mermaid) {
+      proposal.diagram.mermaid = this.mermaidFormatter.format(
+        proposal.diagram.mermaid as string
+      );
+    }
+    return proposal;
+  }
 
-      return `|${cleanLabel}|`;
-    });
+  /**
+   * Saves the architecture proposal to the database
+   * @private
+   */
+  private async saveProposal(
+    proposal: ArchitectureProposal,
+    intakeId: string
+  ): Promise<string> {
+    const firestore = this.firebaseService.getFirestore();
 
-    // Add proper indentation to non-declaration lines
-    lines = formatted.split('\n');
-    lines = lines.map((line) => {
-      if (
-        line.trim() &&
-        !line.trim().startsWith('graph') &&
-        !line.trim().startsWith('flowchart')
-      ) {
-        return '  ' + line.trim(); // Add 2-space indentation
-      }
-      return line.trim();
-    });
+    try {
+      proposal.intakeId = intakeId;
 
-    return lines.join('\n');
+      const archProposalRef = await firestore
+        .collection(this.ARCHITECTURE_COLLECTION)
+        .add(proposal);
+
+      this.logger.log(
+        `Saved architecture proposal with ID: ${archProposalRef.id}`
+      );
+
+      await this.updateIntakeWithProposalId(intakeId, archProposalRef.id);
+      return archProposalRef.id;
+    } catch (error) {
+      this.logger.error(
+        `Failed to save architecture proposal for intake ID ${intakeId}`,
+        error
+      );
+      throw new Error(
+        `Could not save proposal: ${this.getErrorMessage(error)}`
+      );
+    }
+  }
+
+  /**
+   * Updates the intake document with the architecture proposal ID
+   * @private
+   */
+  private async updateIntakeWithProposalId(
+    intakeId: string,
+    proposalId: string
+  ): Promise<void> {
+    const firestore = this.firebaseService.getFirestore();
+
+    try {
+      await firestore
+        .collection(this.INTAKES_COLLECTION)
+        .doc(intakeId)
+        .update({ archProposalId: proposalId });
+
+      this.logger.log(
+        `Updated intake ${intakeId} with proposal ID: ${proposalId}`
+      );
+    } catch (error) {
+      this.logger.error(
+        `Failed to update intake ${intakeId} with proposal ID`,
+        error
+      );
+      throw new Error(
+        `Could not update intake: ${this.getErrorMessage(error)}`
+      );
+    }
+  }
+
+  /**
+   * Extracts error message from various error types
+   * @private
+   */
+  private getErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+    return 'Unknown error occurred';
   }
 }

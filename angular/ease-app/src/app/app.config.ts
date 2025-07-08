@@ -7,7 +7,11 @@ import {
 } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { COLOR_PALETTE, DARK_COLOR_PALETTE } from '../color.palette';
-import { provideColorPalettes, provideFirebase } from '@ease-angular/services';
+import {
+  APP_ENVIRONMENT,
+  provideColorPalettes,
+  provideFirebase,
+} from '@ease-angular/services';
 import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
@@ -18,5 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideColorPalettes(COLOR_PALETTE, DARK_COLOR_PALETTE),
     provideFirebase(environment.firebaseConfig),
+    { provide: APP_ENVIRONMENT, useValue: environment },
   ],
 };

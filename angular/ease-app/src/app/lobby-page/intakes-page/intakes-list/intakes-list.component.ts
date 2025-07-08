@@ -14,6 +14,7 @@ import {
   LobbySubPageLayoutComponent,
   TableCdkComponent,
 } from '@ease-angular/ui';
+import { IntakeDto } from '@ease/dto';
 import { dateToYYYYMMDD } from '@ease/utils';
 import { Timestamp } from 'firebase/firestore';
 
@@ -39,8 +40,8 @@ export class IntakesListComponent implements OnInit {
   private profileService = inject(ProfileService);
   private router = inject(Router);
 
-  private intakes: Intake[] = [];
-  private intakesByOwner: Intake[] = [];
+  private intakes: IntakeDto[] = [];
+  private intakesByOwner: IntakeDto[] = [];
 
   datasource: IntakeListTableColDef[] = [];
 
@@ -101,25 +102,28 @@ export class IntakesListComponent implements OnInit {
   }
 
   private setDatasource(): void {
-    let data: Intake[] = [];
+    let data: IntakeDto[] = [];
 
     if (!this.isFilteredByOwner()) data = this.intakes;
     else data = this.intakesByOwner;
 
-    this.datasource = data.map((intake) => {
-      const { givenName, familyName, createdOn, id } = intake;
-      const { initiative, deadline } = intake.businessContext;
-      const { name, title } = intake.requestorInformation;
+    this.datasource = data
+      .filter((intake) => intake.createdOn !== undefined)
+      .map((intake) => {
+        const { givenName, familyName, createdOn, id } = intake;
+        const { initiative, deadline } = intake.businessContext;
+        const { name, title } = intake.requestorInformation;
 
-      return {
-        createdBy: givenName || familyName ? `${givenName} ${familyName}` : '-',
-        createdOn: createdOn,
-        initiative,
-        deadline: new Date(deadline),
-        requestorName: name,
-        title,
-        id: id || '',
-      };
-    });
+        return {
+          createdBy:
+            givenName || familyName ? `${givenName} ${familyName}` : '-',
+          createdOn: createdOn as Timestamp,
+          initiative,
+          deadline: new Date(deadline),
+          requestorName: name,
+          title,
+          id: id || '',
+        };
+      });
   }
 }

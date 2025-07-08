@@ -1,18 +1,24 @@
 import { Intake } from '@ease-angular/services';
+import { IntakeDto } from '@ease/dto';
 
 export interface IntakeSection {
   title: string;
+  name: string;
+  isEditMode?: boolean;
   fields: Array<{
     label: string;
     value: string | string[];
     isArray?: boolean;
+    isReset?: boolean;
   }>;
 }
 
-export const intakeSections = (intake: Intake): IntakeSection[] => {
+export const intakeSections = (intake: IntakeDto): IntakeSection[] => {
   return [
     {
       title: 'requestor information',
+      name: 'requestorInformation',
+      isEditMode: false,
       fields: [
         { label: 'name', value: intake.requestorInformation.name },
         { label: 'title', value: intake.requestorInformation.title },
@@ -23,6 +29,8 @@ export const intakeSections = (intake: Intake): IntakeSection[] => {
     },
     {
       title: 'business context',
+      name: 'businessContext',
+      isEditMode: false,
       fields: [
         { label: 'initiative', value: intake.businessContext.initiative },
         {
@@ -50,6 +58,8 @@ export const intakeSections = (intake: Intake): IntakeSection[] => {
     },
     {
       title: 'project details',
+      name: 'projectDetails',
+      isEditMode: false,
       fields: [
         { label: 'initiative', value: intake.projectDetails.initiativeName },
         {
@@ -88,6 +98,8 @@ export const intakeSections = (intake: Intake): IntakeSection[] => {
     },
     {
       title: 'financial & procurement',
+      name: 'financialAndProcurement',
+      isEditMode: false,
       fields: [
         {
           label: 'financial approval',
@@ -113,6 +125,8 @@ export const intakeSections = (intake: Intake): IntakeSection[] => {
     },
     {
       title: 'timeline & delivery',
+      name: 'timelineAndDelivery',
+      isEditMode: false,
       fields: [
         {
           label: 'level of urgency',
@@ -150,6 +164,8 @@ export const intakeSections = (intake: Intake): IntakeSection[] => {
     },
     {
       title: 'data & security',
+      name: 'dataAndSecurity',
+      isEditMode: false,
       fields: [
         {
           label: 'data storage location',
@@ -193,6 +209,8 @@ export const intakeSections = (intake: Intake): IntakeSection[] => {
     },
     {
       title: 'technical considerations',
+      name: 'technicalConsiderations',
+      isEditMode: false,
       fields: [
         {
           label: 'anticipated hosting location',
@@ -274,6 +292,8 @@ export const intakeSections = (intake: Intake): IntakeSection[] => {
     },
     {
       title: 'dependecies  & approvals',
+      name: 'dependenciesAndApprovals',
+      isEditMode: false,
       fields: [
         {
           label: 'approval status',

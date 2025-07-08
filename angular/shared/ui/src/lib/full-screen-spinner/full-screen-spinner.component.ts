@@ -34,6 +34,7 @@ export class FullScreenSpinnerComponent implements OnDestroy {
 
   visible = input<boolean>(false);
   message = input<string>('Please wait...');
+  messageInterval = input<number>(1000);
   actionsMessages = input<string[]>([]);
   topOffset = input<string>('0px');
 
@@ -60,7 +61,7 @@ export class FullScreenSpinnerComponent implements OnDestroy {
         } else {
           clearInterval(this.intervalId);
         }
-      }, 1000);
+      }, this.messageInterval());
     } else {
       clearInterval(this.intervalId);
     }

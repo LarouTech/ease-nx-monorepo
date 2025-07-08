@@ -4,13 +4,15 @@
   (keydown.space)="onToggle()"
   tabindex="0"
   role="button"
-  class="border border-[var(--primary)] p-3 rounded-lg mb-4 cursor-pointer"
+  class="border border-[var(--gray)] p-3 rounded-lg mb-4 cursor-pointer"
 >
-  <div class="flex flex-row items-center justify-start gap-x-1">
-    <svg-icon size=".8rem" color="var(--secondary)" name="arrow"></svg-icon>
-    <h3 class="text-[var(--primary)] text-xl font-bold capitalize">
-      {{ title() }}
-    </h3>
+  <div class="flex items-center justify-between">
+    <div class="flex flex-row items-center justify-start gap-x-1">
+      <svg-icon size=".8rem" color="var(--secondary)" name="arrow"></svg-icon>
+      <h3 class="text-[var(--primary)] text-xl font-bold capitalize">
+        {{ title() }}
+      </h3>
+    </div>
   </div>
 
   <!-- Always render the container, control visibility via animation -->

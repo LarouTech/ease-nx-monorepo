@@ -3,7 +3,7 @@
   <label
     [ngStyle]="{ color: labelColor() ? labelColor() : color() }"
     [for]="name()"
-    class="text-xs font-bold mb-2"
+    class="text-xs font-bold mb-2 capitalize"
   >
     {{ label() }}
   </label>
@@ -16,13 +16,15 @@
       [type]="type()"
       [value]="value"
       (input)="onInput($event)"
+      (click)="onClick($event)"
       (blur)="onBlur()"
       [placeholder]="placeholder()"
-      [disabled]="disabled"
+      [disabled]="disabled()"
       [ngStyle]="{
         backgroundColor: backgroundColor(),
         color: color(),
         borderColor: borderColor(),
+        borderWidth: borderWidth(),
         padding: padding()
       }"
       [style.--focusColor]="focusColor()"

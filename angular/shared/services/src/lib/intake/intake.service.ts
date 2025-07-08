@@ -12,7 +12,7 @@ import { Timestamp } from 'firebase/firestore';
 export class IntakeService extends FirestoreService {
   collectionName = 'intakes';
 
-  async createIntake(dto: IntakeDto, profile: Profile | null) {
+  async createIntake(dto: Partial<IntakeDto>, profile: Profile | null) {
     if (!profile) {
       throw Error(
         'user need to be login and have a profile to create an intake'
@@ -21,7 +21,7 @@ export class IntakeService extends FirestoreService {
 
     const { email, givenName, familyName } = profile;
 
-    const intake: Intake = {
+    const intake: Partial<IntakeDto> = {
       ...dto,
       createdOn: new Timestamp(Date.now() / 1000, 0),
       email,
@@ -33,15 +33,15 @@ export class IntakeService extends FirestoreService {
     return await this.create(intake, this.collectionName);
   }
 
-  async getIntakes(): Promise<Intake[]> {
-    return await this.readAll<Intake[]>(this.collectionName);
+  async getIntakes(): Promise<IntakeDto[]> {
+    return await this.readAll<IntakeDto[]>(this.collectionName);
   }
 
-  async getIntake(id: string): Promise<Intake> {
-    return await this.readById<Intake>(this.collectionName, id);
+  async getIntake(id: string): Promise<IntakeDto> {
+    return await this.readById<IntakeDto>(this.collectionName, id);
   }
 
   async getIntakesByOwner(id: string) {
-    return await this.queryBy<Intake>('ownerId', id, this.collectionName);
+    return await this.queryBy<IntakeDto>('ownerId', id, this.collectionName);
   }
 }

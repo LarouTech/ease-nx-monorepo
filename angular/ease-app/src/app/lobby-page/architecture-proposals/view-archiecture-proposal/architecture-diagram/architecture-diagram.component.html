@@ -1,0 +1,24 @@
+@let proposal = architectureProposal();
+
+<div
+  class="h-full text-[var(--text)] p-2 w-[100%] flex flex-col items-start justify-start gap-y-4"
+>
+  <div
+    class="mermaid bg-white rounded-lg p-10 h-full w-full"
+    [innerHTML]="proposal?.diagram?.mermaid"
+  ></div>
+
+  <div class="h-full w-full">
+    <ul class="h-full">
+      @for (mermaidNode of proposal?.diagram?.nodeExplanations; track $index) {
+      @for (entry of (mermaidNode | keyvalue); track $index) {
+      <li class="text-sm mb-3 last:mb-0">
+        <strong class="text-[var(--secondary)] text-sm"
+          >{{ entry.key }}:</strong
+        >
+        <span class="text-sm text-[var(--gray)]"> {{ entry.value }}</span>
+      </li>
+      } }
+    </ul>
+  </div>
+</div>

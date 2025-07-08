@@ -1,4 +1,15 @@
-export interface IntakeDto {
+import { Timestamp } from 'firebase/firestore';
+export interface IntakeDto extends Intake {
+  ownerId?: string;
+  createdOn?: Timestamp;
+  familyName?: string;
+  givenName?: string;
+  email: string;
+  id?: string;
+  archProposalId?: string;
+}
+
+export interface Intake {
   dependenciesAndApprovals: DependenciesAndApprovals; // You can type this more specifically if needed
   requestorInformation: RequestorInformation;
   businessContext: BusinessContext;

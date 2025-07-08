@@ -18,6 +18,14 @@ export const architecturePorposalsRoutes: Routes = [
         data: { animation: 'ListArchitectureProposalsPage' },
       },
       {
+        path: 'create/:intakeId',
+        loadComponent: () =>
+          import(
+            './create-architecture-proposal/create-architecture-proposal.component'
+          ).then((c) => c.CreateArchitectureProposalComponent),
+        data: { animation: 'CreateArchitectureProposalsPage' },
+      },
+      {
         path: ':id',
         loadComponent: () =>
           import(

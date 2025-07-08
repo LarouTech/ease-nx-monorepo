@@ -1,7 +1,6 @@
 import { IntakeDto } from '@ease/dto';
-import { Intake } from './intake.interfaces';
 
-export const FICTIONAL_INTAKEFORM: IntakeDto = {
+export const FICTIONAL_INTAKEFORM: Partial<IntakeDto> = {
   dependenciesAndApprovals: {
     isDependencies: 'yes',
     describeDependencies:

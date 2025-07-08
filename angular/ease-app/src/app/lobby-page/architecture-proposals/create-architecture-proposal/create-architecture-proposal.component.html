@@ -1,0 +1,53 @@
+@let intake = intake_();
+
+<lobby-sub-page-layout title="create architecture proposal">
+  <div class="mt-6 flex flex-col justify-start items-start space-y-4">
+    <select-input
+      (valueChanged)="onSelectOption($event)"
+      class="w-full"
+      [options]="platformOptions"
+    ></select-input>
+
+    <p class="text-[var(--gray)] text-sm px-2">
+      Please note that the architecture proposal may take a few seconds to a
+      minute to generate. Thank you for your patience as we process and compile
+      the necessary information.
+    </p>
+
+    <button
+      [disabled]="!this.selectOption"
+      (click)="onCreateArchitectureProposal()"
+      class="text-base px-4 py-2 rounded-md capitalize bg-[var(--accent)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all mt-4 flex flex-row items-center justify-center gap-x-2"
+    >
+      <svg-icon name="construction" color="#ffffff"></svg-icon>
+      <span> Create Architecture Proposal </span>
+    </button>
+  </div>
+
+  <full-screen-spinner
+    message="Architecture Proposal Creation In-Progress..."
+    [visible]="isLoadingProposal()"
+    [messageInterval]="3000"
+    [actionsMessages]="[
+      'Analyzing project needs and constraints...',
+      'Identifying business goals and compliance priorities...',
+      'Matching technical requirements with proven architecture patterns...',
+      'Evaluating deployment models for Protected B cloud workloads...',
+      'Selecting secure identity management strategies (MFA, RBAC, SSO)...',
+      'Designing fault-tolerant and scalable infrastructure layout...',
+      'Determining cloud-native vs hybrid deployment trade-offs...',
+      'Embedding GC Accessibility and Official Languages Act compliance...',
+      'Mapping integration flows for HR, Finance, and Payroll systems...',
+      'Optimizing backup, recovery, and high availability strategies...',
+      'Assessing regulatory and security controls aligned with ITSG-33...',
+      'Defining performance SLAs and regional deployment configurations...',
+      'Simulating data residency impact and encrypted storage paths...',
+      'Finalizing assumptions, risks, and required clarifications...',
+      'Rendering system architecture diagram...',
+      'Applying security trust policies to sanitize visual components...',
+      'Reviewing everything for consistency and completeness...',
+      'Architecture proposal is almost ready... just a moment!',
+      'Finalizing and caching output for dev environment...'
+    ]"
+  ></full-screen-spinner>
+</lobby-sub-page-layout>

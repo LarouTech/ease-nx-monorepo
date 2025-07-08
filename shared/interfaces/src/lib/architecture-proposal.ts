@@ -7,6 +7,8 @@ export interface ArchitectureProposal {
   performanceAndAvailability: IntegrationStrategy;
   assumptionsAndRisks: AssumptionsAndRisks;
   diagram: Diagram;
+  intakeId?: string;
+  id: string;
 }
 
 export interface Architecture {

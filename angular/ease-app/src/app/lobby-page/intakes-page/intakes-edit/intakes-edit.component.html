@@ -1,4 +1,30 @@
-@let intake = intake_(); @if (intake) {
+@let intake = intake_(); @if (intake) { @let isArchProp = intake.archProposalId;
+
+<div class="flex items-center justify-end mx-6">
+  <button
+    (click)="
+      !intake.archProposalId
+        ? onCreateArchitectureProposal()
+        : onNavigateToArchProposal()
+    "
+    [ngClass]="{ 'bg-[var(--success)]': intake.archProposalId }"
+    class="text-sm px-4 py-1 rounded-md capitalize bg-[var(--accent)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all mt-4 flex flex-row items-center justify-center gap-x-2"
+  >
+    <svg-icon
+      [name]="isArchProp ? 'plan' : 'construction'"
+      color="#ffffff"
+      size="1rem"
+    ></svg-icon>
+    <span>
+      {{
+        isArchProp
+          ? 'View Architecture Proposal'
+          : 'Create Architecture Proposal'
+      }}</span
+    >
+  </button>
+</div>
+
 <lobby-sub-page-layout
   [title]="`Intake Overview: ${intake.projectDetails.initiativeName}`"
 >
@@ -16,7 +42,7 @@
       label="Created On"
       name="createdOn"
       [disabled]="true"
-      [initialValue]="(intake.createdOn.seconds | date : 'longDate') ?? ''"
+      [initialValue]="(intake.createdOn!.seconds | date : 'longDate') ?? ''"
       color="var(--gray)"
       labelColor="var(--primary)"
     ></formfield>
@@ -38,31 +64,54 @@
       color="var(--gray)"
       labelColor="var(--primary)"
     ></formfield>
-
-    @let isArchProp = intake.isArchProposal;
-
-    <button
-      [style.backgroundColor]="isArchProp ? 'var(--success)' : 'var(--accent)'"
-      class="text-white font-bold px-4 py-2 rounded-lg text-sm flex items-center justify-center cursor-pointer mt-6"
-    >
-      {{
-        isArchProp
-          ? 'View Architecture Proposal'
-          : 'Create Archiecture Proposal'
-      }}
-    </button>
   </div>
 
-  <div class="mt-10 space-y-6">
-    @for (section of sections; track section.title) {
-    <accordion [title]="section.title">
-      <div class="pl-4 mt-3 space-y-2">
+  <div class="mt-8 mb-60 space-y-6">
+    @for (section of sections(); track section.title) {
+    <accordion
+      [title]="section.title"
+      iconControl="edit"
+      class="relative"
+      (toggleEvent)="onClosingAccordion($event, section.name)"
+    >
+      <div
+        class="rounded-full bg-[var(--lighterGray)] p-1 border-2 border-[var(--secondary)] absolute right-4 top-4 z-50 flex flex-col items-center justify-center"
+      >
+        <svg-icon
+          (click)="onEditSection($event, section)"
+          class=""
+          color="var(--primary)"
+          name="edit"
+          size="1rem"
+        ></svg-icon>
+      </div>
+      <div class="pl-4 pb-6 mt-3 space-y-2">
         @for (field of section.fields; track field.label) {
         <ng-container
-          *ngTemplateOutlet="intakeFieldRef; context: field"
+          *ngTemplateOutlet="
+            intakeFieldRef;
+            context: {
+              label: field.label,
+              value: field.value,
+              isArray: field.isArray,
+              isEditMode: section.isEditMode,
+              isReset: field.isReset
+            }
+          "
         ></ng-container>
         }
       </div>
+
+      @if(section.isEditMode) {
+      <div class="flex flex-row items-center justify-end">
+        <button
+          (click)="onUpdateSection($event)"
+          class="text-sm px-4 py-2 rounded-md capitalize bg-[var(--accent)] font-semibold text-white cursor-pointer hover:opacity-50 transition-all my-2"
+        >
+          update section
+        </button>
+      </div>
+      }
     </accordion>
     }
   </div>
@@ -74,23 +123,47 @@
   let-label="label"
   let-value="value"
   let-isArray="isArray"
+  let-isEditMode="isEditMode"
+  let-isReset="isReset"
 >
   <div
     [ngClass]="{ 'items-start': isArray }"
-    class="flex flex-row items-center justify-start gap-x-2"
+    class="flex flex-row items-center justify-start gap-y-4 w-full"
   >
-    <span class="text-sm font-semibold capitalize text-[var(--secondary)]"
-      >{{ label }}:</span
-    >
-
     @if (isArray) {
-    <ul class="list-disc pl-4 text-sm text-[var(--gray)]">
+    <ul class="list-disc pl-4 text-sm text-[var(--gray)] w-full">
       @for (item of value; track $index) {
-      <li>{{ item }}</li>
+      <li class="w-full">
+        <formfield
+          class="w-full"
+          [initialValue]="value"
+          [label]="label"
+          [name]="item"
+          [disabled]="!isEditMode"
+          [borderColor]="isEditMode ? 'var(--success)' : 'var(--primary)'"
+          borderWidth="2px"
+          [backgroundColor]="isEditMode ? '#DAF5DA' : 'transparent'"
+          [color]="isEditMode ? '#000' : 'text-[var(--text)]'"
+          labelColor="text[var(--text)]"
+          [isReset]="isReset"
+        ></formfield>
+      </li>
       }
     </ul>
     } @else {
-    <p class="text-sm text-[var(--gray)]">{{ value }}</p>
+    <formfield
+      class="w-full"
+      [initialValue]="value"
+      [name]="label"
+      [label]="label"
+      [disabled]="!isEditMode"
+      [borderColor]="isEditMode ? 'var(--success)' : 'var(--primary)'"
+      borderWidth="2px"
+      [backgroundColor]="isEditMode ? '#DAF5DA' : 'transparent'"
+      [color]="isEditMode ? '#000' : 'text-[var(--text)]'"
+      labelColor="text[var(--text)]"
+      [isReset]="isReset"
+    ></formfield>
 
     }
   </div>

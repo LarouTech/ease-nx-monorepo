@@ -141,7 +141,7 @@ export class IntakeFormSideControlsComponent implements OnInit {
     try {
       const intake = this.devMode
         ? FICTIONAL_INTAKEFORM
-        : (this.intakeForm().getRawValue() as IntakeDto);
+        : (this.intakeForm().getRawValue() as Partial<IntakeDto>);
 
       const user = this.firebaseAuth.getCurrentUser();
 

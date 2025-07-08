@@ -53,7 +53,8 @@ export class SelectInputComponent implements ControlValueAccessor {
   constructor(private overlay: Overlay, private vcr: ViewContainerRef) {}
 
   // Called when the component is touched (for ControlValueAccessor)
-  onTouched = () => {
+  onTouched = (ev: Event) => {
+    ev.stopPropagation();
     // You can set a touched state here if needed
   };
   onChange = (value: string) => {

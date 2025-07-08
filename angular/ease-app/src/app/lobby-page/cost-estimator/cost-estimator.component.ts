@@ -18,7 +18,7 @@ import { FICTIONAL_INTAKEFORM } from '@ease-angular/services';
 import { from, map, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IntakeDto } from '@ease/dto';
-import { ArchitectureDiagramComponent } from './architecture-diagram/architecture-diagram.component';
+import { ArchitectureDiagramComponent } from '../architecture-proposals/view-archiecture-proposal/architecture-diagram/architecture-diagram.component';
 
 @Component({
   selector: 'app-cost-estimator',
@@ -50,7 +50,7 @@ export class CostEstimatorComponent implements OnInit {
   private readonly ARCHITECTURE_CACHE_KEY = 'cachedArchitectureProposal';
 
   private getArchitectureProposal(
-    intake: IntakeDto = FICTIONAL_INTAKEFORM
+    intake: Partial<IntakeDto> = FICTIONAL_INTAKEFORM
   ): Observable<ArchitectureProposal> {
     if (!this.architectureProposal$) {
       const cached = localStorage.getItem(this.ARCHITECTURE_CACHE_KEY);

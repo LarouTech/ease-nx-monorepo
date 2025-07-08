@@ -9,6 +9,7 @@ export interface Intake extends IntakeDto {
   email: string;
   id?: string;
   isArchProposal?: boolean;
+  archProposalId?: string;
 }
 
 // export interface IntakeDto {

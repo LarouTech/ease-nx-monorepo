@@ -8,6 +8,11 @@ import {
   output,
   inject,
   OnInit,
+  signal,
+  SimpleChanges,
+  OnChanges,
+  computed,
+  SimpleChange,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
@@ -26,7 +31,9 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
     },
   ],
 })
-export class FormfieldComponent implements ControlValueAccessor, OnInit {
+export class FormfieldComponent
+  implements ControlValueAccessor, OnInit, OnChanges
+{
   label = input<string>();
   name = input.required<string>();
   placeholder = input<string>('');
@@ -46,20 +53,38 @@ export class FormfieldComponent implements ControlValueAccessor, OnInit {
 
   initialValue = input<string>('');
 
-  @HostBinding('attr.disabled') @Input() disabled = false;
+  disabled = input<boolean>(false);
+
+  isDisabled = signal(false);
 
   value = '';
+  isReset = input<boolean>(false);
 
   ngOnInit() {
     this.value = this.initialValue() || '';
+    this.isDisabled.set(this.disabled());
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.onReset(changes['isReset']);
+  }
+
+  private onReset(change: SimpleChange) {
+    if (change && change.currentValue) {
+      this.value = this.initialValue();
+    }
+  }
+
+  onClick(ev: MouseEvent) {
+    ev.stopPropagation();
   }
 
   onChange: (value: string) => void = () => {
     this.valueChanged.emit(this.value);
   };
 
-  onTouched: () => void = () => {
-    console.log('touched');
+  onTouched = () => {
+    // You can set a touched state here if needed
   };
 
   writeValue(value: string): void {
@@ -84,7 +109,7 @@ export class FormfieldComponent implements ControlValueAccessor, OnInit {
     this.onTouched();
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
+  // setDisabledState(isDisabled: boolean): void {
+  //   this.isDisabled.set(isDisabled);
+  // }
 }

@@ -57,7 +57,7 @@ export const SIDEDMENU_PROPS = (router: Router): SidemenuItemProps[] => {
       ],
     },
     {
-      label: 'Architecture Proposals',
+      label: 'Architecture',
       icon: 'plan',
       action: () => router.navigate(['/', 'lobby', 'architecture-proposals']),
       isSelected: false,
